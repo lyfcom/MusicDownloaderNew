@@ -32,10 +32,10 @@ jobs:
       run: |
         # 替换 'your_script_name.py' 为你的主脚本文件
         # 可以添加更多 PyInstaller 选项，例如 --onefile, --windowed 等
-        pyinstaller --standalone -ico=icon.ico main.py
+        pyinstaller --ico=icon.ico main.py
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: your-app-build
+        name: MusicDownloader
         path: dist/ # PyInstaller 默认将打包文件输出到 dist 目录
