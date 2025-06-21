@@ -14,7 +14,8 @@ from PySide6.QtGui import QAction, QColor, QIcon
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 
 from core.api import search_music, get_song_details_robust
-from core.downloader import SingleDownloadThread, BatchDownloadThread, PlaylistImportThread
+from core.downloader import (SingleDownloadThread, BatchDownloadThread, PlaylistImportThread,
+                             SearchThread, SongDetailsThread)
 from core.playlist_manager import PlaylistManager
 
 # --- Constants ---
@@ -462,14 +463,20 @@ class MusicDownloader(QMainWindow):
             return
         
         self.status_bar.showMessage("正在搜索...")
-        self.song_list = search_music(query)
+        search_thread = SearchThread(query)
+        search_thread.finished_signal.connect(self.handle_search_finished)
+        search_thread.status_signal.connect(self.status_bar.showMessage)
+        search_thread.finished.connect(lambda: self.active_threads.remove(search_thread))
+        self.active_threads.add(search_thread)
+        search_thread.start()
+
+    def handle_search_finished(self, songs):
+        self.song_list = songs
         self.populate_search_results()
         self.status_bar.showMessage(f"找到 {len(self.song_list)} 首歌曲")
 
     def populate_search_results(self):
         self.result_table.setRowCount(0) # Clear table
-        # Simple fade-in effect can be done by animating a dummy property and updating opacity.
-        # For simplicity, we'll just populate directly. A more complex animation would need custom widgets.
         self.result_table.setRowCount(len(self.song_list))
         for row, song in enumerate(self.song_list):
             self.result_table.setItem(row, 0, QTableWidgetItem(str(song.get('n'))))
@@ -574,8 +581,15 @@ class MusicDownloader(QMainWindow):
 
     def play_song(self, song_info, table, row):
         self.status_bar.showMessage(f"正在获取 {song_info['title']} 的播放地址...", 2000)
-        details = get_song_details_robust(song_info)
-        
+
+        details_thread = SongDetailsThread(song_info, table, row)
+        details_thread.finished_signal.connect(self.handle_song_details_finished)
+        details_thread.status_signal.connect(self.status_bar.showMessage)
+        details_thread.finished.connect(lambda: self.active_threads.remove(details_thread))
+        self.active_threads.add(details_thread)
+        details_thread.start()
+
+    def handle_song_details_finished(self, details, song_info, table, row):
         if details and 'url' in details and details['url']:
             self.player.setSource(QUrl(details['url']))
             
@@ -606,15 +620,17 @@ class MusicDownloader(QMainWindow):
                     # Display all lyrics statically first
                     full_lyrics_html = "<br>".join([line['text'] for line in self.current_lyrics])
                     self.lyrics_display.setHtml(f"<center>{full_lyrics_html}</center>")
+                    self.right_stack.setCurrentIndex(1) # Switch to lyrics view
                     self.lyric_timer.start()
                     self.lyrics_button.setEnabled(True)  # 启用歌词按钮
                 else:
                     self.lyrics_display.setHtml("<center>无歌词或歌词格式不正确</center>")
+                    self.right_stack.setCurrentIndex(1)
                     self.lyrics_button.setEnabled(True)  # 即使没有歌词也启用按钮，显示无歌词提示
             else:
                 self.lyrics_display.setHtml("<center>未找到歌词</center>")
+                self.right_stack.setCurrentIndex(1) # Show "no lyrics" message
                 self.lyrics_button.setEnabled(True)  # 即使没有歌词也启用按钮，显示无歌词提示
-
         else:
             self.status_bar.showMessage("无法获取播放地址", 3000)
             self.clear_playing_indicator()

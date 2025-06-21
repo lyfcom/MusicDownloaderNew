@@ -30,6 +30,7 @@
   - 双击歌曲即可快速预览。
   - 清晰的布局，将搜索结果和可切换的播放列表/歌词视图并排展示。
   - 表格列宽支持用户手动调整。
+- **完全无阻塞UI**: 所有网络操作（搜索、获取详情、下载）均在后台线程中执行，确保了即使在网络状况不佳时，主界面依然流畅响应。
 
 ## 技术栈
 
@@ -73,21 +74,19 @@ MusicDownloaderNew/
   - `get_song_details(query, song_number)`: 已降级为内部辅助函数，供 `get_song_details_robust` 调用。
 
 - **`core/downloader.py`**:
-  - `BaseDownloader`: 包含文件下载和元数据嵌入的共享逻辑。
-  - `SingleDownloadThread`: 用于下载单首歌曲的QThread，调用 `get_song_details_robust`。
-  - `BatchDownloadThread`: 用于下载整个播放列表的QThread，同样调用 `get_song_details_robust`。
+  - `SearchThread` & `SongDetailsThread`: 将搜索和获取歌曲详情的网络请求移至后台执行，防止UI阻塞。
+  - `SingleDownloadThread` & `BatchDownloadThread`: 分别处理单曲和整个播放列表的下载任务，同样在后台运行。
+  - `PlaylistImportThread`: 在后台处理歌单的导入和歌曲匹配。
 
 - **`core/playlist_manager.py`**:
   - `PlaylistManager` 类: 提供了加载、保存、创建、删除、重命名播放列表的方法。在添加歌曲时，会基于 `raw_title` 和 `singer` 来检查重复，保证了播放列表的准确性。
 
 - **`ui/main_window.py`**:
-  - `MusicDownloader` 类 (QMainWindow): 构建了应用的全部UI组件，并处理所有交互。
-  - 使用 `QStackedWidget` 实现播放列表和歌词视图的切换。
-  - 使用 `QTextBrowser` 展示歌词，并通过 `QTimer` 与播放进度同步，高亮当前行。
-  - 使用 `QPropertyAnimation` 实现播放/暂停时的音量淡入淡出效果。
-  - 通过**右键上下文菜单**和**双击事件**处理用户交互。
-  - 管理播放器的播放/暂停状态，并通过改变表格行背景色来**高亮显示当前播放的歌曲**。
-  - UI界面上始终显示简洁的 `title`，而在后台逻辑中则使用 `raw_title` 进行精确匹配。
+  - `MusicDownloader` 类 (QMainWindow): 构建了应用的全部UI组件，并通过**信号与槽机制**处理所有后台线程的交互。
+  - **异步操作**: 当用户执行搜索或请求播放歌曲时，主窗口会创建并启动相应的后台线程（`SearchThread`, `SongDetailsThread`），并在接收到完成信号后安全地更新UI。
+  - **界面切换**: 使用 `QStackedWidget` 实现播放列表和歌词视图的切换。
+  - **歌词同步**: 使用 `QTextBrowser` 展示歌词，并通过 `QTimer` 与播放进度同步，高亮当前行。
+  - **平滑音量**: 使用 `QPropertyAnimation` 实现播放/暂停时的音量淡入淡出效果。
 
 ## 如何运行
 
@@ -113,7 +112,6 @@ MusicDownloaderNew/
 
 欢迎开发者对项目进行贡献！以下是一些可以扩展的方向：
 
-- **完全异步的API请求**: 将 `search_music` 和 `get_song_details_robust` 中的网络请求移至专用的QThread中执行，以防止在网络缓慢的情况下造成任何可能的UI卡顿。
 - **更换或聚合新的API源**: 在 `core/api.py` 中添加新的数据源。
 - **支持更多音频格式**: 在 `core/downloader.py` 中扩展元数据嵌入逻辑以支持如 FLAC, WAV 等格式。
 - **美化UI**: 创建一个更现代化的界面，可以引入QSS样式表或自定义控件。

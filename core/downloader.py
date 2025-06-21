@@ -5,6 +5,7 @@ import requests
 from urllib.parse import urlparse
 
 from PySide6.QtCore import QThread, Signal
+from PySide6.QtWidgets import QTableWidget
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC, TPE1, TIT2, TALB, USLT, SYLT, ID3NoHeaderError
 
@@ -15,6 +16,7 @@ from core.fetch_playlist import fetch_qq_playlist
 class BaseDownloader(QThread):
     """Base class for downloader threads to share common methods."""
     status_signal = Signal(str)
+    progress_signal = Signal(int)
 
     def download_file(self, url, file_path, progress_callback=None):
         """Downloads a file to a specified path, with progress reporting."""
@@ -144,13 +146,55 @@ class BaseDownloader(QThread):
             return None
 
 
+class SearchThread(QThread):
+    """
+    后台线程，用于执行音乐搜索，避免UI阻塞。
+    """
+    finished_signal = Signal(list)
+    status_signal = Signal(str)
+
+    def __init__(self, query, parent=None):
+        super().__init__(parent)
+        self.query = query
+
+    def run(self):
+        try:
+            songs = search_music(self.query)
+            self.finished_signal.emit(songs)
+        except Exception as e:
+            self.status_signal.emit(f"搜索失败: {e}")
+            self.finished_signal.emit([])
+
+
+class SongDetailsThread(QThread):
+    """
+    后台线程，用于获取单曲的详细信息（包括播放URL和歌词），避免UI阻塞。
+    """
+    finished_signal = Signal(dict, dict, QTableWidget, int) # details, song_info, table, row
+    status_signal = Signal(str)
+
+    def __init__(self, song_info, table, row, parent=None):
+        super().__init__(parent)
+        self.song_info = song_info
+        self.table = table
+        self.row = row
+
+    def run(self):
+        try:
+            details = get_song_details_robust(self.song_info)
+            self.finished_signal.emit(details, self.song_info, self.table, self.row)
+        except Exception as e:
+            self.status_signal.emit(f"获取歌曲详情失败: {e}")
+            self.finished_signal.emit({}, self.song_info, self.table, self.row)
+
+
 class SingleDownloadThread(BaseDownloader):
     """Thread for downloading a single song."""
     finished_signal = Signal(bool, str) # success, message/filepath
     progress_signal = Signal(int)
 
-    def __init__(self, song_info, download_dir):
-        super().__init__()
+    def __init__(self, song_info, download_dir, parent=None):
+        super().__init__(parent)
         self.song_info = song_info
         self.download_dir = download_dir
 
