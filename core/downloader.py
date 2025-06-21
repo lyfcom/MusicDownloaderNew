@@ -287,8 +287,7 @@ class PlaylistImportThread(QThread):
                 processed_title = title.replace(' ', '').lower().replace('/', '&')
                 processed_singer = song.get('singer', '').replace(' ', '').lower().replace('/', '&')
                 if (processed_title, processed_singer) not in existing_set:
-                    # 插入到头部
-                    new_songs_to_match.insert(0, song)
+                    new_songs_to_match.append(song)
             
             if not new_songs_to_match:
                 self.status_signal.emit("歌单中的所有歌曲已存在于目标播放列表。")

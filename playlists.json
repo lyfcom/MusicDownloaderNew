@@ -4399,5 +4399,238 @@
             "singer": "徐怀钰",
             "query": "分飞 徐怀钰"
         }
+    ],
+    "test2": [
+        {
+            "n": 1,
+            "raw_title": "漫步人生路[酷我]",
+            "title": "漫步人生路",
+            "singer": "一杯陈豆浆",
+            "query": "漫步人生路 一杯陈豆浆"
+        },
+        {
+            "n": 1,
+            "raw_title": "晚风心里吹[酷我]",
+            "title": "晚风心里吹",
+            "singer": "阿梨粤",
+            "query": "晚风心里吹 阿梨粤"
+        },
+        {
+            "n": 1,
+            "raw_title": "零距离的思念[酷我]",
+            "title": "零距离的思念",
+            "singer": "Tiny7",
+            "query": "零距离的思念 TINY7"
+        },
+        {
+            "n": 1,
+            "raw_title": "搀扶[酷我]",
+            "title": "搀扶",
+            "singer": "马健涛",
+            "query": "搀扶 马健涛"
+        },
+        {
+            "n": 1,
+            "raw_title": "偏爱-《仙剑奇侠传3》电视剧插曲[酷我]",
+            "title": "偏爱-《仙剑奇侠传3》电视剧插曲",
+            "singer": "张芸京",
+            "query": "偏爱 张芸京"
+        },
+        {
+            "n": 1,
+            "raw_title": "化风行万里[酷我]",
+            "title": "化风行万里",
+            "singer": "云朵",
+            "query": "化风行万里 云朵"
+        },
+        {
+            "n": 1,
+            "raw_title": "漂洋过海来看你[酷我]",
+            "title": "漂洋过海来看你",
+            "singer": "半吨兄弟",
+            "query": "漂洋过海来看你 半吨兄弟"
+        },
+        {
+            "n": 1,
+            "raw_title": "再见只是陌生人[酷我]",
+            "title": "再见只是陌生人",
+            "singer": "庄心妍",
+            "query": "再见只是陌生人 庄心妍"
+        },
+        {
+            "n": 1,
+            "raw_title": "起风了[酷我]",
+            "title": "起风了",
+            "singer": "苏钧棠",
+            "query": "起风了 苏钧棠"
+        },
+        {
+            "n": 1,
+            "raw_title": "Always Online-联想idea Pad S9/S10笔记本主题曲|《Cries In A Distance》国语版[酷我]",
+            "title": "Always Online-联想idea Pad S9/S10笔记本主题曲|《Cries In A Distance》国语版",
+            "singer": "林俊杰",
+            "query": "Always Online 林俊杰"
+        },
+        {
+            "n": 1,
+            "raw_title": "有多少爱可以重来[酷我]",
+            "title": "有多少爱可以重来",
+            "singer": "师硕晗",
+            "query": "有多少爱可以重来 师硕晗"
+        },
+        {
+            "n": 1,
+            "raw_title": "红唇[酷我]",
+            "title": "红唇",
+            "singer": "陈瑞",
+            "query": "红唇 陈瑞"
+        },
+        {
+            "n": 1,
+            "raw_title": "半杯烈酒敬生活[酷我]",
+            "title": "半杯烈酒敬生活",
+            "singer": "恋特特",
+            "query": "半杯烈酒敬生活 恋特特"
+        },
+        {
+            "n": 1,
+            "raw_title": "遇上你是我的缘[酷我]",
+            "title": "遇上你是我的缘",
+            "singer": "央金兰泽",
+            "query": "遇上你是我的缘 央金兰泽"
+        },
+        {
+            "n": 1,
+            "raw_title": "亲爱的你啊-《无尽的尽头》电视剧主题曲[酷我]",
+            "title": "亲爱的你啊-《无尽的尽头》电视剧主题曲",
+            "singer": "任素汐",
+            "query": "亲爱的你啊 任素汐"
+        },
+        {
+            "n": 1,
+            "raw_title": "可能[酷我]",
+            "title": "可能",
+            "singer": "程响",
+            "query": "可能 程响"
+        },
+        {
+            "n": 1,
+            "raw_title": "城府[酷我]",
+            "title": "城府",
+            "singer": "许嵩",
+            "query": "城府 许嵩"
+        },
+        {
+            "n": 1,
+            "raw_title": "有风无风皆自由[酷我]",
+            "title": "有风无风皆自由",
+            "singer": "王一佳",
+            "query": "有风无风皆自由 王一佳"
+        },
+        {
+            "n": 1,
+            "raw_title": "一场游戏一场梦-《几分伤心几分痴》国语版[酷我]",
+            "title": "一场游戏一场梦-《几分伤心几分痴》国语版",
+            "singer": "王杰",
+            "query": "一场游戏一场梦 王杰"
+        },
+        {
+            "n": 1,
+            "raw_title": "曾经心痛[酷我]",
+            "title": "曾经心痛",
+            "singer": "叶蒨文",
+            "query": "曾经心痛 叶蒨文"
+        },
+        {
+            "n": 1,
+            "raw_title": "悟[酷我]",
+            "title": "悟",
+            "singer": "阿厦",
+            "query": "悟 阿厦"
+        },
+        {
+            "n": 1,
+            "raw_title": "他一定很爱你[酷我]",
+            "title": "他一定很爱你",
+            "singer": "阿杜",
+            "query": "他一定很爱你 阿杜"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱上别人的人[酷我]",
+            "title": "爱上别人的人",
+            "singer": "郑源",
+            "query": "爱上别人的人 郑源"
+        },
+        {
+            "n": 1,
+            "raw_title": "碎银几两[酷我]",
+            "title": "碎银几两",
+            "singer": "轩东",
+            "query": "碎银几两 (Live) 轩东"
+        },
+        {
+            "n": 1,
+            "raw_title": "天空没有极限 (粤)[酷我]",
+            "title": "天空没有极限 (粤)",
+            "singer": "G.E.M. 邓紫棋",
+            "query": "天空没有极限 G.E.M. 邓紫棋"
+        },
+        {
+            "n": 1,
+            "raw_title": "世界赠予我的[酷我]",
+            "title": "世界赠予我的",
+            "singer": "李怡然同学",
+            "query": "世界赠予我的 李怡然同学"
+        },
+        {
+            "n": 1,
+            "raw_title": "小薇[酷我]",
+            "title": "小薇",
+            "singer": "黄品源",
+            "query": "小薇 黄品源"
+        },
+        {
+            "n": 1,
+            "raw_title": "你来了一阵子[酷我]",
+            "title": "你来了一阵子",
+            "singer": "谭歌",
+            "query": "你来了一阵子 谭歌"
+        },
+        {
+            "n": 1,
+            "raw_title": "谢谢你的爱1999[酷我]",
+            "title": "谢谢你的爱1999",
+            "singer": "谢霆锋",
+            "query": "谢谢你的爱1999 谢霆锋"
+        },
+        {
+            "n": 1,
+            "raw_title": "你来了又走心满了又空[酷我]",
+            "title": "你来了又走心满了又空",
+            "singer": "任夏",
+            "query": "你来了又走心满了又空 任夏"
+        },
+        {
+            "n": 1,
+            "raw_title": "Never Fade Away (Vicetone Remix)[酷我]",
+            "title": "Never Fade Away (Vicetone Remix)",
+            "singer": "Vicetone",
+            "query": "Never Fade Away (Vicetone Remix) Vicetone"
+        },
+        {
+            "n": 1,
+            "raw_title": "Memoir(回忆录)[酷我]",
+            "title": "Memoir(回忆录)",
+            "singer": "鹭起Herons",
+            "query": "Memoir(回忆录) 鹭起Herons"
+        },
+        {
+            "n": 1,
+            "raw_title": "Sway[酷我]",
+            "title": "Sway",
+            "singer": "Syn Cole&Nevve",
+            "query": "Sway Syn Cole / Nevve"
+        }
     ]
 }

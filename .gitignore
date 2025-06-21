@@ -23,5 +23,4 @@ __pycache__/
 .DS_Store
 
 # Setup files
-inno_setup.iss
 playlists.json
