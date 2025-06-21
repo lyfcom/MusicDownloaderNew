@@ -1,0 +1,41 @@
+name: Build with PyInstaller
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12' # 指定你的 Python 版本，例如 '3.9' 或 '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller # 安装 PyInstaller
+        # 如果你有 requirements.txt 文件，在这里安装你的项目依赖
+        pip install -r requirements.txt
+
+    - name: Run PyInstaller
+      run: |
+        # 替换 'your_script_name.py' 为你的主脚本文件
+        # 可以添加更多 PyInstaller 选项，例如 --onefile, --windowed 等
+        pyinstaller --standalone -ico=icon.ico main.py
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: your-app-build
+        path: dist/ # PyInstaller 默认将打包文件输出到 dist 目录
