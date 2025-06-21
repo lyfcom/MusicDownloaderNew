@@ -620,16 +620,16 @@ class MusicDownloader(QMainWindow):
                     # Display all lyrics statically first
                     full_lyrics_html = "<br>".join([line['text'] for line in self.current_lyrics])
                     self.lyrics_display.setHtml(f"<center>{full_lyrics_html}</center>")
-                    self.right_stack.setCurrentIndex(1) # Switch to lyrics view
+                    # self.right_stack.setCurrentIndex(1) # Switch to lyrics view
                     self.lyric_timer.start()
                     self.lyrics_button.setEnabled(True)  # 启用歌词按钮
                 else:
                     self.lyrics_display.setHtml("<center>无歌词或歌词格式不正确</center>")
-                    self.right_stack.setCurrentIndex(1)
+                    # self.right_stack.setCurrentIndex(1)
                     self.lyrics_button.setEnabled(True)  # 即使没有歌词也启用按钮，显示无歌词提示
             else:
                 self.lyrics_display.setHtml("<center>未找到歌词</center>")
-                self.right_stack.setCurrentIndex(1) # Show "no lyrics" message
+                # self.right_stack.setCurrentIndex(1) # Show "no lyrics" message
                 self.lyrics_button.setEnabled(True)  # 即使没有歌词也启用按钮，显示无歌词提示
         else:
             self.status_bar.showMessage("无法获取播放地址", 3000)
