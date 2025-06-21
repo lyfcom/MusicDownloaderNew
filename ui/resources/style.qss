@@ -1,0 +1,350 @@
+/* 
+ * Modern Flat UI Theme for Music Downloader
+ */
+
+
+QWidget {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    font-family: "Segoe UI", "Microsoft YaHei", "Arial", sans-serif;
+    font-size: 10pt;
+    border: none;
+}
+
+QMainWindow {
+    background-color: #1e1e2e;
+}
+
+
+QLabel {
+    color: #cdd6f4;
+    font-weight: 500;
+    padding: 2px;
+}
+
+
+#section_header {
+    font-size: 14pt;
+    font-weight: bold;
+    padding: 5px 0;
+}
+
+#subsection_header {
+    color: #89dceb;
+    font-size: 12pt;
+    font-weight: bold;
+    padding: 3px 0;
+}
+
+
+#player_widget {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+#now_playing_label {
+    color: #a6adc8;
+    font-weight: normal;
+}
+
+#now_playing_info {
+    color: #89b4fa;
+    font-weight: bold;
+    font-size: 11pt;
+}
+#separator {
+    background-color: #45475a;
+    max-height: 1px;
+    margin: 10px 0;
+}
+
+QLineEdit {
+    background-color: #313244;
+    color: #cdd6f4;
+    border: 1px solid #45475a;
+    border-radius: 8px;
+    padding: 8px;
+    selection-background-color: #74c7ec;
+    selection-color: #1e1e2e;
+}
+
+QLineEdit:focus {
+    border: 1px solid #89b4fa;
+}
+
+QLineEdit:hover {
+    border: 1px solid #585b70;
+}
+
+
+QPushButton {
+    background-color: #89b4fa;
+    color: #1e1e2e;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: 500;
+    min-width: 32px;
+    min-height: 32px;
+}
+
+QPushButton:hover {
+    background-color: #74c7ec;
+}
+
+QPushButton:pressed {
+    background-color: #89dceb;
+}
+
+QPushButton:disabled {
+    background-color: #45475a;
+    color: #6c7086;
+}
+
+
+#play_pause_button, #prev_button, #next_button, #playback_mode_button {
+    background-color: transparent;
+    border-radius: 16px;
+    padding: 6px;
+    min-width: 32px;
+    min-height: 32px;
+}
+
+#play_pause_button:hover, #prev_button:hover, #next_button:hover, #playback_mode_button:hover {
+    background-color: #313244;
+}
+
+#play_pause_button:pressed, #prev_button:pressed, #next_button:pressed, #playback_mode_button:pressed {
+    background-color: #45475a;
+}
+
+QTableWidget, QListWidget {
+    background-color: #313244;
+    alternate-background-color: #2a2b3c;
+    border: 1px solid #45475a;
+    border-radius: 8px;
+    padding: 4px;
+    gridline-color: transparent;
+}
+
+QTableWidget::item, QListWidget::item {
+    border-radius: 4px;
+    padding: 8px;
+    margin: 2px;
+}
+
+QTableWidget::item:selected, QListWidget::item:selected {
+    background-color: #89b4fa;
+    color: #1e1e2e;
+}
+
+QTableWidget::item:hover, QListWidget::item:hover {
+    background-color: #45475a;
+}
+
+
+QHeaderView::section {
+    background-color: #2a2b3c;
+    color: #cdd6f4;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #45475a;
+    font-weight: bold;
+}
+
+QHeaderView::section:first {
+    border-top-left-radius: 8px;
+}
+
+QHeaderView::section:last {
+    border-top-right-radius: 8px;
+}
+
+
+QScrollBar:vertical {
+    background-color: #313244;
+    width: 12px;
+    margin: 0px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical {
+    background-color: #585b70;
+    min-height: 30px;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background-color: #6c7086;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QScrollBar:horizontal {
+    background-color: #313244;
+    height: 12px;
+    margin: 0px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:horizontal {
+    background-color: #585b70;
+    min-width: 30px;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background-color: #6c7086;
+}
+
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    width: 0px;
+}
+
+
+QProgressBar {
+    border: none;
+    border-radius: 8px;
+    background-color: #313244;
+    text-align: center;
+    height: 8px;
+}
+
+QProgressBar::chunk {
+    background-color: #89b4fa;
+    border-radius: 8px;
+}
+
+
+QSlider {
+    height: 24px;
+}
+
+QSlider::groove:horizontal {
+    height: 4px;
+    background: #45475a;
+    border-radius: 2px;
+    margin: 0px;
+}
+
+QSlider::handle:horizontal {
+    background: #89b4fa;
+    border: none;
+    width: 12px;
+    height: 12px;
+    margin: -4px 0;
+    border-radius: 6px;
+}
+
+QSlider::handle:horizontal:hover {
+    background: #74c7ec;
+}
+
+QSlider::sub-page:horizontal {
+    background: #89b4fa;
+    border-radius: 2px;
+}
+
+QMenu {
+    background-color: #313244;
+    border: 1px solid #45475a;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+QMenu::item {
+    padding: 8px 30px 8px 20px;
+    border-radius: 4px;
+    margin: 2px;
+}
+
+QMenu::item:selected {
+    background-color: #89b4fa;
+    color: #1e1e2e;
+}
+
+QMenu::icon {
+    padding-left: 10px;
+}
+
+QMenu::separator {
+    height: 1px;
+    background: #45475a;
+    margin: 6px 0px;
+}
+
+
+QStatusBar {
+    background-color: #2a2b3c;
+    color: #cdd6f4;
+    border-top: 1px solid #45475a;
+    padding: 4px;
+    font-size: 9pt;
+}
+
+QStatusBar::item {
+    border: none;
+}
+
+
+QToolTip {
+    background-color: #313244;
+    color: #cdd6f4;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 9pt;
+}
+
+
+QSplitter::handle {
+    background-color: #45475a;
+    width: 1px;
+}
+
+QSplitter::handle:hover {
+    background-color: #89b4fa;
+}
+
+#time_label, #duration_label {
+    color: #cdd6f4;
+    font-family: "Consolas", "Courier New", monospace;
+    padding: 0px 10px;
+    min-width: 50px;
+}
+
+/* 滑块 - 音量控制专用样式 */
+#volume_slider {
+    max-height: 16px;
+}
+
+#volume_slider::groove:horizontal {
+    height: 3px;
+    background: #45475a;
+}
+
+#volume_slider::handle:horizontal {
+    background: #cdd6f4;
+    width: 10px;
+    height: 10px;
+}
+
+/* 进度滑块专用样式 */
+#progress_slider {
+    height: 20px;
+}
+
+#progress_slider::groove:horizontal {
+    height: 6px;
+    background: #45475a;
+}
+
+#progress_slider::handle:horizontal {
+    background: #89b4fa;
+    width: 14px;
+    height: 14px;
+} 

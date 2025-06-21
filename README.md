@@ -1,0 +1,122 @@
+# 音乐下载器
+
+这是一个使用 PySide6 构建的桌面音乐下载工具，允许用户搜索、预览、下载歌曲，并管理播放列表。
+
+## 功能特性
+
+- **快速搜索**: 按下回车或点击搜索按钮即可立即搜索。
+- **歌单导入**: 在搜索框输入纯数字歌单ID即可导入整个歌单，自动匹配歌曲并创建新的播放列表。
+- **健壮的歌曲匹配**: 采用"内容优先，索引备用"的策略，优先通过歌名和歌手进行精确匹配，即使API源索引变化也能保证播放列表的长期有效性。
+- **集成迷你播放器**: 
+  - 支持调整播放进度、暂停/播放、切换上/下一首。
+  - 提供列表循环、单曲循环和随机播放模式。
+  - 支持音量淡入淡出，优化听感。
+- **同步歌词显示**:
+  - 播放时自动获取并展示歌词。
+  - 实时高亮当前演唱的歌词行。
+  - 支持在歌词和播放列表视图之间自由切换。
+- **交互式预览**: 
+  - 支持播放、暂停、恢复预览。
+  - 在列表中高亮当前正在播放的歌曲，状态一目了然。
+- **高质量下载**: 下载的音频文件会自动嵌入封面、歌词（包括LRC动态歌词）和ID3元数据。
+- **播放列表管理**: 
+  - 创建、删除、重命名多个播放列表。
+  - 一键播放整个歌单。
+  - 将搜索到的歌曲添加到任意播放列表。
+  - 从播放列表中移除歌曲。
+- **批量下载**: 一键下载整个播放列表的所有歌曲。
+- **直观的UI**:
+  - 使用右键上下文菜单进行所有主要操作。
+  - 双击歌曲即可快速预览。
+  - 清晰的布局，将搜索结果和可切换的播放列表/歌词视图并排展示。
+  - 表格列宽支持用户手动调整。
+
+## 技术栈
+
+- **GUI框架**: [PySide6](https://www.qt.io/qt-for-python)
+- **HTTP请求**: [Requests](https://requests.readthedocs.io/en/latest/)
+- **音频元数据**: [Mutagen](https://mutagen.readthedocs.io/en/latest/)
+
+## 项目结构
+
+项目被设计为模块化的结构，便于维护和扩展。
+
+```
+MusicDownloaderNew/
+│
+├── core/                  # 核心业务逻辑
+│   ├── api.py             # 封装所有与第三方API的交互
+│   ├── downloader.py      # 处理单曲和批量下载的后台线程
+│   ├── playlist_manager.py# 播放列表的增删改查和文件读写
+│   └── __init__.py
+│
+├── ui/                    # 用户界面
+│   ├── main_window.py     # 主窗口UI和事件处理
+│   └── __init__.py
+│
+├── utils/                 # 通用工具函数
+│   ├── lrc_parser.py      # LRC歌词格式解析
+│   └── __init__.py
+│
+├── main.py                # 程序主入口
+├── playlists.json         # 存储用户播放列表数据
+└── README.md              # 项目文档
+```
+
+### 核心模块详解
+
+- **`core/api.py`**:
+  - `search_music(query)`: 根据查询词返回歌曲列表。每个歌曲信息包含 `raw_title` (带标签的原始歌名) 和 `title` (清理后的歌名)。
+  - `get_song_details_robust(song_info)`: **核心歌曲详情获取函数**。它采用两步策略：
+    1.  **首选方法**: 使用歌曲的 `title` 和 `singer` 构造新的搜索词，然后在结果中精确匹配 `raw_title` 和 `singer`，以获得最可靠的歌曲详情。
+    2.  **备用方法**: 如果首选方法失败，则回退到使用原始的搜索 `query` 和歌曲 `n` 索引来获取详情。
+  - `get_song_details(query, song_number)`: 已降级为内部辅助函数，供 `get_song_details_robust` 调用。
+
+- **`core/downloader.py`**:
+  - `BaseDownloader`: 包含文件下载和元数据嵌入的共享逻辑。
+  - `SingleDownloadThread`: 用于下载单首歌曲的QThread，调用 `get_song_details_robust`。
+  - `BatchDownloadThread`: 用于下载整个播放列表的QThread，同样调用 `get_song_details_robust`。
+
+- **`core/playlist_manager.py`**:
+  - `PlaylistManager` 类: 提供了加载、保存、创建、删除、重命名播放列表的方法。在添加歌曲时，会基于 `raw_title` 和 `singer` 来检查重复，保证了播放列表的准确性。
+
+- **`ui/main_window.py`**:
+  - `MusicDownloader` 类 (QMainWindow): 构建了应用的全部UI组件，并处理所有交互。
+  - 使用 `QStackedWidget` 实现播放列表和歌词视图的切换。
+  - 使用 `QTextBrowser` 展示歌词，并通过 `QTimer` 与播放进度同步，高亮当前行。
+  - 使用 `QPropertyAnimation` 实现播放/暂停时的音量淡入淡出效果。
+  - 通过**右键上下文菜单**和**双击事件**处理用户交互。
+  - 管理播放器的播放/暂停状态，并通过改变表格行背景色来**高亮显示当前播放的歌曲**。
+  - UI界面上始终显示简洁的 `title`，而在后台逻辑中则使用 `raw_title` 进行精确匹配。
+
+## 如何运行
+
+1.  **克隆仓库**:
+    ```bash
+    git clone <repository-url>
+    cd MusicDownloaderNew
+    ```
+
+2.  **安装依赖**:
+    项目依赖 `PySide6`, `requests`, 和 `mutagen`。请确保它们已被安装。
+    ```bash
+    pip install PySide6 requests mutagen
+    ```
+
+3.  **运行程序**:
+    执行 `main.py` 文件启动应用。
+    ```bash
+    python main.py
+    ```
+
+## 开发与贡献
+
+欢迎开发者对项目进行贡献！以下是一些可以扩展的方向：
+
+- **完全异步的API请求**: 将 `search_music` 和 `get_song_details_robust` 中的网络请求移至专用的QThread中执行，以防止在网络缓慢的情况下造成任何可能的UI卡顿。
+- **更换或聚合新的API源**: 在 `core/api.py` 中添加新的数据源。
+- **支持更多音频格式**: 在 `core/downloader.py` 中扩展元数据嵌入逻辑以支持如 FLAC, WAV 等格式。
+- **美化UI**: 创建一个更现代化的界面，可以引入QSS样式表或自定义控件。
+- **下载管理**: 创建一个下载队列视图，可以查看下载历史、失败重试等。
+
+如果你有任何问题或建议，欢迎提交 Issue 或 Pull Request。 
