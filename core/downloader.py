@@ -241,76 +241,71 @@ class BatchDownloadThread(BaseDownloader):
 
 
 class PlaylistImportThread(QThread):
-    """用于处理歌单导入的线程，避免UI卡顿"""
+    """
+    后台线程，用于从 QQ 音乐导入歌单，并进行预匹配和去重。
+    """
+    finished_signal = Signal(bool, str, list) # success, target_playlist_name, matched_songs
     status_signal = Signal(str)
-    progress_signal = Signal(int, int)  # current, total
-    finished_signal = Signal(bool, str, list)  # success, playlist_name, imported_songs
-    
-    def __init__(self, playlist_id):
-        super().__init__()
+    progress_signal = Signal(int, int) # current, total
+
+    def __init__(self, playlist_id, target_playlist_name, existing_songs, parent=None):
+        super().__init__(parent)
         self.playlist_id = playlist_id
-        self.imported_songs = []
-        self.new_playlist_name = ""
-    
+        self.target_playlist_name = target_playlist_name
+        self.existing_songs = existing_songs
+
     def run(self):
-        import random
-        import string
-        
-        # 获取歌单内容
-        self.status_signal.emit(f"正在获取歌单 ID: {self.playlist_id} 的内容...")
-        songs = fetch_qq_playlist(self.playlist_id)
-        
-        if not songs:
-            self.status_signal.emit(f"无法导入歌单，可能ID无效或网络问题")
-            self.finished_signal.emit(False, "", [])
-            return
-        
-        # 创建随机名称的新歌单
-        random_suffix = ''.join(random.choice(string.ascii_letters) for _ in range(5))
-        self.new_playlist_name = f"导入歌单_{random_suffix}"
-        
-        # 逐一处理歌单中的歌曲
-        imported_count = 0
-        total_count = len(songs)
-        
-        for i, song in enumerate(songs):
-            title = song.get('title', '')
-            singer = song.get('singer', '')
+        try:
+            self.status_signal.emit("正在获取歌单信息...")
+            raw_songs = fetch_qq_playlist(self.playlist_id)
+            if not raw_songs:
+                self.status_signal.emit("无法获取歌单或歌单为空")
+                self.finished_signal.emit(False, self.target_playlist_name, [])
+                return
+
+            self.status_signal.emit("检查重复歌曲...")
             
-            # 通知进度
-            self.progress_signal.emit(i + 1, total_count)
-            self.status_signal.emit(f"正在匹配: {title} - {singer}")
+            # Create a set of existing songs for efficient lookup
+            # Use a simplified title (removing tags) for comparison
+            existing_set = set()
+            for song in self.existing_songs:
+                title = song.get('title', '').strip()
+                if '[' in title and ']' in title:
+                    title = title.rsplit('[', 1)[0].strip()
+                existing_set.add((title, song.get('singer', '')))
+
+            # Filter out songs that already exist
+            new_songs_to_match = []
+            for song in raw_songs:
+                title = song.get('title', '').strip()
+                if '[' in title and ']' in title:
+                     title = title.rsplit('[', 1)[0].strip()
+                singer = song.get('singer', '')
+                if (title, singer) not in existing_set:
+                    # 插入到头部
+                    new_songs_to_match.insert(0, song)
             
-            # 使用歌名和歌手搜索
-            search_query = f"{title} {singer}"
-            search_results = search_music(search_query)
-            
-            if search_results:
-                matched_song = None
-                
-                # 先尝试完全匹配（去除标签后）
-                for result in search_results:
-                    cleaned_title = title
-                    # 去除可能的标签，如[酷我]等
-                    if '[' in cleaned_title and ']' in cleaned_title:
-                        cleaned_title = cleaned_title.split('[', 1)[0].strip()
-                    
-                    cleaned_result_title = result.get('title', '')
-                    
-                    # 比较清理后的歌名和歌手
-                    if cleaned_title.lower() == cleaned_result_title.lower() and singer.lower() in result.get('singer', '').lower():
-                        matched_song = result
-                        break
-                
-                # 如果没有完全匹配，默认使用第一个结果
-                if not matched_song and search_results:
-                    matched_song = search_results[0]
-                
-                # 添加到导入列表
-                if matched_song:
-                    self.imported_songs.append(matched_song)
-                    imported_count += 1
-        
-        # 完成导入
-        self.status_signal.emit(f"已匹配 {imported_count}/{total_count} 首歌曲")
-        self.finished_signal.emit(True, self.new_playlist_name, self.imported_songs) 
+            if not new_songs_to_match:
+                self.status_signal.emit("歌单中的所有歌曲已存在于目标播放列表。")
+                self.finished_signal.emit(True, self.target_playlist_name, [])
+                return
+
+            # Match the remaining new songs
+            matched_songs = []
+            total = len(new_songs_to_match)
+            for i, song in enumerate(new_songs_to_match):
+                self.status_signal.emit(f"正在匹配: {song['title']} ({i+1}/{total})")
+                query = f"{song['title']} {song['singer']}"
+                search_results = search_music(query)
+                if search_results:
+                    # Heuristic: Pick the first result as the best match.
+                    # This is a reasonable assumption for a specific "title artist" query.
+                    # 插入头部
+                    matched_songs.insert(0, search_results[0])
+                self.progress_signal.emit(i + 1, total)
+
+            self.finished_signal.emit(True, self.target_playlist_name, matched_songs)
+
+        except Exception as e:
+            self.status_signal.emit(f"导入歌单时出错: {e}")
+            self.finished_signal.emit(False, self.target_playlist_name, []) 

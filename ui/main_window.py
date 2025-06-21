@@ -104,14 +104,14 @@ class MusicDownloader(QMainWindow):
         self.search_input.returnPressed.connect(self.run_search)
         self.search_input.setMinimumHeight(40)  # 增加高度
         
-        search_button = QPushButton(qtawesome.icon('fa5s.search', color='#1e1e2e'), "")
-        search_button.setToolTip("立即搜索")
-        search_button.clicked.connect(self.run_search)
-        search_button.setMinimumHeight(40)  # 增加高度
-        search_button.setMaximumWidth(50)  # 限制宽度
+        self.search_button = QPushButton(qtawesome.icon('fa5s.search', color='#1e1e2e'), "")
+        self.search_button.setToolTip("立即搜索")
+        self.search_button.clicked.connect(self.run_search)
+        self.search_button.setMinimumHeight(40)  # 增加高度
+        self.search_button.setMaximumWidth(50)  # 限制宽度
         
         search_layout.addWidget(self.search_input)
-        search_layout.addWidget(search_button)
+        search_layout.addWidget(self.search_button)
         main_layout.addLayout(search_layout)
 
         # 主内容区域
@@ -453,6 +453,11 @@ class MusicDownloader(QMainWindow):
             menu.addAction(self.create_action("下载此列表", "fa5s.cloud-download-alt", lambda: self.download_playlist(playlist_name), menu))
         menu.exec(self.playlist_list_widget.mapToGlobal(pos))
 
+    def set_search_controls_enabled(self, enabled):
+        """Enable or disable search-related controls."""
+        self.search_input.setEnabled(enabled)
+        self.search_button.setEnabled(enabled)
+
     def run_search(self):
         query = self.search_input.text().strip()
         if not query: return
@@ -462,11 +467,18 @@ class MusicDownloader(QMainWindow):
             self.import_playlist(query)
             return
         
+        self.set_search_controls_enabled(False)
         self.status_bar.showMessage("正在搜索...")
         search_thread = SearchThread(query)
         search_thread.finished_signal.connect(self.handle_search_finished)
         search_thread.status_signal.connect(self.status_bar.showMessage)
-        search_thread.finished.connect(lambda: self.active_threads.remove(search_thread))
+        
+        def on_search_finish():
+            if search_thread in self.active_threads:
+                self.active_threads.remove(search_thread)
+            self.set_search_controls_enabled(True)
+
+        search_thread.finished.connect(on_search_finish)
         self.active_threads.add(search_thread)
         search_thread.start()
 
@@ -892,20 +904,52 @@ class MusicDownloader(QMainWindow):
 
     def import_playlist(self, playlist_id):
         """当输入纯数字时，将其视为歌单ID并导入歌单"""
-        # 重置进度条准备显示导入进度
+        # Step 1: Let user choose a playlist or create a new one
+        playlist_names = self.playlist_manager.get_playlist_names()
+        new_playlist_option = ">>> 新建播放列表..."
+        items = playlist_names + [new_playlist_option]
+        
+        target_playlist_name, ok = QInputDialog.getItem(self, "选择播放列表", "请选择要将歌曲导入到哪个播放列表:", items, 0, False)
+        
+        if not ok:
+            return # User cancelled
+
+        # If user chose to create a new one
+        if target_playlist_name == new_playlist_option:
+            new_name, ok = QInputDialog.getText(self, "新建播放列表", "请输入新列表名称:")
+            if ok and new_name:
+                if not self.playlist_manager.create(new_name):
+                    QMessageBox.warning(self, "错误", "该名称的播放列表已存在。")
+                    return
+                target_playlist_name = new_name
+                self.update_playlist_list()
+            else:
+                return # User cancelled new playlist creation
+        
+        self.set_search_controls_enabled(False)
+        self.status_bar.showMessage(f"准备导入到 '{target_playlist_name}'...")
+        
+        # Reset progress bar
         self.progress_bar.setValue(0)
         self.progress_bar.setMaximum(100)
         
-        # 创建并启动导入线程
-        import_thread = PlaylistImportThread(playlist_id)
+        # Get existing songs to avoid duplicates
+        existing_songs = self.playlist_manager.get_playlist_songs(target_playlist_name)
+        
+        # Create and start the import thread
+        import_thread = PlaylistImportThread(playlist_id, target_playlist_name, existing_songs)
         import_thread.status_signal.connect(self.status_bar.showMessage)
         import_thread.progress_signal.connect(self.update_import_progress)
         import_thread.finished_signal.connect(self.handle_import_finished)
         
-        # 正确管理线程生命周期
-        import_thread.finished.connect(lambda: self.active_threads.remove(import_thread))
+        def on_import_finish():
+            if import_thread in self.active_threads:
+                self.active_threads.remove(import_thread)
+            self.set_search_controls_enabled(True)
+            self.progress_bar.setValue(0) # Reset progress bar on finish
+
+        import_thread.finished.connect(on_import_finish)
         self.active_threads.add(import_thread)
-        
         import_thread.start()
 
     def update_import_progress(self, current, total):
@@ -913,35 +957,30 @@ class MusicDownloader(QMainWindow):
         percentage = int((current / total) * 100) if total > 0 else 0
         self.progress_bar.setValue(percentage)
 
-    def handle_import_finished(self, success, playlist_name, imported_songs):
+    def handle_import_finished(self, success, playlist_name, matched_songs):
         """处理歌单导入完成事件"""
         if not success:
             QMessageBox.warning(self, "导入失败", "无法导入歌单，请检查歌单ID是否正确或网络连接。")
             return
         
-        # 创建新歌单
-        if not self.playlist_manager.create(playlist_name):
-            # 如果随机名称已存在（极小概率），再次尝试
-            import random
-            import string
-            random_suffix = ''.join(random.choice(string.ascii_letters) for _ in range(8))
-            playlist_name = f"导入歌单_{random_suffix}"
-            if not self.playlist_manager.create(playlist_name):
-                QMessageBox.warning(self, "创建歌单失败", "无法创建新歌单。")
-                return
+        if not matched_songs:
+             QMessageBox.information(self, "导入提示", "没有新的歌曲被添加到歌单。")
+             return
+
+        # Add all matched songs to the playlist
+        added_count = 0
+        for song in matched_songs:
+            if self.playlist_manager.add_song(playlist_name, song):
+                added_count += 1
         
-        # 将所有匹配的歌曲添加到歌单
-        for song in imported_songs:
-            self.playlist_manager.add_song(playlist_name, song)
-        
-        # 选择并显示新歌单
+        # Select and show the playlist
         self.current_playlist_name = playlist_name
         self.update_playlist_list()
         self.update_playlist_songs_table()
         
-        # 显示完成消息
+        # Show completion message
         QMessageBox.information(self, "导入完成", 
-                              f"已成功导入 {len(imported_songs)} 首歌曲到歌单 '{playlist_name}'。")
+                              f"成功添加 {added_count} 首新歌曲到歌单 '{playlist_name}'。")
         self.progress_bar.setValue(0)
 
     def play_playlist(self, playlist_name):

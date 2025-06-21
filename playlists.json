@@ -32,6 +32,734 @@
     "导入歌单_GUJJm": [
         {
             "n": 1,
+            "raw_title": "相思的债 (慢四版)[酷我]",
+            "title": "相思的债 (慢四版)",
+            "singer": "陈瑞",
+            "query": "相思的债 陈瑞"
+        },
+        {
+            "n": 1,
+            "raw_title": "滚滚红尘-《滚滚红尘》电影主题曲[酷我]",
+            "title": "滚滚红尘-《滚滚红尘》电影主题曲",
+            "singer": "陈淑桦",
+            "query": "滚滚红尘 陈淑桦"
+        },
+        {
+            "n": 1,
+            "raw_title": "精忠报国-《三少爷的剑》电视剧片尾曲[酷我]",
+            "title": "精忠报国-《三少爷的剑》电视剧片尾曲",
+            "singer": "屠洪刚",
+            "query": "精忠报国 屠洪刚"
+        },
+        {
+            "n": 1,
+            "raw_title": "拯救[酷我]",
+            "title": "拯救",
+            "singer": "孙楠&李斯丹妮&刘忻",
+            "query": "拯救 (Live) 孙楠"
+        },
+        {
+            "n": 1,
+            "raw_title": "星语心愿-《星愿》电影插曲[酷我]",
+            "title": "星语心愿-《星愿》电影插曲",
+            "singer": "张柏芝",
+            "query": "星语心愿 张柏芝"
+        },
+        {
+            "n": 1,
+            "raw_title": "我是一只小小鸟[酷我]",
+            "title": "我是一只小小鸟",
+            "singer": "赵传",
+            "query": "我是一只小小鸟 (Live) 赵传"
+        },
+        {
+            "n": 1,
+            "raw_title": "放手去爱-《落地请开手机》插曲[酷我]",
+            "title": "放手去爱-《落地请开手机》插曲",
+            "singer": "迪克牛仔",
+            "query": "放手去爱 迪克牛仔"
+        },
+        {
+            "n": 1,
+            "raw_title": "我想我是海[酷我]",
+            "title": "我想我是海",
+            "singer": "黄磊",
+            "query": "我想我是海 黄磊"
+        },
+        {
+            "n": 1,
+            "raw_title": "我要找到你[酷我]",
+            "title": "我要找到你",
+            "singer": "陈明",
+            "query": "我要找到你 陈明"
+        },
+        {
+            "n": 1,
+            "raw_title": "飞天[酷我]",
+            "title": "飞天",
+            "singer": "含笑",
+            "query": "飞天 含笑"
+        },
+        {
+            "n": 1,
+            "raw_title": "无地自容[酷我]",
+            "title": "无地自容",
+            "singer": "黑豹乐队",
+            "query": "无地自容 黑豹乐队"
+        },
+        {
+            "n": 21,
+            "raw_title": "问 (Live)[网易]",
+            "title": "问 (Live)",
+            "singer": "梁静茹",
+            "query": "问 (Live) 梁静茹"
+        },
+        {
+            "n": 2,
+            "raw_title": "问情[酷我]",
+            "title": "问情",
+            "singer": "蔡幸娟",
+            "query": "问情 蔡幸娟"
+        },
+        {
+            "n": 5,
+            "raw_title": "仙剑问情[酷我]",
+            "title": "仙剑问情",
+            "singer": "萧人凤",
+            "query": "仙剑问情 萧人凤"
+        },
+        {
+            "n": 1,
+            "raw_title": "潇洒走一回[酷我]",
+            "title": "潇洒走一回",
+            "singer": "叶蒨文",
+            "query": "潇洒走一回 叶蒨文"
+        },
+        {
+            "n": 2,
+            "raw_title": "藕断丝连[酷我]",
+            "title": "藕断丝连",
+            "singer": "陈瑞",
+            "query": "藕断丝连 陈瑞"
+        },
+        {
+            "n": 3,
+            "raw_title": "相思的债[酷我]",
+            "title": "相思的债",
+            "singer": "陈瑞&网络歌手",
+            "query": "相思的债 陈瑞"
+        },
+        {
+            "n": 2,
+            "raw_title": "笑红尘[酷我]",
+            "title": "笑红尘",
+            "singer": "陈淑桦",
+            "query": "笑红尘 陈淑桦"
+        },
+        {
+            "n": 1,
+            "raw_title": "一生有你[酷我]",
+            "title": "一生有你",
+            "singer": "水木年华",
+            "query": "一生有你 水木年华"
+        },
+        {
+            "n": 1,
+            "raw_title": "一路上有你[酷我]",
+            "title": "一路上有你",
+            "singer": "张学友",
+            "query": "一路上有你 张学友"
+        },
+        {
+            "n": 1,
+            "raw_title": "愚爱[酷我]",
+            "title": "愚爱",
+            "singer": "欢子",
+            "query": "愚爱 欢子"
+        },
+        {
+            "n": 7,
+            "raw_title": "有多少爱可以重来[酷我]",
+            "title": "有多少爱可以重来",
+            "singer": "迪克牛仔",
+            "query": "有多少爱可以重来 迪克牛仔"
+        },
+        {
+            "n": 1,
+            "raw_title": "永远到底有多远[酷我]",
+            "title": "永远到底有多远",
+            "singer": "陈妃平",
+            "query": "永远到底有多远 陈妃平"
+        },
+        {
+            "n": 1,
+            "raw_title": "再回到从前[酷我]",
+            "title": "再回到从前",
+            "singer": "张镐哲",
+            "query": "再回到从前 张镐哲"
+        },
+        {
+            "n": 1,
+            "raw_title": "只对你有感觉[酷我]",
+            "title": "只对你有感觉",
+            "singer": "飞轮海&田馥甄",
+            "query": "只对你有感觉 飞轮海 / 田馥甄"
+        },
+        {
+            "n": 1,
+            "raw_title": "找一个字代替[酷我]",
+            "title": "找一个字代替",
+            "singer": "邰正宵",
+            "query": "找一个字代替 邰正宵"
+        },
+        {
+            "n": 1,
+            "raw_title": "求佛[酷我]",
+            "title": "求佛",
+            "singer": "誓言",
+            "query": "求佛 誓言"
+        },
+        {
+            "n": 1,
+            "raw_title": "丁香花[酷我]",
+            "title": "丁香花",
+            "singer": "唐磊",
+            "query": "丁香花 唐磊"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱要怎么说出口[酷我]",
+            "title": "爱要怎么说出口",
+            "singer": "赵传",
+            "query": "爱要怎么说出口 赵传"
+        },
+        {
+            "n": 1,
+            "raw_title": "无情的世界无情的你[酷我]",
+            "title": "无情的世界无情的你",
+            "singer": "冷漠",
+            "query": "无情的世界无情的你 冷漠"
+        },
+        {
+            "n": 1,
+            "raw_title": "一个人的寂寞两个人的错[酷我]",
+            "title": "一个人的寂寞两个人的错",
+            "singer": "贺一航",
+            "query": "一个人的寂寞两个人的错 贺一航"
+        },
+        {
+            "n": 1,
+            "raw_title": "特别的爱给特别的你[酷我]",
+            "title": "特别的爱给特别的你",
+            "singer": "伍思凯",
+            "query": "特别的爱给特别的你 伍思凯"
+        },
+        {
+            "n": 4,
+            "raw_title": "可惜不是你[酷我]",
+            "title": "可惜不是你",
+            "singer": "梁静茹",
+            "query": "可惜不是你 梁静茹"
+        },
+        {
+            "n": 1,
+            "raw_title": "寂寞才说爱[酷我]",
+            "title": "寂寞才说爱",
+            "singer": "刘可",
+            "query": "寂寞才说爱 刘可"
+        },
+        {
+            "n": 1,
+            "raw_title": "寂寞在唱歌[酷我]",
+            "title": "寂寞在唱歌",
+            "singer": "阿桑",
+            "query": "寂寞在唱歌 阿桑"
+        },
+        {
+            "n": 1,
+            "raw_title": "王妃[酷我]",
+            "title": "王妃",
+            "singer": "萧敬腾",
+            "query": "王妃 萧敬腾"
+        },
+        {
+            "n": 1,
+            "raw_title": "梦醒时分[酷我]",
+            "title": "梦醒时分",
+            "singer": "陈淑桦",
+            "query": "梦醒时分 陈淑桦"
+        },
+        {
+            "n": 2,
+            "raw_title": "心要让你听见[酷我]",
+            "title": "心要让你听见",
+            "singer": "邰正宵",
+            "query": "心要让你听见 邰正宵"
+        },
+        {
+            "n": 1,
+            "raw_title": "追梦人[酷我]",
+            "title": "追梦人",
+            "singer": "凤飞飞",
+            "query": "追梦人 凤飞飞"
+        },
+        {
+            "n": 2,
+            "raw_title": "爱江山更爱美人[酷我]",
+            "title": "爱江山更爱美人",
+            "singer": "李丽芬",
+            "query": "爱江山更爱美人 李丽芬"
+        },
+        {
+            "n": 1,
+            "raw_title": "自古美女爱英雄[酷我]",
+            "title": "自古美女爱英雄",
+            "singer": "刘一喆",
+            "query": "自古美女爱英雄 刘一喆"
+        },
+        {
+            "n": 3,
+            "raw_title": "滚滚红尘[酷我]",
+            "title": "滚滚红尘",
+            "singer": "罗大佑&陈淑桦",
+            "query": "滚滚红尘 陈淑桦"
+        },
+        {
+            "n": 1,
+            "raw_title": "Super Star[酷我]",
+            "title": "Super Star",
+            "singer": "S.H.E",
+            "query": "Super Star S.H.E"
+        },
+        {
+            "n": 1,
+            "raw_title": "我是不是该安静的走开[酷我]",
+            "title": "我是不是该安静的走开",
+            "singer": "郭富城",
+            "query": "我是不是该安静的走开 郭富城"
+        },
+        {
+            "n": 3,
+            "raw_title": "精忠报国[酷我]",
+            "title": "精忠报国",
+            "singer": "屠洪刚&马佳",
+            "query": "精忠报国 屠洪刚"
+        },
+        {
+            "n": 21,
+            "raw_title": "拯救 (live)[网易]",
+            "title": "拯救 (live)",
+            "singer": "孙楠",
+            "query": "拯救 (Live) 孙楠"
+        },
+        {
+            "n": 1,
+            "raw_title": "大城小爱[酷我]",
+            "title": "大城小爱",
+            "singer": "王力宏",
+            "query": "大城小爱 王力宏"
+        },
+        {
+            "n": 1,
+            "raw_title": "青花瓷[酷我]",
+            "title": "青花瓷",
+            "singer": "周杰伦",
+            "query": "青花瓷 周杰伦"
+        },
+        {
+            "n": 2,
+            "raw_title": "七月七日晴[酷我]",
+            "title": "七月七日晴",
+            "singer": "许慧欣",
+            "query": "七月七日晴 许慧欣"
+        },
+        {
+            "n": 1,
+            "raw_title": "短发[酷我]",
+            "title": "短发",
+            "singer": "梁咏琪",
+            "query": "短发 梁咏琪"
+        },
+        {
+            "n": 1,
+            "raw_title": "生如夏花[酷我]",
+            "title": "生如夏花",
+            "singer": "朴树",
+            "query": "生如夏花 朴树"
+        },
+        {
+            "n": 3,
+            "raw_title": "星语心愿[酷我]",
+            "title": "星语心愿",
+            "singer": "任贤齐&张柏芝",
+            "query": "星语心愿 张柏芝"
+        },
+        {
+            "n": 2,
+            "raw_title": "曾经的你[酷我]",
+            "title": "曾经的你",
+            "singer": "许巍",
+            "query": "曾经的你 许巍"
+        },
+        {
+            "n": 1,
+            "raw_title": "飞舞[酷我]",
+            "title": "飞舞",
+            "singer": "王冰洋",
+            "query": "飞舞 王冰洋"
+        },
+        {
+            "n": 1,
+            "raw_title": "大约在冬季[酷我]",
+            "title": "大约在冬季",
+            "singer": "齐秦",
+            "query": "大约在冬季 齐秦"
+        },
+        {
+            "n": 1,
+            "raw_title": "水手[酷我]",
+            "title": "水手",
+            "singer": "郑智化",
+            "query": "水手 郑智化"
+        },
+        {
+            "n": 1,
+            "raw_title": "烟火[酷我]",
+            "title": "烟火",
+            "singer": "吴奇隆",
+            "query": "烟火 吴奇隆"
+        },
+        {
+            "n": 1,
+            "raw_title": "真心真意过一生[酷我]",
+            "title": "真心真意过一生",
+            "singer": "叶蒨文",
+            "query": "真心真意过一生 叶蒨文"
+        },
+        {
+            "n": 1,
+            "raw_title": "信仰[酷我]",
+            "title": "信仰",
+            "singer": "张信哲",
+            "query": "信仰 张信哲"
+        },
+        {
+            "n": 1,
+            "raw_title": "用心良苦[酷我]",
+            "title": "用心良苦",
+            "singer": "张宇",
+            "query": "用心良苦 张宇"
+        },
+        {
+            "n": 1,
+            "raw_title": "大海[酷我]",
+            "title": "大海",
+            "singer": "张雨生",
+            "query": "大海 张雨生"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱情诺曼底[酷我]",
+            "title": "爱情诺曼底",
+            "singer": "黄征",
+            "query": "爱情诺曼底 黄征"
+        },
+        {
+            "n": 1,
+            "raw_title": "白月光[酷我]",
+            "title": "白月光",
+            "singer": "张信哲",
+            "query": "白月光 张信哲"
+        },
+        {
+            "n": 1,
+            "raw_title": "分爱[酷我]",
+            "title": "分爱",
+            "singer": "易欣",
+            "query": "分爱 易欣"
+        },
+        {
+            "n": 1,
+            "raw_title": "天意[酷我]",
+            "title": "天意",
+            "singer": "刘德华",
+            "query": "天意 刘德华"
+        },
+        {
+            "n": 2,
+            "raw_title": "认真的雪[酷我]",
+            "title": "认真的雪",
+            "singer": "薛之谦",
+            "query": "认真的雪 薛之谦"
+        },
+        {
+            "n": 1,
+            "raw_title": "忘忧草[酷我]",
+            "title": "忘忧草",
+            "singer": "周华健",
+            "query": "忘忧草 周华健"
+        },
+        {
+            "n": 2,
+            "raw_title": "人间[酷我]",
+            "title": "人间",
+            "singer": "王菲",
+            "query": "人间 王菲"
+        },
+        {
+            "n": 1,
+            "raw_title": "黄昏[酷我]",
+            "title": "黄昏",
+            "singer": "周传雄",
+            "query": "黄昏 周传雄"
+        },
+        {
+            "n": 25,
+            "raw_title": "我是一只小小鸟 (Live)[网易]",
+            "title": "我是一只小小鸟 (Live)",
+            "singer": "赵传/王克/赵露",
+            "query": "我是一只小小鸟 (Live) 赵传"
+        },
+        {
+            "n": 24,
+            "raw_title": "突然的自我 (Live)[网易]",
+            "title": "突然的自我 (Live)",
+            "singer": "伍佰 & China Blue",
+            "query": "突然的自我 (Live) 伍佰 & China Blue"
+        },
+        {
+            "n": 1,
+            "raw_title": "街角的祝福[酷我]",
+            "title": "街角的祝福",
+            "singer": "戴佩妮",
+            "query": "街角的祝福 戴佩妮"
+        },
+        {
+            "n": 1,
+            "raw_title": "吻别[酷我]",
+            "title": "吻别",
+            "singer": "张学友",
+            "query": "吻别 张学友"
+        },
+        {
+            "n": 5,
+            "raw_title": "来生缘[酷我]",
+            "title": "来生缘",
+            "singer": "刘德华",
+            "query": "来生缘 刘德华"
+        },
+        {
+            "n": 1,
+            "raw_title": "哭砂[酷我]",
+            "title": "哭砂",
+            "singer": "张惠妹",
+            "query": "哭砂 张惠妹"
+        },
+        {
+            "n": 6,
+            "raw_title": "盛夏的果实[酷我]",
+            "title": "盛夏的果实",
+            "singer": "莫文蔚",
+            "query": "盛夏的果实 莫文蔚"
+        },
+        {
+            "n": 1,
+            "raw_title": "你的样子[酷我]",
+            "title": "你的样子",
+            "singer": "林志炫",
+            "query": "你的样子 林志炫"
+        },
+        {
+            "n": 2,
+            "raw_title": "终于明白[酷我]",
+            "title": "终于明白",
+            "singer": "动力火车",
+            "query": "终于明白 动力火车"
+        },
+        {
+            "n": 2,
+            "raw_title": "太傻[酷我]",
+            "title": "太傻",
+            "singer": "巫启贤",
+            "query": "太傻 巫启贤"
+        },
+        {
+            "n": 1,
+            "raw_title": "独角戏[酷我]",
+            "title": "独角戏",
+            "singer": "许茹芸",
+            "query": "独角戏 许茹芸"
+        },
+        {
+            "n": 1,
+            "raw_title": "等一分钟[酷我]",
+            "title": "等一分钟",
+            "singer": "徐誉滕",
+            "query": "等一分钟 徐誉滕"
+        },
+        {
+            "n": 9,
+            "raw_title": "记事本[酷我]",
+            "title": "记事本",
+            "singer": "陈慧琳",
+            "query": "记事本 陈慧琳"
+        },
+        {
+            "n": 1,
+            "raw_title": "冷酷到底[酷我]",
+            "title": "冷酷到底",
+            "singer": "羽泉",
+            "query": "冷酷到底 羽泉"
+        },
+        {
+            "n": 1,
+            "raw_title": "那些花儿[酷我]",
+            "title": "那些花儿",
+            "singer": "朴树",
+            "query": "那些花儿 朴树"
+        },
+        {
+            "n": 2,
+            "raw_title": "心似狂潮[酷我]",
+            "title": "心似狂潮",
+            "singer": "羽泉",
+            "query": "心似狂潮 羽泉"
+        },
+        {
+            "n": 1,
+            "raw_title": "手放开[酷我]",
+            "title": "手放开",
+            "singer": "李圣杰",
+            "query": "手放开 李圣杰"
+        },
+        {
+            "n": 6,
+            "raw_title": "十年[酷我]",
+            "title": "十年",
+            "singer": "陈奕迅",
+            "query": "十年 陈奕迅"
+        },
+        {
+            "n": 3,
+            "raw_title": "想太多[酷我]",
+            "title": "想太多",
+            "singer": "李玖哲",
+            "query": "想太多 李玖哲"
+        },
+        {
+            "n": 3,
+            "raw_title": "太多[酷我]",
+            "title": "太多",
+            "singer": "陈冠蒲",
+            "query": "太多 陈冠蒲"
+        },
+        {
+            "n": 3,
+            "raw_title": "爱情转移[酷我]",
+            "title": "爱情转移",
+            "singer": "陈奕迅",
+            "query": "爱情转移 陈奕迅"
+        },
+        {
+            "n": 1,
+            "raw_title": "最远的你是我最近的爱[酷我]",
+            "title": "最远的你是我最近的爱",
+            "singer": "车继铃",
+            "query": "最远的你是我最近的爱 车继铃"
+        },
+        {
+            "n": 1,
+            "raw_title": "一言难尽[酷我]",
+            "title": "一言难尽",
+            "singer": "张宇",
+            "query": "一言难尽 张宇"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱我的人和我爱的人[酷我]",
+            "title": "爱我的人和我爱的人",
+            "singer": "迪克牛仔",
+            "query": "爱我的人和我爱的人 迪克牛仔"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱就爱了[酷我]",
+            "title": "爱就爱了",
+            "singer": "陈琳",
+            "query": "爱就爱了 陈琳"
+        },
+        {
+            "n": 1,
+            "raw_title": "擦肩而过[酷我]",
+            "title": "擦肩而过",
+            "singer": "宇桐非&胡雯",
+            "query": "擦肩而过 宇桐非 / 胡雯"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱死了昨天[酷我]",
+            "title": "爱死了昨天",
+            "singer": "李慧珍",
+            "query": "爱死了昨天 李慧珍"
+        },
+        {
+            "n": 1,
+            "raw_title": "电台情歌[酷我]",
+            "title": "电台情歌",
+            "singer": "莫文蔚",
+            "query": "电台情歌 莫文蔚"
+        },
+        {
+            "n": 2,
+            "raw_title": "曾经最美[酷我]",
+            "title": "曾经最美",
+            "singer": "朱铭捷",
+            "query": "曾经最美 朱铭捷"
+        },
+        {
+            "n": 2,
+            "raw_title": "想起[酷我]",
+            "title": "想起",
+            "singer": "韩雪",
+            "query": "想起 韩雪"
+        },
+        {
+            "n": 1,
+            "raw_title": "最真的梦[酷我]",
+            "title": "最真的梦",
+            "singer": "周华健",
+            "query": "最真的梦 周华健"
+        },
+        {
+            "n": 2,
+            "raw_title": "伤心太平洋[酷我]",
+            "title": "伤心太平洋",
+            "singer": "任贤齐",
+            "query": "伤心太平洋 任贤齐"
+        },
+        {
+            "n": 1,
+            "raw_title": "寂寞沙洲冷[酷我]",
+            "title": "寂寞沙洲冷",
+            "singer": "周传雄",
+            "query": "寂寞沙洲冷 周传雄"
+        },
+        {
+            "n": 3,
+            "raw_title": "放手去爱[酷我]",
+            "title": "放手去爱",
+            "singer": "迪克牛仔&DJ小鱼儿",
+            "query": "放手去爱 迪克牛仔"
+        },
+        {
+            "n": 1,
+            "raw_title": "分飞[酷我]",
+            "title": "分飞",
+            "singer": "徐怀钰",
+            "query": "分飞 徐怀钰"
+        },
+        {
+            "n": 1,
             "raw_title": "Sway[酷我]",
             "title": "Sway",
             "singer": "Syn Cole&Nevve",
@@ -934,6 +1662,2047 @@
             "title": "分飞",
             "singer": "徐怀钰",
             "query": "分飞 徐怀钰"
+        }
+    ],
+    "阿斯顿": [
+        {
+            "n": 1,
+            "raw_title": "我想我是海[酷我]",
+            "title": "我想我是海",
+            "singer": "黄磊",
+            "query": "我想我是海 黄磊"
+        },
+        {
+            "n": 1,
+            "raw_title": "我要找到你[酷我]",
+            "title": "我要找到你",
+            "singer": "陈明",
+            "query": "我要找到你 陈明"
+        },
+        {
+            "n": 1,
+            "raw_title": "飞天[酷我]",
+            "title": "飞天",
+            "singer": "含笑",
+            "query": "飞天 含笑"
+        },
+        {
+            "n": 1,
+            "raw_title": "无地自容[酷我]",
+            "title": "无地自容",
+            "singer": "黑豹乐队",
+            "query": "无地自容 黑豹乐队"
+        },
+        {
+            "n": 1,
+            "raw_title": "问[酷我]",
+            "title": "问",
+            "singer": "梁静茹",
+            "query": "问 (Live) 梁静茹"
+        },
+        {
+            "n": 1,
+            "raw_title": "问情-《戏说乾隆》电视剧片头曲[酷我]",
+            "title": "问情-《戏说乾隆》电视剧片头曲",
+            "singer": "蔡幸娟",
+            "query": "问情 蔡幸娟"
+        },
+        {
+            "n": 1,
+            "raw_title": "仙剑问情-《仙剑奇侠传三外传·问情篇》主题曲[酷我]",
+            "title": "仙剑问情-《仙剑奇侠传三外传·问情篇》主题曲",
+            "singer": "萧人凤&贾卓伦&骆集益",
+            "query": "仙剑问情 萧人凤"
+        },
+        {
+            "n": 1,
+            "raw_title": "潇洒走一回[酷我]",
+            "title": "潇洒走一回",
+            "singer": "叶蒨文",
+            "query": "潇洒走一回 叶蒨文"
+        },
+        {
+            "n": 1,
+            "raw_title": "藕断丝连 (快四版)[酷我]",
+            "title": "藕断丝连 (快四版)",
+            "singer": "陈瑞",
+            "query": "藕断丝连 陈瑞"
+        },
+        {
+            "n": 1,
+            "raw_title": "相思的债 (慢四版)[酷我]",
+            "title": "相思的债 (慢四版)",
+            "singer": "陈瑞",
+            "query": "相思的债 陈瑞"
+        },
+        {
+            "n": 1,
+            "raw_title": "笑红尘-《东方不败风云再起》电影主题曲|《莲花争霸》电视剧插曲|《做个真的我》粤语版[酷我]",
+            "title": "笑红尘-《东方不败风云再起》电影主题曲|《莲花争霸》电视剧插曲|《做个真的我》粤语版",
+            "singer": "陈淑桦",
+            "query": "笑红尘 陈淑桦"
+        },
+        {
+            "n": 1,
+            "raw_title": "一生有你[酷我]",
+            "title": "一生有你",
+            "singer": "水木年华",
+            "query": "一生有你 水木年华"
+        },
+        {
+            "n": 1,
+            "raw_title": "一路上有你[酷我]",
+            "title": "一路上有你",
+            "singer": "张学友",
+            "query": "一路上有你 张学友"
+        },
+        {
+            "n": 1,
+            "raw_title": "愚爱[酷我]",
+            "title": "愚爱",
+            "singer": "欢子",
+            "query": "愚爱 欢子"
+        },
+        {
+            "n": 1,
+            "raw_title": "有多少爱可以重来-《爱与痛的边缘》国语版[酷我]",
+            "title": "有多少爱可以重来-《爱与痛的边缘》国语版",
+            "singer": "迪克牛仔",
+            "query": "有多少爱可以重来 迪克牛仔"
+        },
+        {
+            "n": 1,
+            "raw_title": "永远到底有多远[酷我]",
+            "title": "永远到底有多远",
+            "singer": "陈妃平",
+            "query": "永远到底有多远 陈妃平"
+        },
+        {
+            "n": 1,
+            "raw_title": "再回到从前[酷我]",
+            "title": "再回到从前",
+            "singer": "张镐哲",
+            "query": "再回到从前 张镐哲"
+        },
+        {
+            "n": 1,
+            "raw_title": "只对你有感觉[酷我]",
+            "title": "只对你有感觉",
+            "singer": "飞轮海&田馥甄",
+            "query": "只对你有感觉 飞轮海 / 田馥甄"
+        },
+        {
+            "n": 1,
+            "raw_title": "找一个字代替[酷我]",
+            "title": "找一个字代替",
+            "singer": "邰正宵",
+            "query": "找一个字代替 邰正宵"
+        },
+        {
+            "n": 1,
+            "raw_title": "求佛[酷我]",
+            "title": "求佛",
+            "singer": "誓言",
+            "query": "求佛 誓言"
+        },
+        {
+            "n": 1,
+            "raw_title": "丁香花[酷我]",
+            "title": "丁香花",
+            "singer": "唐磊",
+            "query": "丁香花 唐磊"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱要怎么说出口[酷我]",
+            "title": "爱要怎么说出口",
+            "singer": "赵传",
+            "query": "爱要怎么说出口 赵传"
+        },
+        {
+            "n": 1,
+            "raw_title": "无情的世界无情的你[酷我]",
+            "title": "无情的世界无情的你",
+            "singer": "冷漠",
+            "query": "无情的世界无情的你 冷漠"
+        },
+        {
+            "n": 1,
+            "raw_title": "一个人的寂寞两个人的错[酷我]",
+            "title": "一个人的寂寞两个人的错",
+            "singer": "贺一航",
+            "query": "一个人的寂寞两个人的错 贺一航"
+        },
+        {
+            "n": 1,
+            "raw_title": "特别的爱给特别的你[酷我]",
+            "title": "特别的爱给特别的你",
+            "singer": "伍思凯",
+            "query": "特别的爱给特别的你 伍思凯"
+        },
+        {
+            "n": 1,
+            "raw_title": "可惜不是你-《非诚勿扰》节目插曲[酷我]",
+            "title": "可惜不是你-《非诚勿扰》节目插曲",
+            "singer": "梁静茹",
+            "query": "可惜不是你 梁静茹"
+        },
+        {
+            "n": 1,
+            "raw_title": "寂寞才说爱[酷我]",
+            "title": "寂寞才说爱",
+            "singer": "刘可",
+            "query": "寂寞才说爱 刘可"
+        },
+        {
+            "n": 1,
+            "raw_title": "寂寞在唱歌[酷我]",
+            "title": "寂寞在唱歌",
+            "singer": "阿桑",
+            "query": "寂寞在唱歌 阿桑"
+        },
+        {
+            "n": 1,
+            "raw_title": "王妃[酷我]",
+            "title": "王妃",
+            "singer": "萧敬腾",
+            "query": "王妃 萧敬腾"
+        },
+        {
+            "n": 1,
+            "raw_title": "梦醒时分[酷我]",
+            "title": "梦醒时分",
+            "singer": "陈淑桦",
+            "query": "梦醒时分 陈淑桦"
+        },
+        {
+            "n": 1,
+            "raw_title": "心要让你听见-摩托罗拉传呼机广告曲[酷我]",
+            "title": "心要让你听见-摩托罗拉传呼机广告曲",
+            "singer": "邰正宵",
+            "query": "心要让你听见 邰正宵"
+        },
+        {
+            "n": 1,
+            "raw_title": "追梦人[酷我]",
+            "title": "追梦人",
+            "singer": "凤飞飞",
+            "query": "追梦人 凤飞飞"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱江山更爱美人-《倚天屠龙记》电视剧片尾曲[酷我]",
+            "title": "爱江山更爱美人-《倚天屠龙记》电视剧片尾曲",
+            "singer": "李丽芬",
+            "query": "爱江山更爱美人 李丽芬"
+        },
+        {
+            "n": 1,
+            "raw_title": "自古美女爱英雄[酷我]",
+            "title": "自古美女爱英雄",
+            "singer": "刘一喆",
+            "query": "自古美女爱英雄 刘一喆"
+        },
+        {
+            "n": 1,
+            "raw_title": "滚滚红尘-《滚滚红尘》电影主题曲[酷我]",
+            "title": "滚滚红尘-《滚滚红尘》电影主题曲",
+            "singer": "陈淑桦",
+            "query": "滚滚红尘 陈淑桦"
+        },
+        {
+            "n": 1,
+            "raw_title": "Super Star[酷我]",
+            "title": "Super Star",
+            "singer": "S.H.E",
+            "query": "Super Star S.H.E"
+        },
+        {
+            "n": 1,
+            "raw_title": "我是不是该安静的走开[酷我]",
+            "title": "我是不是该安静的走开",
+            "singer": "郭富城",
+            "query": "我是不是该安静的走开 郭富城"
+        },
+        {
+            "n": 1,
+            "raw_title": "精忠报国-《三少爷的剑》电视剧片尾曲[酷我]",
+            "title": "精忠报国-《三少爷的剑》电视剧片尾曲",
+            "singer": "屠洪刚",
+            "query": "精忠报国 屠洪刚"
+        },
+        {
+            "n": 1,
+            "raw_title": "拯救[酷我]",
+            "title": "拯救",
+            "singer": "孙楠&李斯丹妮&刘忻",
+            "query": "拯救 (Live) 孙楠"
+        },
+        {
+            "n": 1,
+            "raw_title": "大城小爱[酷我]",
+            "title": "大城小爱",
+            "singer": "王力宏",
+            "query": "大城小爱 王力宏"
+        },
+        {
+            "n": 1,
+            "raw_title": "青花瓷[酷我]",
+            "title": "青花瓷",
+            "singer": "周杰伦",
+            "query": "青花瓷 周杰伦"
+        },
+        {
+            "n": 1,
+            "raw_title": "七月七日晴-《心动列车之广岛之恋》电视剧片尾曲[酷我]",
+            "title": "七月七日晴-《心动列车之广岛之恋》电视剧片尾曲",
+            "singer": "许慧欣",
+            "query": "七月七日晴 许慧欣"
+        },
+        {
+            "n": 1,
+            "raw_title": "短发[酷我]",
+            "title": "短发",
+            "singer": "梁咏琪",
+            "query": "短发 梁咏琪"
+        },
+        {
+            "n": 1,
+            "raw_title": "生如夏花[酷我]",
+            "title": "生如夏花",
+            "singer": "朴树",
+            "query": "生如夏花 朴树"
+        },
+        {
+            "n": 1,
+            "raw_title": "星语心愿-《星愿》电影插曲[酷我]",
+            "title": "星语心愿-《星愿》电影插曲",
+            "singer": "张柏芝",
+            "query": "星语心愿 张柏芝"
+        },
+        {
+            "n": 1,
+            "raw_title": "曾经的你-《夏洛特烦恼》电影插曲[酷我]",
+            "title": "曾经的你-《夏洛特烦恼》电影插曲",
+            "singer": "许巍",
+            "query": "曾经的你 许巍"
+        },
+        {
+            "n": 1,
+            "raw_title": "飞舞[酷我]",
+            "title": "飞舞",
+            "singer": "王冰洋",
+            "query": "飞舞 王冰洋"
+        },
+        {
+            "n": 1,
+            "raw_title": "大约在冬季[酷我]",
+            "title": "大约在冬季",
+            "singer": "齐秦",
+            "query": "大约在冬季 齐秦"
+        },
+        {
+            "n": 1,
+            "raw_title": "水手[酷我]",
+            "title": "水手",
+            "singer": "郑智化",
+            "query": "水手 郑智化"
+        },
+        {
+            "n": 1,
+            "raw_title": "烟火[酷我]",
+            "title": "烟火",
+            "singer": "吴奇隆",
+            "query": "烟火 吴奇隆"
+        },
+        {
+            "n": 1,
+            "raw_title": "真心真意过一生[酷我]",
+            "title": "真心真意过一生",
+            "singer": "叶蒨文",
+            "query": "真心真意过一生 叶蒨文"
+        },
+        {
+            "n": 1,
+            "raw_title": "信仰[酷我]",
+            "title": "信仰",
+            "singer": "张信哲",
+            "query": "信仰 张信哲"
+        },
+        {
+            "n": 1,
+            "raw_title": "用心良苦[酷我]",
+            "title": "用心良苦",
+            "singer": "张宇",
+            "query": "用心良苦 张宇"
+        },
+        {
+            "n": 1,
+            "raw_title": "大海[酷我]",
+            "title": "大海",
+            "singer": "张雨生",
+            "query": "大海 张雨生"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱情诺曼底[酷我]",
+            "title": "爱情诺曼底",
+            "singer": "黄征",
+            "query": "爱情诺曼底 黄征"
+        },
+        {
+            "n": 1,
+            "raw_title": "白月光[酷我]",
+            "title": "白月光",
+            "singer": "张信哲",
+            "query": "白月光 张信哲"
+        },
+        {
+            "n": 1,
+            "raw_title": "一场游戏一场梦-《几分伤心几分痴》国语版[酷我]",
+            "title": "一场游戏一场梦-《几分伤心几分痴》国语版",
+            "singer": "王杰",
+            "query": "一场游戏一场梦 王杰"
+        },
+        {
+            "n": 1,
+            "raw_title": "分爱[酷我]",
+            "title": "分爱",
+            "singer": "易欣",
+            "query": "分爱 易欣"
+        },
+        {
+            "n": 1,
+            "raw_title": "天意[酷我]",
+            "title": "天意",
+            "singer": "刘德华",
+            "query": "天意 刘德华"
+        },
+        {
+            "n": 1,
+            "raw_title": "认真的雪-《妈妈像花儿一样》电视剧插曲[酷我]",
+            "title": "认真的雪-《妈妈像花儿一样》电视剧插曲",
+            "singer": "薛之谦",
+            "query": "认真的雪 薛之谦"
+        },
+        {
+            "n": 1,
+            "raw_title": "忘忧草[酷我]",
+            "title": "忘忧草",
+            "singer": "周华健",
+            "query": "忘忧草 周华健"
+        },
+        {
+            "n": 1,
+            "raw_title": "人间-《陪安东尼度过漫长岁月》电影推广曲[酷我]",
+            "title": "人间-《陪安东尼度过漫长岁月》电影推广曲",
+            "singer": "王菲",
+            "query": "人间 王菲"
+        },
+        {
+            "n": 1,
+            "raw_title": "黄昏[酷我]",
+            "title": "黄昏",
+            "singer": "周传雄",
+            "query": "黄昏 周传雄"
+        },
+        {
+            "n": 1,
+            "raw_title": "谢谢你的爱1999[酷我]",
+            "title": "谢谢你的爱1999",
+            "singer": "谢霆锋",
+            "query": "谢谢你的爱1999 谢霆锋"
+        },
+        {
+            "n": 1,
+            "raw_title": "我是一只小小鸟[酷我]",
+            "title": "我是一只小小鸟",
+            "singer": "赵传",
+            "query": "我是一只小小鸟 (Live) 赵传"
+        },
+        {
+            "n": 1,
+            "raw_title": "突然的自我-《散打》电影主题曲|《路边野餐》电影插曲[酷我]",
+            "title": "突然的自我-《散打》电影主题曲|《路边野餐》电影插曲",
+            "singer": "伍佰 & China Blue",
+            "query": "突然的自我 (Live) 伍佰 & China Blue"
+        },
+        {
+            "n": 1,
+            "raw_title": "街角的祝福[酷我]",
+            "title": "街角的祝福",
+            "singer": "戴佩妮",
+            "query": "街角的祝福 戴佩妮"
+        },
+        {
+            "n": 1,
+            "raw_title": "吻别[酷我]",
+            "title": "吻别",
+            "singer": "张学友",
+            "query": "吻别 张学友"
+        },
+        {
+            "n": 1,
+            "raw_title": "来生缘-《一起走过的日子》国语版[酷我]",
+            "title": "来生缘-《一起走过的日子》国语版",
+            "singer": "刘德华",
+            "query": "来生缘 刘德华"
+        },
+        {
+            "n": 1,
+            "raw_title": "哭砂[酷我]",
+            "title": "哭砂",
+            "singer": "张惠妹",
+            "query": "哭砂 张惠妹"
+        },
+        {
+            "n": 1,
+            "raw_title": "盛夏的果实-《爱情风暴美丽99》电视剧插曲|《北极光》国语版[酷我]",
+            "title": "盛夏的果实-《爱情风暴美丽99》电视剧插曲|《北极光》国语版",
+            "singer": "莫文蔚",
+            "query": "盛夏的果实 莫文蔚"
+        },
+        {
+            "n": 1,
+            "raw_title": "你的样子[酷我]",
+            "title": "你的样子",
+            "singer": "林志炫",
+            "query": "你的样子 林志炫"
+        },
+        {
+            "n": 1,
+            "raw_title": "终于明白-《仙剑奇侠传》电视剧主题曲[酷我]",
+            "title": "终于明白-《仙剑奇侠传》电视剧主题曲",
+            "singer": "动力火车",
+            "query": "终于明白 动力火车"
+        },
+        {
+            "n": 1,
+            "raw_title": "太傻(国语版)[酷我]",
+            "title": "太傻(国语版)",
+            "singer": "巫启贤",
+            "query": "太傻 巫启贤"
+        },
+        {
+            "n": 1,
+            "raw_title": "独角戏[酷我]",
+            "title": "独角戏",
+            "singer": "许茹芸",
+            "query": "独角戏 许茹芸"
+        },
+        {
+            "n": 1,
+            "raw_title": "等一分钟[酷我]",
+            "title": "等一分钟",
+            "singer": "徐誉滕",
+            "query": "等一分钟 徐誉滕"
+        },
+        {
+            "n": 1,
+            "raw_title": "记事本-选自“我的秘密花园2”[酷我]",
+            "title": "记事本-选自“我的秘密花园2”",
+            "singer": "陈慧琳",
+            "query": "记事本 陈慧琳"
+        },
+        {
+            "n": 1,
+            "raw_title": "冷酷到底[酷我]",
+            "title": "冷酷到底",
+            "singer": "羽泉",
+            "query": "冷酷到底 羽泉"
+        },
+        {
+            "n": 1,
+            "raw_title": "那些花儿[酷我]",
+            "title": "那些花儿",
+            "singer": "朴树",
+            "query": "那些花儿 朴树"
+        },
+        {
+            "n": 1,
+            "raw_title": "心似狂潮-《少林武王》电视剧主题曲[酷我]",
+            "title": "心似狂潮-《少林武王》电视剧主题曲",
+            "singer": "羽泉",
+            "query": "心似狂潮 羽泉"
+        },
+        {
+            "n": 1,
+            "raw_title": "手放开[酷我]",
+            "title": "手放开",
+            "singer": "李圣杰",
+            "query": "手放开 李圣杰"
+        },
+        {
+            "n": 1,
+            "raw_title": "十年-《明年今日》国语版|《隐婚男女》电影插曲|《摆渡人》电影插曲[酷我]",
+            "title": "十年-《明年今日》国语版|《隐婚男女》电影插曲|《摆渡人》电影插曲",
+            "singer": "陈奕迅",
+            "query": "十年 陈奕迅"
+        },
+        {
+            "n": 1,
+            "raw_title": "想太多-《原来我不帅》电视剧插曲[酷我]",
+            "title": "想太多-《原来我不帅》电视剧插曲",
+            "singer": "李玖哲",
+            "query": "想太多 李玖哲"
+        },
+        {
+            "n": 1,
+            "raw_title": "太多-《乌龙闯情关》电视剧片尾曲|《穿越时空的爱恋》电视剧片头曲|《新蜀山剑侠》电视剧主题曲|《女人汤》电视剧主题曲[酷我]",
+            "title": "太多-《乌龙闯情关》电视剧片尾曲|《穿越时空的爱恋》电视剧片头曲|《新蜀山剑侠》电视剧主题曲|《女人汤》电视剧主题曲",
+            "singer": "陈冠蒲",
+            "query": "太多 陈冠蒲"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱情转移-《爱情呼叫转移》电影主题曲|《富士山下》国语版[酷我]",
+            "title": "爱情转移-《爱情呼叫转移》电影主题曲|《富士山下》国语版",
+            "singer": "陈奕迅",
+            "query": "爱情转移 陈奕迅"
+        },
+        {
+            "n": 1,
+            "raw_title": "最远的你是我最近的爱[酷我]",
+            "title": "最远的你是我最近的爱",
+            "singer": "车继铃",
+            "query": "最远的你是我最近的爱 车继铃"
+        },
+        {
+            "n": 1,
+            "raw_title": "一言难尽[酷我]",
+            "title": "一言难尽",
+            "singer": "张宇",
+            "query": "一言难尽 张宇"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱我的人和我爱的人[酷我]",
+            "title": "爱我的人和我爱的人",
+            "singer": "迪克牛仔",
+            "query": "爱我的人和我爱的人 迪克牛仔"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱就爱了[酷我]",
+            "title": "爱就爱了",
+            "singer": "陈琳",
+            "query": "爱就爱了 陈琳"
+        },
+        {
+            "n": 1,
+            "raw_title": "擦肩而过[酷我]",
+            "title": "擦肩而过",
+            "singer": "宇桐非&胡雯",
+            "query": "擦肩而过 宇桐非 / 胡雯"
+        },
+        {
+            "n": 1,
+            "raw_title": "爱死了昨天[酷我]",
+            "title": "爱死了昨天",
+            "singer": "李慧珍",
+            "query": "爱死了昨天 李慧珍"
+        },
+        {
+            "n": 1,
+            "raw_title": "电台情歌[酷我]",
+            "title": "电台情歌",
+            "singer": "莫文蔚",
+            "query": "电台情歌 莫文蔚"
+        },
+        {
+            "n": 1,
+            "raw_title": "曾经最美-《水晶之恋》电视剧主题曲[酷我]",
+            "title": "曾经最美-《水晶之恋》电视剧主题曲",
+            "singer": "朱铭捷",
+            "query": "曾经最美 朱铭捷"
+        },
+        {
+            "n": 1,
+            "raw_title": "想起-《喜气洋洋猪八戒》电视剧插曲|《福星高照猪八戒》电视剧第一单元插曲|《愤怒的蝴蝶》电视剧片头曲[酷我]",
+            "title": "想起-《喜气洋洋猪八戒》电视剧插曲|《福星高照猪八戒》电视剧第一单元插曲|《愤怒的蝴蝶》电视剧片头曲",
+            "singer": "韩雪",
+            "query": "想起 韩雪"
+        },
+        {
+            "n": 1,
+            "raw_title": "最真的梦[酷我]",
+            "title": "最真的梦",
+            "singer": "周华健",
+            "query": "最真的梦 周华健"
+        },
+        {
+            "n": 1,
+            "raw_title": "伤心太平洋-《神雕侠侣》电视剧片尾曲|《路边野餐》电影插曲[酷我]",
+            "title": "伤心太平洋-《神雕侠侣》电视剧片尾曲|《路边野餐》电影插曲",
+            "singer": "任贤齐",
+            "query": "伤心太平洋 任贤齐"
+        },
+        {
+            "n": 1,
+            "raw_title": "寂寞沙洲冷[酷我]",
+            "title": "寂寞沙洲冷",
+            "singer": "周传雄",
+            "query": "寂寞沙洲冷 周传雄"
+        },
+        {
+            "n": 1,
+            "raw_title": "放手去爱-《落地请开手机》插曲[酷我]",
+            "title": "放手去爱-《落地请开手机》插曲",
+            "singer": "迪克牛仔",
+            "query": "放手去爱 迪克牛仔"
+        },
+        {
+            "n": 1,
+            "raw_title": "分飞[酷我]",
+            "title": "分飞",
+            "singer": "徐怀钰",
+            "query": "分飞 徐怀钰"
+        }
+    ],
+    "NEW_TEST": [
+        {
+            "n": 1,
+            "raw_title": "Sway[酷我]",
+            "title": "Sway",
+            "singer": "Syn Cole&Nevve",
+            "query": "Sway Syn Cole / Nevve"
+        },
+        {
+            "n": 1,
+            "raw_title": "Hunted[酷我]",
+            "title": "Hunted",
+            "singer": "Jonny Rose&TwoThirds&Priority One",
+            "query": "Hunted TwoThirds / Jonny Rose / Priority One"
+        },
+        {
+            "n": 1,
+            "raw_title": "Hotter Than My Exes[酷我]",
+            "title": "Hotter Than My Exes",
+            "singer": "BEAUZ&David Shane&杨约翰",
+            "query": "Hotter Than My Exes BEAUZ / David Shane / 杨约翰"
+        },
+        {
+            "n": 1,
+            "raw_title": "Shooting Stars[酷我]",
+            "title": "Shooting Stars",
+            "singer": "Bag Raiders",
+            "query": "Shooting Stars Bag Raiders"
+        },
+        {
+            "n": 1,
+            "raw_title": "Fatal Love[酷我]",
+            "title": "Fatal Love",
+            "singer": "Jori King",
+            "query": "Fatal Love Jori King"
+        },
+        {
+            "n": 1,
+            "raw_title": "叹[酷我]",
+            "title": "叹",
+            "singer": "黄龄&Tăng Duy Tân",
+            "query": "叹 黄龄 / Tăng Duy Tân"
+        },
+        {
+            "n": 1,
+            "raw_title": "2022[酷我]",
+            "title": "2022",
+            "singer": "Panta.Q",
+            "query": "2022 Panta.Q"
+        },
+        {
+            "n": 1,
+            "raw_title": "Illusion[酷我]",
+            "title": "Illusion",
+            "singer": "Matilda",
+            "query": "Illusion Matilda"
+        },
+        {
+            "n": 1,
+            "raw_title": "All My People[酷我]",
+            "title": "All My People",
+            "singer": "Alexandra Stan&Manilla Maniacs",
+            "query": "All My People Alexandra Stan / Manilla Maniacs"
+        },
+        {
+            "n": 1,
+            "raw_title": "Last Regret[酷我]",
+            "title": "Last Regret",
+            "singer": "Alva Gracia&Hoop Records",
+            "query": "Last Regret Alva Gracia / Hoop Records"
+        },
+        {
+            "n": 1,
+            "raw_title": "I Like It[酷我]",
+            "title": "I Like It",
+            "singer": "Sebastian Mateo&Dexum",
+            "query": "I Like It Sebastian Mateo / Dexum"
+        },
+        {
+            "n": 1,
+            "raw_title": "Lightning Moment feat.fox capture plan[酷我]",
+            "title": "Lightning Moment feat.fox capture plan",
+            "singer": "DJ OKAWARI&fox capture plan",
+            "query": "Lightning Moment feat.fox capture plan DJ OKAWARI / fox capture plan"
+        },
+        {
+            "n": 1,
+            "raw_title": "NIGHT DANCER[酷我]",
+            "title": "NIGHT DANCER",
+            "singer": "imase",
+            "query": "NIGHT DANCER imase"
+        },
+        {
+            "n": 1,
+            "raw_title": "This Feeling[酷我]",
+            "title": "This Feeling",
+            "singer": "my!lane&Ivan Kurdiumov",
+            "query": "This Feeling (Explicit) my!lane / Ivan Kurdiumov"
+        },
+        {
+            "n": 1,
+            "raw_title": "Showdown[酷我]",
+            "title": "Showdown",
+            "singer": "F.O.O.L",
+            "query": "Showdown F.O.O.L"
+        },
+        {
+            "n": 1,
+            "raw_title": "Go Like[酷我]",
+            "title": "Go Like",
+            "singer": "Fox Stevenson",
+            "query": "Go Like (D&B Remix) Fox Stevenson"
+        },
+        {
+            "n": 1,
+            "raw_title": "Colour[酷我]",
+            "title": "Colour",
+            "singer": "Marshmello",
+            "query": "Colour Marshmello"
+        },
+        {
+            "n": 1,
+            "raw_title": "抉择[酷我]",
+            "title": "抉择",
+            "singer": "Powerful_K",
+            "query": "抉择 Powerful_K"
+        },
+        {
+            "n": 1,
+            "raw_title": "Clown[酷我]",
+            "title": "Clown",
+            "singer": "PelicanTone",
+            "query": "Clown PelicanTone"
+        },
+        {
+            "n": 1,
+            "raw_title": "青涩[酷我]",
+            "title": "青涩",
+            "singer": "Powerful_K",
+            "query": "青涩 Powerful_K"
+        },
+        {
+            "n": 1,
+            "raw_title": "ILY[酷我]",
+            "title": "ILY",
+            "singer": "Panda Eyes",
+            "query": "ILY Panda Eyes"
+        },
+        {
+            "n": 1,
+            "raw_title": "Lanterns[酷我]",
+            "title": "Lanterns",
+            "singer": "Xomu",
+            "query": "Lanterns Xomu"
+        },
+        {
+            "n": 1,
+            "raw_title": "Iron Princess[酷我]",
+            "title": "Iron Princess",
+            "singer": "Xomu&Hyp3rLaps3",
+            "query": "Iron Princess Xomu / Hyp3rLaps3"
+        },
+        {
+            "n": 1,
+            "raw_title": "We Won't Be Alone[酷我]",
+            "title": "We Won't Be Alone",
+            "singer": "Laura Brehm&Feint",
+            "query": "We Won't Be Alone Feint / Laura Brehm"
+        },
+        {
+            "n": 1,
+            "raw_title": "Grievous Lady -nothing is but what is not-[酷我]",
+            "title": "Grievous Lady -nothing is but what is not-",
+            "singer": "Various Artists&Laur&Team Grimoire",
+            "query": "Grievous Lady -nothing is but what is not- Various Artists / Laur / Team Grimoire"
+        },
+        {
+            "n": 1,
+            "raw_title": "Celestial[酷我]",
+            "title": "Celestial",
+            "singer": "Egzod&Aotu",
+            "query": "Celestial Egzod / Aotu"
+        },
+        {
+            "n": 1,
+            "raw_title": "Sunny day[酷我]",
+            "title": "Sunny day",
+            "singer": "徐梦圆",
+            "query": "Sunny day 徐梦圆"
+        },
+        {
+            "n": 1,
+            "raw_title": "Perfume![酷我]",
+            "title": "Perfume!",
+            "singer": "Fusq",
+            "query": "Perfume! Fusq"
+        },
+        {
+            "n": 1,
+            "raw_title": "Let Me Know[酷我]",
+            "title": "Let Me Know",
+            "singer": "习谱予&文颖秋",
+            "query": "Let Me Know 习谱予 / 文颖秋"
+        },
+        {
+            "n": 1,
+            "raw_title": "Differences (0.8X）[酷我]",
+            "title": "Differences (0.8X）",
+            "singer": "XXXCR3&Kiiiu_",
+            "query": "Differences (0.8x版) XXXCR3 / Kiiiu_"
+        },
+        {
+            "n": 1,
+            "raw_title": "Luv Drunk[酷我]",
+            "title": "Luv Drunk",
+            "singer": "Snoop Dogg&The-Dream",
+            "query": "luv(drunk) Conro"
+        },
+        {
+            "n": 1,
+            "raw_title": "Explorers[酷我]",
+            "title": "Explorers",
+            "singer": "Hinkik",
+            "query": "Explorers Hinkik"
+        },
+        {
+            "n": 1,
+            "raw_title": "neon lamp[酷我]",
+            "title": "neon lamp",
+            "singer": "skurass",
+            "query": "neon lamp skurass"
+        },
+        {
+            "n": 1,
+            "raw_title": "Pearlescent[酷我]",
+            "title": "Pearlescent",
+            "singer": "EnV",
+            "query": "Pearlescent ENV"
+        },
+        {
+            "n": 1,
+            "raw_title": "Fly[酷我]",
+            "title": "Fly",
+            "singer": "Kirara Magic",
+            "query": "Fly Kirara Magic"
+        },
+        {
+            "n": 1,
+            "raw_title": "lain[酷我]",
+            "title": "lain",
+            "singer": "C4FF31N3",
+            "query": "lain (DJ版) C4FF31N3"
+        },
+        {
+            "n": 1,
+            "raw_title": "New World[酷我]",
+            "title": "New World",
+            "singer": "Hoaprox&Rogue",
+            "query": "New World Hoaprox / Rogue"
+        },
+        {
+            "n": 1,
+            "raw_title": "Alone[酷我]",
+            "title": "Alone",
+            "singer": "Maduk&Marianna Ray",
+            "query": "Alone Maduk / Marianna Ray"
+        },
+        {
+            "n": 1,
+            "raw_title": "The Feels(feat. Alex Newell)[酷我]",
+            "title": "The Feels(feat. Alex Newell)",
+            "singer": "Cash Cash&Alex Newell",
+            "query": "The Feels(feat. Alex Newell) Cash Cash / Alex Newell"
+        },
+        {
+            "n": 1,
+            "raw_title": "Let's Go[酷我]",
+            "title": "Let's Go",
+            "singer": "Full Trunk",
+            "query": "Let's Go (Explicit) Full Trunk"
+        },
+        {
+            "n": 1,
+            "raw_title": "Night Cruising[酷我]",
+            "title": "Night Cruising",
+            "singer": "DreamSky",
+            "query": "Night Cruising (夜间巡航) 牛尾憲輔 (agraph)"
+        },
+        {
+            "n": 1,
+            "raw_title": "True Stories[酷我]",
+            "title": "True Stories",
+            "singer": "Axero",
+            "query": "True Stories (Original Mix) Axero"
+        },
+        {
+            "n": 1,
+            "raw_title": "Hey Hey[酷我]",
+            "title": "Hey Hey",
+            "singer": "Full Trunk",
+            "query": "Hey Hey Full Trunk"
+        },
+        {
+            "n": 1,
+            "raw_title": "Chrono[酷我]",
+            "title": "Chrono",
+            "singer": "Kirara Magic",
+            "query": "Chrono Kirara Magic"
+        },
+        {
+            "n": 1,
+            "raw_title": "Phonky Tribu[酷我]",
+            "title": "Phonky Tribu",
+            "singer": "Funk Tribu",
+            "query": "Phonky Tribu Funk Tribu"
+        },
+        {
+            "n": 1,
+            "raw_title": "Valhalla[酷我]",
+            "title": "Valhalla",
+            "singer": "Xomu&Retrograde",
+            "query": "Valhalla Xomu / Retrograde"
+        },
+        {
+            "n": 1,
+            "raw_title": "Lynx[酷我]",
+            "title": "Lynx",
+            "singer": "ELE SHEEP",
+            "query": "Lynx ELE SHEEP"
+        },
+        {
+            "n": 1,
+            "raw_title": "Axium Crisis[酷我]",
+            "title": "Axium Crisis",
+            "singer": "Various Artists&ak+q",
+            "query": "Axium Crisis Various Artists / ak+q"
+        },
+        {
+            "n": 1,
+            "raw_title": "Kronos[酷我]",
+            "title": "Kronos",
+            "singer": "Sakuzyo",
+            "query": "Kronos 削除 (Sakuzyo)"
+        },
+        {
+            "n": 1,
+            "raw_title": "Paladin[酷我]",
+            "title": "Paladin",
+            "singer": "ENV",
+            "query": "Paladin ENV"
+        },
+        {
+            "n": 1,
+            "raw_title": "Ghost Break[酷我]",
+            "title": "Ghost Break",
+            "singer": "Empty",
+            "query": "Ghost Break Empty"
+        },
+        {
+            "n": 1,
+            "raw_title": "METAMORPHOSIS[酷我]",
+            "title": "METAMORPHOSIS",
+            "singer": "INTERWORLD&IVAN BELOZEROV",
+            "query": "METAMORPHOSIS (Sped Up|Explicit) INTERWORLD / IVAN BELOZEROV"
+        },
+        {
+            "n": 1,
+            "raw_title": "Lumina[酷我]",
+            "title": "Lumina",
+            "singer": "Wisp X&Xomu",
+            "query": "Lumina Wisp X / Xomu"
+        },
+        {
+            "n": 1,
+            "raw_title": "Supersonic[酷我]",
+            "title": "Supersonic",
+            "singer": "Rob Gasser",
+            "query": "Supersonic Rob Gasser"
+        },
+        {
+            "n": 1,
+            "raw_title": "Moonlight[酷我]",
+            "title": "Moonlight",
+            "singer": "Geoxor",
+            "query": "Moonlight Geoxor"
+        },
+        {
+            "n": 1,
+            "raw_title": "One Piece Epic Battle[酷我]",
+            "title": "One Piece Epic Battle",
+            "singer": "有点Fun",
+            "query": "One Piece Epic Battle 高梨康治 (たかなし やすはる)"
+        },
+        {
+            "n": 1,
+            "raw_title": "Memes[酷我]",
+            "title": "Memes",
+            "singer": "NIVIRO",
+            "query": "Memes NIVIRO"
+        },
+        {
+            "n": 1,
+            "raw_title": "Cyberpunk[酷我]",
+            "title": "Cyberpunk",
+            "singer": "Demon-K",
+            "query": "Cyberpunk Demon-K"
+        },
+        {
+            "n": 1,
+            "raw_title": "Triumph[酷我]",
+            "title": "Triumph",
+            "singer": "WRLD",
+            "query": "Triumph WRLD"
+        },
+        {
+            "n": 1,
+            "raw_title": "濒日遗地[酷我]",
+            "title": "濒日遗地",
+            "singer": "Powerful_K",
+            "query": "濒日遗地 Powerful_K"
+        },
+        {
+            "n": 1,
+            "raw_title": "殉道之人[酷我]",
+            "title": "殉道之人",
+            "singer": "塞壬唱片-MSR&Erik Castro",
+            "query": "殉道之人 塞壬唱片-MSR / Erik Castro"
+        },
+        {
+            "n": 1,
+            "raw_title": "Harmonics[酷我]",
+            "title": "Harmonics",
+            "singer": "雄之助&Circus-P&GUMI&巡音ルカ",
+            "query": "Harmonics 雄之助 / Circus-P / GUMI (グミ) / 巡音流歌 (巡音ルカ)"
+        },
+        {
+            "n": 1,
+            "raw_title": "Zombies on Your Lawn[酷我]",
+            "title": "Zombies on Your Lawn",
+            "singer": "Laura Shigihara",
+            "query": "Zombies on Your Lawn Laura Shigihara"
+        },
+        {
+            "n": 1,
+            "raw_title": "Frontier[酷我]",
+            "title": "Frontier",
+            "singer": "Krale&Jasmina Lin&Jay Christopher",
+            "query": "Frontier Krale / Jasmina Lin / Jay Christopher"
+        },
+        {
+            "n": 1,
+            "raw_title": "Moonfunk[酷我]",
+            "title": "Moonfunk",
+            "singer": "Ellis",
+            "query": "Moonfunk Ellis"
+        },
+        {
+            "n": 1,
+            "raw_title": "What Is Love[酷我]",
+            "title": "What Is Love",
+            "singer": "Haddaway",
+            "query": "What is Love Haddaway"
+        },
+        {
+            "n": 1,
+            "raw_title": "Our Road[酷我]",
+            "title": "Our Road",
+            "singer": "Axero&Vexento",
+            "query": "Our Road Axero / Vexento"
+        },
+        {
+            "n": 1,
+            "raw_title": "Error Code[酷我]",
+            "title": "Error Code",
+            "singer": "Case & Point",
+            "query": "Error Code Case & Point"
+        },
+        {
+            "n": 1,
+            "raw_title": "Lay It All on Me(feat. Ed Sheeran)-2016年维多利亚的秘密泳装秀秀场音乐[酷我]",
+            "title": "Lay It All on Me(feat. Ed Sheeran)-2016年维多利亚的秘密泳装秀秀场音乐",
+            "singer": "Rudimental&Ed Sheeran",
+            "query": "All On Me Case & Point / Gamble & Burke"
+        },
+        {
+            "n": 1,
+            "raw_title": "kieroOov[酷我]",
+            "title": "kieroOov",
+            "singer": "Dxniel Idk",
+            "query": "kieroOov (Explicit) Dxniel Idk"
+        },
+        {
+            "n": 1,
+            "raw_title": "CRYSTALS (slowed)[酷我]",
+            "title": "CRYSTALS (slowed)",
+            "singer": "PR1SVX",
+            "query": "CRYSTALS (Slowed) PR1SVX"
+        },
+        {
+            "n": 1,
+            "raw_title": "CRYSTALS[酷我]",
+            "title": "CRYSTALS",
+            "singer": "PR1SVX",
+            "query": "CRYSTALS PR1SVX"
+        },
+        {
+            "n": 1,
+            "raw_title": "BiBiC HEART[酷我]",
+            "title": "BiBiC HEART",
+            "singer": "MYUKKE.",
+            "query": "BiBiC HEART MYUKKE."
+        },
+        {
+            "n": 1,
+            "raw_title": "2021 End Of The Year Mix[酷我]",
+            "title": "2021 End Of The Year Mix",
+            "singer": "Vicetone",
+            "query": "2021 End Of The Year Mix (DJ版) Vicetone"
+        },
+        {
+            "n": 1,
+            "raw_title": "COLD TEARS[酷我]",
+            "title": "COLD TEARS",
+            "singer": "NUEKI&TOLCHONOV",
+            "query": "COLD TEARS (Explicit) NUEKI / TOLCHONOV"
+        },
+        {
+            "n": 1,
+            "raw_title": "Sky[酷我]",
+            "title": "Sky",
+            "singer": "Trifect",
+            "query": "Sky Trifect"
+        },
+        {
+            "n": 1,
+            "raw_title": "温柔[酷我]",
+            "title": "温柔",
+            "singer": "Powerful_K",
+            "query": "温柔 Powerful_K"
+        },
+        {
+            "n": 1,
+            "raw_title": "Aloha[酷我]",
+            "title": "Aloha",
+            "singer": "Møme&Merryn Jeann",
+            "query": "Aloha Møme / Merryn Jeann"
+        },
+        {
+            "n": 1,
+            "raw_title": "What's With The Roses[酷我]",
+            "title": "What's With The Roses",
+            "singer": "NOTD&Kiiara",
+            "query": "What's With The Roses (Explicit) NOTD / Kiiara"
+        },
+        {
+            "n": 1,
+            "raw_title": "Index[酷我]",
+            "title": "Index",
+            "singer": "Kirara Magic",
+            "query": "Index Kirara Magic"
+        },
+        {
+            "n": 1,
+            "raw_title": "Vampire[酷我]",
+            "title": "Vampire",
+            "singer": "Kirara Magic",
+            "query": "Vampire Kirara Magic"
+        },
+        {
+            "n": 1,
+            "raw_title": "Overflow (feat. Helen Tess)[酷我]",
+            "title": "Overflow (feat. Helen Tess)",
+            "singer": "smle&Helen Tess",
+            "query": "Overflow (feat. Helen Tess) smle / Helen Tess"
+        },
+        {
+            "n": 1,
+            "raw_title": "specialist[酷我]",
+            "title": "specialist",
+            "singer": "アトラスサウンドチーム",
+            "query": "specialist (专家) アトラスサウンドチーム"
+        },
+        {
+            "n": 1,
+            "raw_title": "Substitution[酷我]",
+            "title": "Substitution",
+            "singer": "Purple Disco Machine&Kungs&Julian Perretta",
+            "query": "Substitution Purple Disco Machine / Kungs / Julian Perretta"
+        },
+        {
+            "n": 1,
+            "raw_title": "lll Do lt(Reverb[酷我]",
+            "title": "lll Do lt(Reverb",
+            "singer": "HLHS",
+            "query": "lll Do lt(Reverb (Reverb Slowed) HLHS"
+        },
+        {
+            "n": 1,
+            "raw_title": "卓别林[酷我]",
+            "title": "卓别林",
+            "singer": "忘不掉的你",
+            "query": "卓别林 忘不掉的你"
+        },
+        {
+            "n": 1,
+            "raw_title": "GoneBad (乡村Phonk）[酷我]",
+            "title": "GoneBad (乡村Phonk）",
+            "singer": "VodKe&HSHK&人面兽心&花凯",
+            "query": "GoneBad (乡村Phonk） VodKe / HSHK / 人面兽心 / 花凯"
+        },
+        {
+            "n": 1,
+            "raw_title": "Aria Math[酷我]",
+            "title": "Aria Math",
+            "singer": "bxkq&Hardx",
+            "query": "Aria Math bxkq / Hardx"
+        },
+        {
+            "n": 1,
+            "raw_title": "Peace Peace[酷我]",
+            "title": "Peace Peace",
+            "singer": "Trifect",
+            "query": "Peace Peace Trifect"
+        },
+        {
+            "n": 1,
+            "raw_title": "Ghost of My Past[酷我]",
+            "title": "Ghost of My Past",
+            "singer": "Vicetone&Emily Falvey",
+            "query": "Ghost of My Past Vicetone / Emily Falvey"
+        },
+        {
+            "n": 1,
+            "raw_title": "Dota 2 the Fat Rat Origin Reprise[酷我]",
+            "title": "Dota 2 the Fat Rat Origin Reprise",
+            "singer": "Lullaby Legends",
+            "query": "Origin (Inst.) TheFatRat"
+        },
+        {
+            "n": 1,
+            "raw_title": "Sweet Potatoe[酷我]",
+            "title": "Sweet Potatoe",
+            "singer": "Sparflex&JohnJohn",
+            "query": "Sweet Potatoe Sparflex / JohnJohn"
+        },
+        {
+            "n": 1,
+            "raw_title": "Watch Out[酷我]",
+            "title": "Watch Out",
+            "singer": "Various Artists",
+            "query": "Watch Out (Main Track|Full Length) Various Artists"
+        },
+        {
+            "n": 1,
+            "raw_title": "画离弦[酷我]",
+            "title": "画离弦",
+            "singer": "柯柯柯啊",
+            "query": "画离弦 (柯柯吉他版) 柯柯柯啊"
+        },
+        {
+            "n": 1,
+            "raw_title": "Made For You[酷我]",
+            "title": "Made For You",
+            "singer": "Joakim Lundell",
+            "query": "Made For You Joakim Lundell"
+        },
+        {
+            "n": 1,
+            "raw_title": "Together[酷我]",
+            "title": "Together",
+            "singer": "ALisa",
+            "query": "Together ALisa"
+        },
+        {
+            "n": 1,
+            "raw_title": "Louder Now[酷我]",
+            "title": "Louder Now",
+            "singer": "Tobu",
+            "query": "Louder Now Tobu"
+        },
+        {
+            "n": 1,
+            "raw_title": "Runaway Baby-《这！就是街舞》第十期背景音乐[酷我]",
+            "title": "Runaway Baby-《这！就是街舞》第十期背景音乐",
+            "singer": "Bruno Mars",
+            "query": "Runaway Baby Bruno Mars"
+        },
+        {
+            "n": 1,
+            "raw_title": "Freak On[酷我]",
+            "title": "Freak On",
+            "singer": "Charming Horses&Karlyn",
+            "query": "Freak On (Radio Edit) Charming Horses / Karlyn"
+        },
+        {
+            "n": 1,
+            "raw_title": "Invincible[酷我]",
+            "title": "Invincible",
+            "singer": "Borgeous",
+            "query": "Invincible (Original Mix) Borgeous"
+        },
+        {
+            "n": 1,
+            "raw_title": "Fading Wind[酷我]",
+            "title": "Fading Wind",
+            "singer": "Feint",
+            "query": "Fading Wind Feint"
+        },
+        {
+            "n": 1,
+            "raw_title": "KICK BACK[酷我]",
+            "title": "KICK BACK",
+            "singer": "米津玄師",
+            "query": "KICK BACK 米津玄師 (よねづ けんし)"
+        },
+        {
+            "n": 1,
+            "raw_title": "Steps[酷我]",
+            "title": "Steps",
+            "singer": "Krimsonn",
+            "query": "Steps Krimsonn"
+        },
+        {
+            "n": 1,
+            "raw_title": "Alex Skrindo-Ease-Shots[酷我]",
+            "title": "Alex Skrindo-Ease-Shots",
+            "singer": "DJ Bmaster",
+            "query": "Ease (Alex Skrindo - Ease) Alex Skrindo"
+        },
+        {
+            "n": 1,
+            "raw_title": "Cruel Summer (cover: Taylor Swift)[酷我]",
+            "title": "Cruel Summer (cover: Taylor Swift)",
+            "singer": "DeeR泰勒",
+            "query": "Taylor Swift DeeR泰勒"
+        },
+        {
+            "n": 1,
+            "raw_title": "Future House Megalovania[酷我]",
+            "title": "Future House Megalovania",
+            "singer": "Magentium",
+            "query": "Future House Megalovania Magentium"
+        },
+        {
+            "n": 1,
+            "raw_title": "Party Nation[酷我]",
+            "title": "Party Nation",
+            "singer": "터보트로닉",
+            "query": "Party Nation Turbotronic (터보트로닉)"
+        },
+        {
+            "n": 1,
+            "raw_title": "Hollaback Girl[酷我]",
+            "title": "Hollaback Girl",
+            "singer": "Gwen Stefani",
+            "query": "Hollaback Girl (Oja Tunes Remix) Gwen Stefani"
+        },
+        {
+            "n": 1,
+            "raw_title": "Dancing Machine[酷我]",
+            "title": "Dancing Machine",
+            "singer": "터보트로닉",
+            "query": "Dancing Machine Turbotronic (터보트로닉)"
+        },
+        {
+            "n": 1,
+            "raw_title": "高街卡拍[酷我]",
+            "title": "高街卡拍",
+            "singer": "季雯雯",
+            "query": "高街卡拍 季雯雯"
+        },
+        {
+            "n": 1,
+            "raw_title": "Be Okay (feat. Andrew Harris)[酷我]",
+            "title": "Be Okay (feat. Andrew Harris)",
+            "singer": "Axero&Andrew Harris",
+            "query": "Be Okay (feat. Andrew Harris) Axero / Andrew Harris"
+        },
+        {
+            "n": 1,
+            "raw_title": "Rescue Me(feat. A Day To Remember)[酷我]",
+            "title": "Rescue Me(feat. A Day To Remember)",
+            "singer": "Marshmello&A Day To Remember",
+            "query": "Rescue Me(feat. A Day To Remember) Marshmello / A Day To Remember"
+        },
+        {
+            "n": 1,
+            "raw_title": "NO ONE YES MAN[酷我]",
+            "title": "NO ONE YES MAN",
+            "singer": "MYUKKE.",
+            "query": "NO ONE YES MAN MYUKKE."
+        },
+        {
+            "n": 1,
+            "raw_title": "Even LA[酷我]",
+            "title": "Even LA",
+            "singer": "Snareskin&Twan Ray",
+            "query": "Even LA Snareskin / Twan Ray"
+        },
+        {
+            "n": 1,
+            "raw_title": "Firefly[酷我]",
+            "title": "Firefly",
+            "singer": "BEAUZ&Ameria",
+            "query": "Firefly Ameria / BEAUZ"
+        },
+        {
+            "n": 1,
+            "raw_title": "INTRO[酷我]",
+            "title": "INTRO",
+            "singer": "IAMTRA$H",
+            "query": "INTRO IAMTRA$H"
+        },
+        {
+            "n": 1,
+            "raw_title": "What The Night Holds[酷我]",
+            "title": "What The Night Holds",
+            "singer": "Jay Eskar&Rentz&AXYL",
+            "query": "What The Night Holds Jay Eskar / Rentz / AXYL"
+        },
+        {
+            "n": 1,
+            "raw_title": "No Rival[酷我]",
+            "title": "No Rival",
+            "singer": "Egzod&Maestro Chives&Alaina Cross",
+            "query": "No Rival Egzod / Maestro Chives / Alaina Cross"
+        },
+        {
+            "n": 1,
+            "raw_title": "Lynx[酷我]",
+            "title": "Lynx",
+            "singer": "Brooks",
+            "query": "Lynx Brooks"
+        },
+        {
+            "n": 1,
+            "raw_title": "Nobody Like You[酷我]",
+            "title": "Nobody Like You",
+            "singer": "Deorro&Lost Boy",
+            "query": "Nobody Like You Deorro / Lost Boy"
+        },
+        {
+            "n": 1,
+            "raw_title": "夜行的阳光[酷我]",
+            "title": "夜行的阳光",
+            "singer": "武言圣",
+            "query": "夜行的阳光 武言圣"
+        },
+        {
+            "n": 1,
+            "raw_title": "Crying At Eleven O`Clock[酷我]",
+            "title": "Crying At Eleven O`Clock",
+            "singer": "Powerful_K",
+            "query": "Crying At Eleven O`Clock Powerful_K"
+        },
+        {
+            "n": 1,
+            "raw_title": "Scattered[酷我]",
+            "title": "Scattered",
+            "singer": "Jamvana",
+            "query": "Scattered Jamvana"
+        },
+        {
+            "n": 1,
+            "raw_title": "Thaitsuki Roiyaru Sanmai Katana (Limited Ivory Edition)[酷我]",
+            "title": "Thaitsuki Roiyaru Sanmai Katana (Limited Ivory Edition)",
+            "singer": "DJ Vital Force",
+            "query": "Thaitsuki Roiyaru Sanmai Katana DJ Vital Force"
+        },
+        {
+            "n": 1,
+            "raw_title": "Intimate[酷我]",
+            "title": "Intimate",
+            "singer": "Crystal Castles",
+            "query": "Intimate Crystal Castles"
+        },
+        {
+            "n": 1,
+            "raw_title": "Partiality[酷我]",
+            "title": "Partiality",
+            "singer": "Narvent&OBLXKQ",
+            "query": "Partiality Narvent / OBLXKQ"
+        },
+        {
+            "n": 1,
+            "raw_title": "Superhero[酷我]",
+            "title": "Superhero",
+            "singer": "ILLENIUM&William Black&Alna",
+            "query": "Superhero ILLENIUM / William Black / Alna"
+        },
+        {
+            "n": 1,
+            "raw_title": "Hypnodancer[酷我]",
+            "title": "Hypnodancer",
+            "singer": "Little Big",
+            "query": "Hypnodancer Little Big"
+        },
+        {
+            "n": 1,
+            "raw_title": "I Need Love[酷我]",
+            "title": "I Need Love",
+            "singer": "DEBRIS&Justin Petti&Veronica Bravo",
+            "query": "I Need Love DEBRIS / Justin Petti / Veronica Bravo"
+        },
+        {
+            "n": 1,
+            "raw_title": "Skin 2 Skin[酷我]",
+            "title": "Skin 2 Skin",
+            "singer": "Diamond Pistols&Karra",
+            "query": "Skin 2 Skin Diamond Pistols / Karra"
+        },
+        {
+            "n": 1,
+            "raw_title": "梦想家の鱼[酷我]",
+            "title": "梦想家の鱼",
+            "singer": "Powerful_K",
+            "query": "梦想家の鱼 Powerful_K"
+        },
+        {
+            "n": 1,
+            "raw_title": "On My Own[酷我]",
+            "title": "On My Own",
+            "singer": "Panda Eyes",
+            "query": "On My Own (Original Mix) Panda Eyes"
+        },
+        {
+            "n": 1,
+            "raw_title": "Unchanged Mind[酷我]",
+            "title": "Unchanged Mind",
+            "singer": "Valentin",
+            "query": "Unchanged Mind Valentin (ヴァレンティン)"
+        },
+        {
+            "n": 1,
+            "raw_title": "as the light fades[酷我]",
+            "title": "as the light fades",
+            "singer": "a vow",
+            "query": "as the light fades a vow"
+        },
+        {
+            "n": 1,
+            "raw_title": "Мереке[酷我]",
+            "title": "Мереке",
+            "singer": "Various Artists&Дастан Оразбеков",
+            "query": "Мереке Various Artists / Дастан Оразбеков"
+        },
+        {
+            "n": 1,
+            "raw_title": "Grin[酷我]",
+            "title": "Grin",
+            "singer": "HyuN",
+            "query": "Grin HyuN"
+        },
+        {
+            "n": 1,
+            "raw_title": "Flicker[酷我]",
+            "title": "Flicker",
+            "singer": "Andora&Gweltaz Calori",
+            "query": "Flicker Andora / RANASOL / Gweltaz Calori / Matthew Clanton"
+        },
+        {
+            "n": 1,
+            "raw_title": "Colourful 2(Instrumental)[酷我]",
+            "title": "Colourful 2(Instrumental)",
+            "singer": "鹭起Herons&好多纯音乐",
+            "query": "Colourful 2 鹭起Herons / 好多纯音乐"
+        },
+        {
+            "n": 1,
+            "raw_title": "Phoenix[酷我]",
+            "title": "Phoenix",
+            "singer": "Netrum&Halvorsen",
+            "query": "Phoenix Netrum / Halvorsen"
+        },
+        {
+            "n": 1,
+            "raw_title": "Discord (feat. Eurobeat Brony)[酷我]",
+            "title": "Discord (feat. Eurobeat Brony)",
+            "singer": "The Living Tombstone&Eurobeat Brony",
+            "query": "Discord (feat. Eurobeat Brony) The Living Tombstone / Eurobeat Brony"
+        },
+        {
+            "n": 1,
+            "raw_title": "Song After Midnight (Song For Denise)[酷我]",
+            "title": "Song After Midnight (Song For Denise)",
+            "singer": "Bon Entendeur&Piano Fantasia",
+            "query": "Song After Midnight (Song For Denise) Bon Entendeur / Piano Fantasia"
+        },
+        {
+            "n": 1,
+            "raw_title": "Reverse (Alternate Take)[酷我]",
+            "title": "Reverse (Alternate Take)",
+            "singer": "Caravan Palace",
+            "query": "Reverse Caravan Palace"
+        },
+        {
+            "n": 1,
+            "raw_title": "Song for Denise[酷我]",
+            "title": "Song for Denise",
+            "singer": "Piano Fantasia",
+            "query": "Song for Denise (Wide Walking Version) Piano Fantasia"
+        },
+        {
+            "n": 1,
+            "raw_title": "mr. sunshine[酷我]",
+            "title": "mr. sunshine",
+            "singer": "Arden Jones",
+            "query": "mr. sunshine Arden Jones"
+        },
+        {
+            "n": 1,
+            "raw_title": "Dangerous[酷我]",
+            "title": "Dangerous",
+            "singer": "Olivia Addams",
+            "query": "Dangerous Olivia Addams"
+        },
+        {
+            "n": 1,
+            "raw_title": "Под луной （在月亮下）（x1.05）[酷我]",
+            "title": "Под луной （在月亮下）（x1.05）",
+            "singer": "SUNAMI",
+            "query": "Под луной （在月亮下）（x1.05） SUNAMI"
+        },
+        {
+            "n": 1,
+            "raw_title": "Come Into My World[酷我]",
+            "title": "Come Into My World",
+            "singer": "Alexandra Stan&NERVO",
+            "query": "Come Into My World Alexandra Stan / NERVO"
+        },
+        {
+            "n": 1,
+            "raw_title": "Good Girls in the Dark[酷我]",
+            "title": "Good Girls in the Dark",
+            "singer": "YENA (崔叡娜)",
+            "query": "Good Girls in the Dark YENA (崔叡娜)"
+        },
+        {
+            "n": 1,
+            "raw_title": "Iron Sky[酷我]",
+            "title": "Iron Sky",
+            "singer": "Tonebox&Rogue VHS",
+            "query": "Iron Sky Tonebox / Rogue VHS"
+        },
+        {
+            "n": 1,
+            "raw_title": "Rush[酷我]",
+            "title": "Rush",
+            "singer": "Syn Cole",
+            "query": "Rush Syn Cole"
+        },
+        {
+            "n": 1,
+            "raw_title": "Without It[酷我]",
+            "title": "Without It",
+            "singer": "Syn Cole&Novia Bachmid",
+            "query": "Without It Syn Cole / Novia Bachmid"
+        },
+        {
+            "n": 1,
+            "raw_title": "着魔[酷我]",
+            "title": "着魔",
+            "singer": "京仔",
+            "query": "着魔 京仔"
+        },
+        {
+            "n": 1,
+            "raw_title": "Hi 见到你真开心 (电子喵)[酷我]",
+            "title": "Hi 见到你真开心 (电子喵)",
+            "singer": "404Hz",
+            "query": "Hi 见到你真开心 (电子喵) 404Hz"
+        },
+        {
+            "n": 1,
+            "raw_title": "Loser[酷我]",
+            "title": "Loser",
+            "singer": "Ola&Ola Svensson&Kristofer Östergren&Jakob Erixon",
+            "query": "Loser Ola"
+        },
+        {
+            "n": 1,
+            "raw_title": "Forever[酷我]",
+            "title": "Forever",
+            "singer": "Plastic3",
+            "query": "Forever Plastic3"
+        },
+        {
+            "n": 1,
+            "raw_title": "Wrecking Ball[酷我]",
+            "title": "Wrecking Ball",
+            "singer": "Frankmusik",
+            "query": "Wrecking Ball Frankmusik"
+        },
+        {
+            "n": 1,
+            "raw_title": "(You Make The) Girls Go Wild![酷我]",
+            "title": "(You Make The) Girls Go Wild!",
+            "singer": "The Lips",
+            "query": "(You Make The) Girls Go Wild! (Hit Radio) The Lips"
+        },
+        {
+            "n": 1,
+            "raw_title": "On The Run (feat. Benj Heard)[酷我]",
+            "title": "On The Run (feat. Benj Heard)",
+            "singer": "Dance Cartel&Benj Heard",
+            "query": "On The Run (feat. Benj Heard) Dance Cartel / Benj Heard"
+        },
+        {
+            "n": 1,
+            "raw_title": "Kan R. Gao-Born a Stranger[酷我]",
+            "title": "Kan R. Gao-Born a Stranger",
+            "singer": "Unicorn",
+            "query": "Toby Fox / Kan R. Gao-DeltaTale (Probe remix) Probe"
+        },
+        {
+            "n": 1,
+            "raw_title": "Luv Letter (Wisp X Remix)-wispxremix[酷我]",
+            "title": "Luv Letter (Wisp X Remix)-wispxremix",
+            "singer": "DJ OKAWARI",
+            "query": "Luv Letter (情书) DJ OKAWARI"
+        },
+        {
+            "n": 1,
+            "raw_title": "Iris - Letter 信 钢琴曲 哄睡助眠纯音乐[酷我]",
+            "title": "Iris - Letter 信 钢琴曲 哄睡助眠纯音乐",
+            "singer": "谷玉",
+            "query": "Letter (信) iris"
+        },
+        {
+            "n": 1,
+            "raw_title": "Vagrant[酷我]",
+            "title": "Vagrant",
+            "singer": "Feint&Veela",
+            "query": "Vagrant Feint / Veela"
+        },
+        {
+            "n": 1,
+            "raw_title": "Telescope[酷我]",
+            "title": "Telescope",
+            "singer": "Tim Legend&Transviolet",
+            "query": "Telescope Tim Legend / Transviolet"
+        },
+        {
+            "n": 1,
+            "raw_title": "Geisha[酷我]",
+            "title": "Geisha",
+            "singer": "Dino Sor",
+            "query": "Geisha (LaSuite Mix) Dino Sor"
+        },
+        {
+            "n": 1,
+            "raw_title": "One Way Trip (2024)[酷我]",
+            "title": "One Way Trip (2024)",
+            "singer": "Axero&Lisa Moon",
+            "query": "One Way Trip (2024) Axero / Lisa Moon"
+        },
+        {
+            "n": 1,
+            "raw_title": "Chasers[酷我]",
+            "title": "Chasers",
+            "singer": "Bahari",
+            "query": "Chasers (Explicit) Bahari"
+        },
+        {
+            "n": 1,
+            "raw_title": "Frog (Super Slowed)[酷我]",
+            "title": "Frog (Super Slowed)",
+            "singer": "TXCHI",
+            "query": "Frog (Super Slowed) TXCHI"
+        },
+        {
+            "n": 1,
+            "raw_title": "Espresso[酷我]",
+            "title": "Espresso",
+            "singer": "Sabrina Carpenter",
+            "query": "Espresso (Explicit) Sabrina Carpenter"
+        },
+        {
+            "n": 1,
+            "raw_title": "Crush Confession[酷我]",
+            "title": "Crush Confession",
+            "singer": "Mona Lisa Heartfelt",
+            "query": "Crush Confession Mona Lisa Heartfelt"
+        },
+        {
+            "n": 1,
+            "raw_title": "MEGALO CLAMOUR[酷我]",
+            "title": "MEGALO CLAMOUR",
+            "singer": "PanPan",
+            "query": "MEGALO CLAMOUR PanPan"
+        },
+        {
+            "n": 1,
+            "raw_title": "MAYDAY[酷我]",
+            "title": "MAYDAY",
+            "singer": "TheFatRat&Laura Brehm",
+            "query": "MAYDAY TheFatRat / Laura Brehm"
+        },
+        {
+            "n": 1,
+            "raw_title": "Makes Me Wonder[酷我]",
+            "title": "Makes Me Wonder",
+            "singer": "Maroon 5",
+            "query": "Makes Me Wonder (Explicit) Maroon 5"
+        },
+        {
+            "n": 1,
+            "raw_title": "バケモノの唄[酷我]",
+            "title": "バケモノの唄",
+            "singer": "shino&初音ミク",
+            "query": "バケモノの唄 shino / 初音未来 (初音ミク)"
+        },
+        {
+            "n": 1,
+            "raw_title": "UNO[酷我]",
+            "title": "UNO",
+            "singer": "Little Big",
+            "query": "UNO Little Big"
+        },
+        {
+            "n": 1,
+            "raw_title": "Oh No![酷我]",
+            "title": "Oh No!",
+            "singer": "MARINA",
+            "query": "Oh No! MARINA"
+        },
+        {
+            "n": 1,
+            "raw_title": "Handful of Water[酷我]",
+            "title": "Handful of Water",
+            "singer": "Sofía Valdés",
+            "query": "Handful of Water Sofía Valdés"
+        },
+        {
+            "n": 1,
+            "raw_title": "The Innocent[酷我]",
+            "title": "The Innocent",
+            "singer": "AURORA",
+            "query": "The Innocent AURORA"
+        },
+        {
+            "n": 1,
+            "raw_title": "Play Date[酷我]",
+            "title": "Play Date",
+            "singer": "Melanie Martinez",
+            "query": "Play Date (Explicit) Melanie Martinez"
+        },
+        {
+            "n": 1,
+            "raw_title": "Somebody Like You[酷我]",
+            "title": "Somebody Like You",
+            "singer": "Vicetone&Lena Leon",
+            "query": "Somebody Like You Vicetone / Lena Leon"
+        },
+        {
+            "n": 1,
+            "raw_title": "Little Too Close[酷我]",
+            "title": "Little Too Close",
+            "singer": "WRLD&Veronika Redd",
+            "query": "Little Too Close WRLD / Veronika Redd"
+        },
+        {
+            "n": 1,
+            "raw_title": "Ambigue[酷我]",
+            "title": "Ambigue",
+            "singer": "BLADELXRD",
+            "query": "Ambigue BLADELXRD"
+        },
+        {
+            "n": 1,
+            "raw_title": "Ride It[酷我]",
+            "title": "Ride It",
+            "singer": "Jay Sean",
+            "query": "Ride It Jay Sean"
+        },
+        {
+            "n": 1,
+            "raw_title": "Assumptions[酷我]",
+            "title": "Assumptions",
+            "singer": "Sam Gellaitry",
+            "query": "Assumptions Sam Gellaitry"
+        },
+        {
+            "n": 1,
+            "raw_title": "Feel Good[酷我]",
+            "title": "Feel Good",
+            "singer": "Syn Cole",
+            "query": "Feel Good Syn Cole"
+        },
+        {
+            "n": 1,
+            "raw_title": "Searching Robot[酷我]",
+            "title": "Searching Robot",
+            "singer": "Vexento",
+            "query": "Searching Robot Vexento"
+        },
+        {
+            "n": 1,
+            "raw_title": "Die Of A Broken Heart[酷我]",
+            "title": "Die Of A Broken Heart",
+            "singer": "Olly Murs",
+            "query": "Die Of A Broken Heart Olly Murs"
+        },
+        {
+            "n": 1,
+            "raw_title": "Retromind[酷我]",
+            "title": "Retromind",
+            "singer": "Clovis Reyes",
+            "query": "Retromind Clovis Reyes"
+        },
+        {
+            "n": 1,
+            "raw_title": "Blurry Memories(Piano Version)[酷我]",
+            "title": "Blurry Memories(Piano Version)",
+            "singer": "鹭起Herons",
+            "query": "Blurry Memories (Piano Version) 鹭起Herons"
+        },
+        {
+            "n": 1,
+            "raw_title": "Not The One(Complete Version)[酷我]",
+            "title": "Not The One(Complete Version)",
+            "singer": "DJ HAI CENA",
+            "query": "Not The One (Complete Version) DJ HAI CENA"
+        },
+        {
+            "n": 1,
+            "raw_title": "Creepin Up On You[酷我]",
+            "title": "Creepin Up On You",
+            "singer": "Darren Hayes",
+            "query": "Creepin' up on You Darren Hayes"
+        },
+        {
+            "n": 1,
+            "raw_title": "Go![酷我]",
+            "title": "Go!",
+            "singer": "M83&Mai Lan",
+            "query": "Go! M83 / Mai Lan"
+        },
+        {
+            "n": 1,
+            "raw_title": "Floating(feat. Khalid)[酷我]",
+            "title": "Floating(feat. Khalid)",
+            "singer": "Alina Baraz&filous&Khalid",
+            "query": "Floating(feat. Khalid) (filous Remix) Alina Baraz / filous / Khalid"
         }
     ]
 }
