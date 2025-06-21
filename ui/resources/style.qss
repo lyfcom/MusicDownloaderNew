@@ -70,6 +70,7 @@ QLineEdit {
 }
 
 QLineEdit:focus {
+    outline: none;
     border: 1px solid #89b4fa;
 }
 
@@ -347,4 +348,34 @@ QSplitter::handle:hover {
     background: #89b4fa;
     width: 14px;
     height: 14px;
+}
+
+/* Force the focus state to look identical to the selected state */
+QTableView::item:focus,
+QListWidget::item:focus {
+    background-color: #89b4fa; /* Same as selection color */
+    color: #1e1e2e;            /* Same as selection text color */
+    outline: none;             /* Keep this for good measure */
+}
+
+QTableView::item:selected:focus,
+QListWidget::item:selected:focus {
+    background-color: #89b4fa;
+    color: #1e1e2e;
+}
+
+/* Remove focus border from input controls */
+QLineEdit:focus, 
+QTextEdit:focus, 
+QPlainTextEdit:focus, 
+QSpinBox:focus, 
+QDoubleSpinBox:focus, 
+QComboBox:focus {
+    outline: none;
+    border: 1px solid #89b4fa; /* Use a solid border with the theme color instead */
+}
+
+/* Ensure no focus rectangle appears anywhere */
+*:focus {
+    outline: none;
 } 
