@@ -36,8 +36,15 @@ jobs:
           --onedir `
           --noconsole `
           --name MusicDownloader `
-          --ico=icon.ico `
-          --add-data "ui/resources/style.qss:ui/resources"
+          --ico=icon.ico
+    - name: Copy UI Resources (Post-processing)
+      # 这将在 PyInstaller 打包完成后执行
+      # 将你的 ui/resources 目录复制到 dist/MusicDownloader/ 根目录下
+      # 使用 robocopy /E 复制目录及其所有子目录和空子目录 (Windows)
+      # 或者 cp -r (Linux/macOS)
+      run: |
+        robocopy "./ui/resources" "dist/MusicDownloader/ui/resources" /E /XD ".git" ".github"
+      shell: pwsh # 明确指定使用 PowerShell
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
