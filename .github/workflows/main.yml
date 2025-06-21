@@ -33,6 +33,7 @@ jobs:
         # 替换 'your_script_name.py' 为你的主脚本文件
         # 可以添加更多 PyInstaller 选项，例如 --onefile, --windowed 等
         pyinstaller main.py `
+          --onedir `
           --noconsole `
           --name MusicDownloader `
           --ico=icon.ico `
