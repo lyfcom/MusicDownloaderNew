@@ -272,7 +272,10 @@ class PlaylistImportThread(QThread):
                 title = song.get('title', '').strip()
                 if '[' in title and ']' in title:
                     title = title.rsplit('[', 1)[0].strip()
-                existing_set.add((title, song.get('singer', '')))
+                # 预处理：去除空格，转小写，替换'/'为'&'
+                title = title.replace(' ', '').lower().replace('/', '&')
+                singer = song.get('singer', '').replace(' ', '').lower().replace('/', '&')
+                existing_set.add((title, singer))
 
             # Filter out songs that already exist
             new_songs_to_match = []
@@ -280,8 +283,10 @@ class PlaylistImportThread(QThread):
                 title = song.get('title', '').strip()
                 if '[' in title and ']' in title:
                      title = title.rsplit('[', 1)[0].strip()
-                singer = song.get('singer', '')
-                if (title, singer) not in existing_set:
+                # 预处理：去除空格，转小写，替换'/'为'&'
+                processed_title = title.replace(' ', '').lower().replace('/', '&')
+                processed_singer = song.get('singer', '').replace(' ', '').lower().replace('/', '&')
+                if (processed_title, processed_singer) not in existing_set:
                     # 插入到头部
                     new_songs_to_match.insert(0, song)
             

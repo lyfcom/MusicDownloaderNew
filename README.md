@@ -76,7 +76,9 @@ MusicDownloaderNew/
 - **`core/downloader.py`**:
   - `SearchThread` & `SongDetailsThread`: 将搜索和获取歌曲详情的网络请求移至后台执行，防止UI阻塞。
   - `SingleDownloadThread` & `BatchDownloadThread`: 分别处理单曲和整个播放列表的下载任务，同样在后台运行。
-  - `PlaylistImportThread`: 在后台处理歌单的导入和歌曲匹配。
+  - `PlaylistImportThread`: 在后台处理歌单的导入和歌曲匹配。它具有以下特性：
+    - **预先去重**: 在匹配前，会将歌名和歌手名进行标准化处理（转小写、去空格、统一分隔符），然后与目标播放列表中的现有歌曲进行比较，从而高效地跳过重复歌曲。
+    - **增量匹配**: 只对歌单中不重复的新歌曲发起网络请求，大大减少了API调用次数。
 
 - **`core/playlist_manager.py`**:
   - `PlaylistManager` 类: 提供了加载、保存、创建、删除、重命名播放列表的方法。在添加歌曲时，会基于 `raw_title` 和 `singer` 来检查重复，保证了播放列表的准确性。

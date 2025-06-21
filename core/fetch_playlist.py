@@ -46,7 +46,7 @@ def fetch_qq_playlist(playlist_id):
 
 # For testing purposes
 if __name__ == '__main__':
-    playlist_id = '8162578020'  # Example playlist ID from user
+    playlist_id = '9521850610'  # Example playlist ID from user
     song_list = fetch_qq_playlist(playlist_id)
     if song_list:
         print(f"Successfully fetched {len(song_list)} songs:")
