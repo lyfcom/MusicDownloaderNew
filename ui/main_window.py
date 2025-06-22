@@ -156,7 +156,7 @@ class MusicDownloader(QMainWindow):
         playlist_page_layout = QVBoxLayout(playlist_page_widget)
         playlist_page_layout.setContentsMargins(0, 0, 0, 0)
         playlist_page_layout.setSpacing(10)
-
+        
         # 播放列表选择器
         self.playlist_list_widget = QListWidget()
         self.playlist_list_widget.itemClicked.connect(self.select_playlist)
@@ -176,6 +176,7 @@ class MusicDownloader(QMainWindow):
         playlist_header_view = self.playlist_songs_table.horizontalHeader()
         playlist_header_view.setSectionResizeMode(QHeaderView.Interactive)
         playlist_header_view.setStretchLastSection(True)
+        playlist_header_view.resizeSection(0, 200)  # 设置"歌曲名"列宽度为200px
 
         self.playlist_songs_table.itemDoubleClicked.connect(lambda item: self.preview_playlist_song(item.row()))
         self.playlist_songs_table.setAlternatingRowColors(True)  # 交替行颜色
@@ -358,6 +359,7 @@ class MusicDownloader(QMainWindow):
         self.volume_slider.setValue(70)  # 默认音量
         self.volume_slider.setMaximumWidth(100)
         self.volume_slider.valueChanged.connect(self.change_volume)
+        self.volume_slider.sliderReleased.connect(self.restore_volume_animation_duration)
         self.audio_output.setVolume(0.7)  # 设置初始音量
         
         controls_layout.addStretch()
@@ -895,12 +897,25 @@ class MusicDownloader(QMainWindow):
         return f"{minutes:02}:{seconds:02}"
 
     def change_volume(self, value):
-        volume = value / 100.0
-        
-        if self.volume_animation.state() == QPropertyAnimation.Running:
+        target_volume = value / 100.0
+
+        # Stop any long-running (fade) animation if the user interacts with the slider
+        if self.volume_animation.duration() == 400 and self.volume_animation.state() == QPropertyAnimation.Running:
             self.volume_animation.stop()
 
-        self.audio_output.setVolume(volume)
+        if self.volume_slider.isSliderDown():
+            # For smooth sliding, use a very short animation
+            self.volume_animation.setDuration(50)
+            self.volume_animation.setStartValue(self.audio_output.volume())
+            self.volume_animation.setEndValue(target_volume)
+            self.volume_animation.start()
+        else:
+            # For clicks, set the volume instantly
+            self.audio_output.setVolume(target_volume)
+    
+    def restore_volume_animation_duration(self):
+        # After sliding, restore the original duration for fade-in/out effects
+        self.volume_animation.setDuration(400)
 
     def import_playlist(self, playlist_id):
         """当输入纯数字时，将其视为歌单ID并导入歌单"""
@@ -964,9 +979,9 @@ class MusicDownloader(QMainWindow):
             return
         
         if not matched_songs:
-             QMessageBox.information(self, "导入提示", "没有新的歌曲被添加到歌单。")
-             return
-
+            QMessageBox.information(self, "导入提示", "没有新的歌曲被添加到歌单。")
+            return
+        
         # Add all matched songs to the playlist
         added_count = 0
         for song in matched_songs:

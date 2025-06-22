@@ -50,8 +50,15 @@ jobs:
         Copy-Item -Path "ui/resources/*" -Destination "dist/MusicDownloader/ui/resources" -Recurse -Force
       shell: pwsh # 明确指定使用 PowerShell
 
-    - name: Upload artifact
+    - name: Install Inno Setup
+      run: choco install innosetup --no-progress --yes
+
+    - name: Compile Installer with Inno Setup
+      run: iscc inno_setup.iss
+      shell: cmd
+
+    - name: Upload Installer Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MusicDownloader
-        path: dist/ # PyInstaller 默认将打包文件输出到 dist 目录
+        name: MusicDownloader-Installer
+        path: Output/MusicDownloader-Setup.exe

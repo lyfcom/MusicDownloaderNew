@@ -161,19 +161,18 @@ QHeaderView::section:last {
     border-top-right-radius: 8px;
 }
 
-
+/* --- Global ScrollBar Settings --- */
 QScrollBar:vertical {
-    background-color: #313244;
+    border: none;
+    background: #313244;
     width: 12px;
-    margin: 0px;
-    border-radius: 6px;
+    margin: 0px 0px 0px 0px;
 }
 
 QScrollBar::handle:vertical {
     background-color: #585b70;
-    min-height: 30px;
-    border-radius: 5px;
-    margin: 2px;
+    min-height: 20px;
+    border-radius: 6px;
 }
 
 QScrollBar::handle:vertical:hover {
@@ -181,21 +180,26 @@ QScrollBar::handle:vertical:hover {
 }
 
 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    border: none;
+    background: none;
     height: 0px;
 }
 
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}
+
 QScrollBar:horizontal {
-    background-color: #313244;
+    border: none;
+    background: #313244;
     height: 12px;
-    margin: 0px;
-    border-radius: 6px;
+    margin: 0px 0px 0px 0px;
 }
 
 QScrollBar::handle:horizontal {
     background-color: #585b70;
-    min-width: 30px;
-    border-radius: 5px;
-    margin: 2px;
+    min-width: 20px;
+    border-radius: 6px;
 }
 
 QScrollBar::handle:horizontal:hover {
@@ -203,7 +207,13 @@ QScrollBar::handle:horizontal:hover {
 }
 
 QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    border: none;
+    background: none;
     width: 0px;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+    background: none;
 }
 
 
@@ -247,6 +257,40 @@ QSlider::handle:horizontal:hover {
 
 QSlider::sub-page:horizontal {
     background: #89b4fa;
+    border-radius: 2px;
+}
+
+/* --- Volume Slider --- */
+#volume_slider {
+    height: 18px;
+}
+
+#volume_slider::groove:horizontal {
+    height: 4px;
+    background: #45475a;
+    border-radius: 2px;
+}
+
+#volume_slider::handle:horizontal {
+    background: #cdd6f4;
+    border: none;
+    width: 14px;
+    height: 14px;
+    margin: -5px 0;
+    border-radius: 7px;
+}
+
+#volume_slider::handle:horizontal:hover {
+    background: #bac2de;
+}
+
+#volume_slider::sub-page:horizontal {
+    background: #89b4fa;
+    border-radius: 2px;
+}
+
+#volume_slider::add-page:horizontal {
+    background: #45475a;
     border-radius: 2px;
 }
 
@@ -316,22 +360,6 @@ QSplitter::handle:hover {
     font-family: "Consolas", "Courier New", monospace;
     padding: 0px 10px;
     min-width: 50px;
-}
-
-/* 滑块 - 音量控制专用样式 */
-#volume_slider {
-    max-height: 16px;
-}
-
-#volume_slider::groove:horizontal {
-    height: 3px;
-    background: #45475a;
-}
-
-#volume_slider::handle:horizontal {
-    background: #cdd6f4;
-    width: 10px;
-    height: 10px;
 }
 
 /* 进度滑块专用样式 */
