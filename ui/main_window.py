@@ -35,9 +35,11 @@ class PlaybackMode:
     }
 
 class MusicDownloader(QMainWindow):
+    VERSION = "1.1.0"
+
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("音乐下载器")
+        self.setWindowTitle(f"音乐下载器 v{self.VERSION}")
         self.setMinimumSize(900, 750)  # 稍微增加窗口大小
         self.setWindowIcon(qtawesome.icon('fa5s.music', color='#cdd6f4'))
 
