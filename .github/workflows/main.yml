@@ -39,10 +39,12 @@ jobs:
         # --include-data-dir=ui/resources=ui/resources: 包含资源文件
         # --enable-plugin=pyside6: 启用pyside6插件以支持Qt
         # --assume-yes-for-downloads: 自动同意所有依赖下载
+        # --include-qt-plugins=multimedia: 强制包含Qt多媒体插件
         python -m nuitka `
           --standalone `
           --assume-yes-for-downloads `
           --enable-plugin=pyside6 `
+          --include-qt-plugins=multimedia `
           --windows-console-mode=disable `
           --output-dir=dist `
           --include-data-dir=ui/resources=ui/resources `
