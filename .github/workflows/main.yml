@@ -38,8 +38,10 @@ jobs:
         # --output-dir=dist: 指定输出目录为dist
         # --include-data-dir=ui/resources=ui/resources: 包含资源文件
         # --enable-plugin=pyside6: 启用pyside6插件以支持Qt
+        # --assume-yes-for-downloads: 自动同意所有依赖下载
         python -m nuitka `
           --standalone `
+          --assume-yes-for-downloads `
           --enable-plugin=pyside6 `
           --windows-console-mode=disable `
           --output-dir=dist `
