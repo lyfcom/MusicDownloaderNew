@@ -62,6 +62,10 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: MusicDownloader-Installer
-        path: |
-          Output/MusicDownloader-Setup.exe
-          dist/MusicDownloader
+        path: Output/MusicDownloader-Setup.exe
+
+    - name: Upload Application Files
+      uses: actions/upload-artifact@v4
+      with:
+        name: MusicDownloader-Application
+        path: dist/MusicDownloader
