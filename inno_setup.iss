@@ -48,10 +48,10 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 ; Source 路径现在是相对于 GitHub Actions 的工作目录 (即你的仓库根目录)
-; Nuitka 会将文件输出到 dist 目录
-Source: "dist/{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-; 复制 dist 目录下的所有其他文件和子目录
-Source: "dist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+; PyInstaller 的 --onedir 模式会将所有文件放在 dist/MusicDownloader 目录下
+Source: "dist/MusicDownloader/{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+; 复制 dist/MusicDownloader 目录下的所有其他文件和子目录
+Source: "dist/MusicDownloader\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
