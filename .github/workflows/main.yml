@@ -19,37 +19,47 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12' # 指定你的 Python 版本，例如 '3.9' 或 '3.10'
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pyinstaller # 安装 PyInstaller
-        # 如果你有 requirements.txt 文件，在这里安装你的项目依赖
+        # 安装Nuitka而不是PyInstaller
+        pip install nuitka
+        pip install ordered-set # Nuitka依赖
+        # 安装项目依赖
         pip install -r requirements.txt
 
-    - name: Run PyInstaller
+    - name: Run Nuitka
       run: |
-        # 替换 'your_script_name.py' 为你的主脚本文件
-        # 可以添加更多 PyInstaller 选项，例如 --onefile, --windowed 等
-        pyinstaller main.py `
-          --onedir `
-          --noconsole `
-          --name MusicDownloader `
-          --ico=icon.ico
+        # 使用Nuitka打包应用程序
+        # --standalone: 创建包含所有依赖的独立应用（类似PyInstaller的--onedir）
+        # --windows-disable-console: 禁用控制台（类似--noconsole）
+        # --output-dir=dist: 指定输出目录为dist
+        # --include-data-dir=ui/resources=ui/resources: 包含资源文件
+        python -m nuitka `
+          --standalone `
+          --windows-disable-console `
+          --output-dir=dist `
+          --include-data-dir=ui/resources=ui/resources `
+          --windows-icon-from-ico=icon.ico `
+          --windows-company-name=XHZX `
+          --windows-product-name="音乐下载器" `
+          --windows-file-version=1.1.0 `
+          --windows-product-version=1.1.0 `
+          --output-filename=MusicDownloader.exe `
+          main.py
 
+    # 由于Nuitka会自动处理包含的数据文件，我们可能不需要额外的复制步骤
+    # 但为了确保资源文件被正确包含，保留此步骤并调整路径
     - name: Copy UI Resources (Post-processing)
       run: |
-        # 确保目标目录存在，Copy-Item -Recurse 在复制目录时如果目标不存在会自动创建，
-        # 但如果目标是文件而不是目录时，可能需要预先创建目标父目录
-        # 这里为了稳妥，我们可以在复制之前先创建一个空目录（如果它不存在）
-        New-Item -ItemType Directory -Force -Path "dist/MusicDownloader/ui/resources"
+        # 确保目标目录存在
+        New-Item -ItemType Directory -Force -Path "dist/main.dist/ui/resources"
         
-        # 使用 Copy-Item 复制内容
-        # 注意：这里我们只复制 ui/resources 目录内部的文件和子目录，而不是 ui/resources 本身
-        # 因为目标路径是 dist/MusicDownloader/ui/resources
-        Copy-Item -Path "ui/resources/*" -Destination "dist/MusicDownloader/ui/resources" -Recurse -Force
-      shell: pwsh # 明确指定使用 PowerShell
+        # 复制UI资源
+        Copy-Item -Path "ui/resources/*" -Destination "dist/main.dist/ui/resources" -Recurse -Force
+      shell: pwsh
 
     - name: Install Inno Setup
       run: choco install innosetup --no-progress --yes
@@ -68,4 +78,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: MusicDownloader-Application
-        path: dist/MusicDownloader
+        path: dist/main.dist

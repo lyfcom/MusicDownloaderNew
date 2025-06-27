@@ -47,11 +47,11 @@ Name: "chinese"; MessagesFile: "Chinese.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-; Source 路径现在是相对于 GitHub Actions 的工作目录 (即你的仓库根目录)
-; PyInstaller 的 --onedir 模式会将所有文件放在 dist/MusicDownloader 目录下
-Source: "dist/MusicDownloader/{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-; 复制 dist/MusicDownloader 目录下的所有其他文件和子目录
-Source: "dist/MusicDownloader\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+; 修改Source路径以匹配Nuitka输出目录结构
+; Nuitka使用--standalone模式会将文件输出到dist/main.dist目录
+Source: "dist\main.dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+; 复制dist/main.dist目录下的所有其他文件和子目录
+Source: "dist\main.dist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
