@@ -30,10 +30,12 @@ jobs:
 
     - name: Run Nuitka
       run: |
-        python -m nuitka --disable-console `
+        python -m nuitka --windows-console-mode=disable `
           --windows-icon-from-ico=icon.ico `
           --output-filename=MusicDownloader.exe `
           --product-name=MusicDownloader `
+          --product-version=1.1.0 `
+          --file-version=1.1.0 `
           --enable-plugin=pyside6 `
           --include-data-dir=ui/resources=ui/resources `
           --output-dir=dist `
