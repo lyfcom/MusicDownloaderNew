@@ -34,12 +34,14 @@ jobs:
       run: |
         # 使用Nuitka打包应用程序
         # --standalone: 创建包含所有依赖的独立应用（类似PyInstaller的--onedir）
-        # --windows-disable-console: 禁用控制台（类似--noconsole）
+        # --windows-console-mode=disable: 禁用控制台
         # --output-dir=dist: 指定输出目录为dist
         # --include-data-dir=ui/resources=ui/resources: 包含资源文件
+        # --enable-plugin=pyside6: 启用pyside6插件以支持Qt
         python -m nuitka `
           --standalone `
-          --windows-disable-console `
+          --enable-plugin=pyside6 `
+          --windows-console-mode=disable `
           --output-dir=dist `
           --include-data-dir=ui/resources=ui/resources `
           --windows-icon-from-ico=icon.ico `
