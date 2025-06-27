@@ -34,7 +34,7 @@ jobs:
           --windows-icon-from-ico=icon.ico `
           --output-filename=MusicDownloader.exe `
           --product-name=MusicDownloader `
-          --include-plugin-pyside6 `
+          --enable-plugin=pyside6 `
           --include-data-dir=ui/resources=ui/resources `
           --output-dir=dist `
           main.py
