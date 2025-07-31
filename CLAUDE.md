@@ -393,6 +393,55 @@ from pathlib import Path
 self.path_display = QLineEdit(str(self.download_dir))  # Path对象转字符串
 ```
 
+### 数据存储权限修复
+```python
+# core/playlist_manager.py:5-48
+# 问题：程序安装到Program Files后，普通用户无法写入playlist.json
+# 解决：迁移数据到用户AppData目录，并实现自动数据迁移
+
+class PlaylistManager:
+    def __init__(self, playlist_file=None):
+        if playlist_file is None:
+            # 将playlist.json存储在用户的AppData/Roaming目录中，避免权限问题
+            app_data_dir = Path.home() / "AppData" / "Roaming" / "MusicDownloader"
+            app_data_dir.mkdir(parents=True, exist_ok=True)
+            self.playlist_file = app_data_dir / "playlists.json"
+            
+            # 自动迁移旧数据
+            self._migrate_old_data()
+
+    def _migrate_old_data(self):
+        """迁移旧位置的playlist.json到新的AppData目录"""
+        old_locations = [
+            Path("playlists.json"),  # 当前工作目录
+            Path.cwd() / "playlists.json",  # 程序运行目录
+        ]
+        
+        # 如果新位置已经有文件，跳过迁移
+        if self.playlist_file.exists():
+            return
+        
+        # 查找并迁移第一个找到的旧文件
+        for old_path in old_locations:
+            if old_path.exists() and old_path != self.playlist_file:
+                try:
+                    with old_path.open('r', encoding='utf-8') as f:
+                        old_data = json.load(f)
+                    
+                    with self.playlist_file.open('w', encoding='utf-8') as f:
+                        json.dump(old_data, f, indent=4, ensure_ascii=False)
+                    
+                    print(f"✅ 歌单数据已从 {old_path} 迁移到 {self.playlist_file}")
+                    break
+                except (json.JSONDecodeError, IOError) as e:
+                    print(f"⚠️ 迁移歌单数据时出错: {e}")
+                    continue
+
+# 新的数据存储位置：
+# Windows: C:\Users\[用户名]\AppData\Roaming\MusicDownloader\playlists.json
+# 优势：普通用户权限可读写，符合Windows应用数据存储规范
+```
+
 ## 开发最佳实践
 
 ### 代码结构原则
