@@ -20,7 +20,7 @@ from ui.components.playlist_widget import PlaylistWidget
 from ui.components.player_controls import PlayerControls
 
 class MusicDownloader(QMainWindow):
-    VERSION = "1.1.0"
+    VERSION = "1.2.0"
 
     def __init__(self):
         super().__init__()
@@ -591,10 +591,11 @@ class MusicDownloader(QMainWindow):
         self.volume_animation.setStartValue(self.audio_output.volume())
         self.volume_animation.setEndValue(target_volume)
         
+        # 断开之前的finished连接，避免重复连接
         try:
             self.volume_animation.finished.disconnect()
-        except RuntimeError:
-            pass
+        except (RuntimeError, TypeError):
+            pass  # 忽略没有连接时的警告
         self.volume_animation.start()
 
     def fade_out_and_pause(self):
@@ -602,10 +603,11 @@ class MusicDownloader(QMainWindow):
         self.volume_animation.setStartValue(self.audio_output.volume())
         self.volume_animation.setEndValue(0)
 
+        # 断开之前的finished连接，避免重复连接
         try:
             self.volume_animation.finished.disconnect()
-        except RuntimeError:
-            pass
+        except (RuntimeError, TypeError):
+            pass  # 忽略没有连接时的警告
         self.volume_animation.finished.connect(self.player.pause)
         self.volume_animation.start()
 

@@ -41,8 +41,8 @@ python -m nuitka \
     --windows-icon-from-ico=icon.ico \
     --windows-company-name=XHZX \
     --windows-product-name="音乐下载器" \
-    --windows-file-version=1.1.0 \
-    --windows-product-version=1.1.0 \
+    --windows-file-version=1.2.0 \
+    --windows-product-version=1.2.0 \
     --output-filename=MusicDownloader.exe \
     main.py
 ```
@@ -82,7 +82,7 @@ MusicDownloaderNew/
 │
 ├── ui/                       # 用户界面层
 │   ├── __init__.py
-│   ├── main_window.py        # 主窗口（720行，核心UI逻辑）
+│   ├── main_window.py        # 主窗口（900+行，核心UI逻辑）
 │   ├── main_window_backup.py # 主窗口备份
 │   ├── components/           # 模块化UI组件
 │   │   ├── __init__.py
@@ -139,7 +139,7 @@ PlaylistManager:
   └── playlists.json        # 数据存储格式
 ```
 
-#### `ui/main_window.py` - 主界面控制器（720行）
+#### `ui/main_window.py` - 主界面控制器（900+行）
 ```python
 MusicDownloader(QMainWindow):
   ├── init_components()      # 组件初始化
@@ -225,6 +225,174 @@ fetch_qq_playlist(playlist_id) -> List[Dict]:
   # 自动处理多歌手分隔和名称清理
 ```
 
+## 最新稳定性改进 (v1.2.0)
+
+### 音频设备热切换解决方案
+```python
+# ui/main_window.py:72-128
+# 问题：PySide6中不存在 QMediaDevices.defaultAudioOutputChanged 信号
+# 解决：使用定时器检查方式
+class MusicDownloader:
+    def init_player(self):
+        self._current_audio_device = QMediaDevices.defaultAudioOutput()
+        self._device_check_timer = QTimer(self)
+        self._device_check_timer.timeout.connect(self._check_audio_device_change)
+        self._device_check_timer.start(2000)  # 每2秒检查一次
+
+    def _check_audio_device_change(self):
+        current_device = QMediaDevices.defaultAudioOutput()
+        if current_device.id() != self._current_audio_device.id():
+            self._on_audio_device_changed(current_device)
+            self._current_audio_device = current_device
+```
+
+### 统一线程管理机制
+```python
+# ui/main_window.py:49-57
+def _register_thread(self, thread):
+    """统一的线程注册和清理管理"""
+    def cleanup_thread():
+        self.active_threads.discard(thread)  # 使用discard避免KeyError
+        thread.deleteLater()  # 确保线程对象被正确释放
+    thread.finished.connect(cleanup_thread)
+    self.active_threads.add(thread)
+    return thread
+
+# 使用示例：
+search_thread = self._register_thread(SearchThread(query))
+```
+
+### 优雅关闭处理
+```python
+# ui/main_window.py:553-580
+def closeEvent(self, event):
+    # 1. 保存数据
+    self.playlist_manager.save()
+    
+    # 2. 停止播放器和定时器
+    self.player.stop()
+    if hasattr(self, 'lyric_timer'): self.lyric_timer.stop()
+    if hasattr(self, 'volume_animation'): self.volume_animation.stop()
+    
+    # 3. 优雅关闭所有线程
+    if self.active_threads:
+        for thread in list(self.active_threads):
+            if hasattr(thread, 'requestInterruption'):
+                thread.requestInterruption()
+        for thread in list(self.active_threads):
+            if thread.isRunning():
+                thread.wait(5000)  # 最多等待5秒
+    
+    # 4. 停止设备检查定时器
+    if hasattr(self, '_device_check_timer'):
+        self._device_check_timer.stop()
+```
+
+### 网络性能优化架构
+```python
+# core/api.py:10-38
+# 全局Session管理，支持连接池和重试策略
+_session = None
+
+def get_session():
+    global _session
+    if _session is None:
+        _session = requests.Session()
+        # 重试策略：3次重试，指数退避，特定状态码
+        retry_strategy = Retry(
+            total=3, 
+            backoff_factor=0.5, 
+            status_forcelist=[429, 500, 502, 503, 504]
+        )
+        adapter = HTTPAdapter(
+            max_retries=retry_strategy,
+            pool_connections=10,    # 连接池大小
+            pool_maxsize=20        # 每个连接池的最大连接数
+        )
+        _session.mount("http://", adapter)
+        _session.mount("https://", adapter)
+        _session.timeout = (5, 15)  # 连接5s，读取15s
+    return _session
+```
+
+### 歌词显示性能优化
+```python
+# ui/main_window.py:806-877
+# 问题：频繁的HTML重建导致性能问题
+# 解决：缓存 + 二分查找 + 降频
+class MusicDownloader:
+    def __init__(self):
+        self.lyric_timer.setInterval(250)  # 从100ms优化到250ms
+        self.lyrics_html_cache = ""        # HTML缓存
+
+    def _find_current_lyric_line(self, position):
+        """使用二分查找快速定位当前歌词行"""
+        if not self.lyrics:
+            return -1
+        left, right = 0, len(self.lyrics) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if self.lyrics[mid][0] <= position:
+                left = mid + 1
+            else:
+                right = mid - 1
+        return right
+
+    def _build_lyrics_html(self):
+        """只在歌词变化时重建HTML缓存"""
+        # 生成完整HTML并缓存
+        
+    def _update_lyrics_highlight(self):
+        """只更新高亮状态，不重建HTML"""
+        # 使用JavaScript动态更新高亮
+```
+
+### 临时文件统一清理
+```python
+# core/downloader.py:165-176
+def _cleanup_temp_files(self, *temp_paths):
+    """统一的临时文件清理机制"""
+    for temp_path in temp_paths:
+        if temp_path:
+            path_obj = Path(temp_path) if not isinstance(temp_path, Path) else temp_path
+            if path_obj.exists():
+                try:
+                    path_obj.unlink()
+                except OSError as e:
+                    print(f"清理临时文件失败 {temp_path}: {e}")
+
+# 使用try-finally确保清理
+def process_song(self, song_details, download_dir, progress_callback=None):
+    temp_audio_path = None
+    temp_cover_path = None
+    try:
+        # ... 处理逻辑 ...
+    except Exception as e:
+        self.status_signal.emit(f"处理歌曲时发生错误: {e}")
+        return None
+    finally:
+        self._cleanup_temp_files(temp_audio_path, temp_cover_path)
+```
+
+### 跨平台路径处理
+```python
+# 全项目迁移到pathlib.Path
+from pathlib import Path
+
+# 替代模式：
+# 旧：os.path.join(dir, filename)
+# 新：Path(dir) / filename
+
+# 旧：os.makedirs(path, exist_ok=True)
+# 新：Path(path).mkdir(parents=True, exist_ok=True)
+
+# 旧：os.path.exists(path)
+# 新：Path(path).exists()
+
+# UI组件兼容性处理：
+self.path_display = QLineEdit(str(self.download_dir))  # Path对象转字符串
+```
+
 ## 开发最佳实践
 
 ### 代码结构原则
@@ -277,14 +445,52 @@ fetch_qq_playlist(playlist_id) -> List[Dict]:
 
 ## 故障排除
 
-### 常见问题
-1. **样式表无法加载**: 检查 `ui/resources/style.qss` 路径
-2. **音频无法播放**: 确认Qt多媒体插件已正确包含
-3. **网络请求失败**: 检查API端点可用性和网络连接
-4. **线程相关错误**: 确保UI更新只在主线程中进行
+### 常见问题及解决方案
+1. **音频设备切换问题**: 
+   - **症状**: Windows下切换声卡后音频仍从旧设备输出
+   - **解决**: v1.2.0已修复，程序会自动检测设备变化并切换音频输出
+
+2. **程序长时间运行后崩溃**:
+   - **症状**: 使用几小时后出现意外关闭
+   - **解决**: v1.2.0已修复线程管理和内存泄漏问题
+
+3. **歌词显示卡顿**:
+   - **症状**: 歌词滚动时界面卡顿
+   - **解决**: 已优化为缓存+二分查找机制，大幅提升性能
+
+4. **网络请求超时**:
+   - **症状**: 搜索或下载时频繁超时
+   - **解决**: 引入连接池和智能重试机制，提升网络稳定性
+
+5. **Path对象类型错误**:
+   - **症状**: `TypeError: 'PySide6.QtWidgets.QLineEdit.__init__' called with wrong argument types: WindowsPath`
+   - **解决**: 确保传递给Qt组件的路径参数为字符串：`str(path_object)`
+
+6. **RuntimeWarning信号断开连接**:
+   - **症状**: `Failed to disconnect (None) from signal "finished()"`
+   - **解决**: 使用`try-except (RuntimeError, TypeError)`捕获断开连接异常
+
+7. **样式表无法加载**: 检查 `ui/resources/style.qss` 路径
+8. **音频无法播放**: 确认Qt多媒体插件已正确包含
+9. **线程相关错误**: 确保UI更新只在主线程中进行
 
 ### 调试建议
-1. 启用控制台输出查看详细错误信息
-2. 使用Qt Creator的调试器进行断点调试
-3. 检查 `playlists.json` 文件格式是否正确
-4. 验证所有依赖库版本兼容性
+1. **性能分析**: 
+   - 使用任务管理器监控内存使用情况
+   - 检查CPU占用率，特别是歌词播放时
+   
+2. **网络问题排查**:
+   - 检查防火墙设置和代理配置
+   - 验证API端点可用性：`https://www.hhlqilongzhu.cn/api/joox/juhe_music.php`
+   
+3. **线程调试**:
+   - 启用控制台输出查看线程创建和销毁信息
+   - 关注`active_threads`集合的大小变化
+   
+4. **日志记录**:
+   - 启用PySide6日志：`export QT_LOGGING_RULES="qt.pyside.libpyside.warning=true"`
+   - 检查 `playlists.json` 文件格式是否正确
+   
+5. **依赖检查**:
+   - 验证所有依赖库版本兼容性：`pip list`
+   - 确保PySide6版本 >= 6.0.0
