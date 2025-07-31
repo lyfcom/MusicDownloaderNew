@@ -24,11 +24,8 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 UninstallDisplayIcon={app}\{#MyAppExeName}
 OutputDir=Output
-; 支持 x64 和 ARM64 架构（包括 Windows 11 on ARM）
-; "x64compatible arm64compatible" 允许在 x64 和 ARM64 设备上安装
-ArchitecturesAllowed=x64compatible arm64compatible
-; 在 64 位模式下安装，支持 x64 和 ARM64
-ArchitecturesInstallIn64BitMode=x64compatible arm64compatible
+ArchitecturesAllowed=x64
+ArchitecturesInstallIn64BitMode=x64
 ChangesAssociations=yes
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only).
