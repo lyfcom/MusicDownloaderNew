@@ -68,10 +68,26 @@ class MusicDownloader(QMainWindow):
         
         self.audio_output.setVolume(0.7)
         
-        # 监听默认音频输出设备变化，解决声卡切换问题
-        QMediaDevices.defaultAudioOutputChanged.connect(self._on_audio_device_changed)
+        # 设置定时器定期检查音频设备变化（解决声卡切换问题）
+        self._current_audio_device = QMediaDevices.defaultAudioOutput()
+        self._device_check_timer = QTimer(self)
+        self._device_check_timer.timeout.connect(self._check_audio_device_change)
+        self._device_check_timer.start(2000)  # 每2秒检查一次
 
-    def _on_audio_device_changed(self, device_info):
+    def _check_audio_device_change(self):
+        """定期检查默认音频输出设备是否变化"""
+        try:
+            current_device = QMediaDevices.defaultAudioOutput()
+            if current_device and self._current_audio_device:
+                # 比较设备ID或名称来判断设备是否变化
+                if (current_device.id() != self._current_audio_device.id() or 
+                    current_device.description() != self._current_audio_device.description()):
+                    self._on_audio_device_changed(current_device)
+                    self._current_audio_device = current_device
+        except Exception as e:
+            print(f"检查音频设备变化时出错: {e}")
+
+    def _on_audio_device_changed(self, new_device):
         """处理音频输出设备变化，确保音频输出到正确的设备"""
         try:
             # 保存当前状态
@@ -83,9 +99,9 @@ class MusicDownloader(QMainWindow):
             # 停止动画以避免干扰
             self.volume_animation.stop()
             
-            # 创建新的音频输出实例
+            # 创建新的音频输出实例，使用新的默认设备
             old_audio_output = self.audio_output
-            self.audio_output = QAudioOutput()
+            self.audio_output = QAudioOutput(new_device)  # 使用新设备
             self.audio_output.setVolume(current_volume)
             
             # 重新绑定到播放器
@@ -104,7 +120,8 @@ class MusicDownloader(QMainWindow):
             # 清理旧的音频输出对象
             old_audio_output.deleteLater()
             
-            self.status_bar.showMessage("音频输出设备已切换", 2000)
+            device_name = new_device.description() if new_device else "未知设备"
+            self.status_bar.showMessage(f"音频输出已切换到: {device_name}", 3000)
             
         except Exception as e:
             print(f"音频设备切换失败: {e}")
@@ -186,7 +203,7 @@ class MusicDownloader(QMainWindow):
         path_label = QLabel("下载路径:")
         path_label.setMinimumWidth(80)
         
-        self.path_display = QLineEdit(self.download_dir)
+        self.path_display = QLineEdit(str(self.download_dir))
         self.path_display.setReadOnly(True)
         
         browse_button = QPushButton(qtawesome.icon('fa5s.folder-open', color='#1e1e2e'), "")
@@ -469,9 +486,9 @@ class MusicDownloader(QMainWindow):
                 table.set_playing_indicator(row, True)
 
     def browse_download_path(self):
-        dir_path = QFileDialog.getExistingDirectory(self, "选择下载目录", self.download_dir)
+        dir_path = QFileDialog.getExistingDirectory(self, "选择下载目录", str(self.download_dir))
         if dir_path:
-            self.download_dir = dir_path
+            self.download_dir = Path(dir_path)  # 保持Path类型
             self.path_display.setText(dir_path)
 
     def download_song(self, song_info):
@@ -556,11 +573,9 @@ class MusicDownloader(QMainWindow):
                     if thread.isRunning():
                         print(f"警告: 线程 {thread} 未能在5秒内完成")
         
-        # 断开音频设备监听
-        try:
-            QMediaDevices.defaultAudioOutputChanged.disconnect(self._on_audio_device_changed)
-        except:
-            pass  # 忽略断开连接时的错误
+        # 停止音频设备检查定时器
+        if hasattr(self, '_device_check_timer'):
+            self._device_check_timer.stop()
         
         super().closeEvent(event)
 
