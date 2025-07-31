@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "音乐下载器"
-#define MyAppVersion "1.1.0"
+#define MyAppVersion "1.2.1"
 #define MyAppPublisher "XHZX"
 #define MyAppURL "https://index.xhzx.xyz"
 #define MyAppExeName "MusicDownloader.exe"

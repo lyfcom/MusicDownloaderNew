@@ -20,7 +20,7 @@ from ui.components.playlist_widget import PlaylistWidget
 from ui.components.player_controls import PlayerControls
 
 class MusicDownloader(QMainWindow):
-    VERSION = "1.2.0"
+    VERSION = "1.2.1"
 
     def __init__(self):
         super().__init__()
