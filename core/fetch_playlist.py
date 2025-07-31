@@ -1,5 +1,6 @@
 import requests
 import json
+from .api import get_session
 
 def fetch_qq_playlist(playlist_id):
     """
@@ -15,7 +16,8 @@ def fetch_qq_playlist(playlist_id):
     }
 
     try:
-        response = requests.get(url, headers=headers)
+        session = get_session()
+        response = session.get(url, headers=headers, timeout=(10, 20))
         response.raise_for_status()  # Raise an exception for bad status codes
 
         data = response.json()

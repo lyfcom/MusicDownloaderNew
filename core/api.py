@@ -1,15 +1,58 @@
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 API_URL = "https://www.hhlqilongzhu.cn/api/joox/juhe_music.php"
+
+# 创建全局Session用于连接重用和统一配置
+_session = None
+
+def get_session():
+    """获取或创建全局Session实例，配置连接重用、超时和重试策略"""
+    global _session
+    if _session is None:
+        _session = requests.Session()
+        
+        # 配置重试策略
+        retry_strategy = Retry(
+            total=3,  # 最多重试3次
+            backoff_factor=0.5,  # 重试间隔指数退避
+            status_forcelist=[429, 500, 502, 503, 504],  # 这些状态码会触发重试
+        )
+        
+        # 为HTTP和HTTPS配置适配器
+        adapter = HTTPAdapter(
+            max_retries=retry_strategy,
+            pool_connections=10,  # 连接池大小
+            pool_maxsize=20       # 每个连接池的最大连接数
+        )
+        _session.mount("http://", adapter)
+        _session.mount("https://", adapter)
+        
+        # 设置默认超时和请求头
+        _session.timeout = (5, 15)  # 连接超时5s，读取超时15s
+        _session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Safari/537.36'
+        })
+    
+    return _session
 
 def request_api(params):
     """
     Sends an API request and handles basic errors.
+    使用Session进行连接重用和统一配置。
     """
     try:
-        response = requests.get(API_URL, params=params)
+        session = get_session()
+        response = session.get(API_URL, params=params, timeout=(5, 15))
         response.raise_for_status()  # Raise an exception for bad status codes
         return response.json()
+    except requests.exceptions.Timeout:
+        print("API请求超时，请检查网络连接")
+        return None
+    except requests.exceptions.ConnectionError:
+        print("网络连接错误，请检查网络设置")
+        return None
     except (requests.exceptions.RequestException, ValueError) as e:
         print(f"API request or JSON decoding failed: {e}")
         return None

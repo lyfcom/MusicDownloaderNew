@@ -1,16 +1,16 @@
 import json
-import os
+from pathlib import Path
 
 class PlaylistManager:
     def __init__(self, playlist_file="playlists.json"):
-        self.playlist_file = playlist_file
+        self.playlist_file = Path(playlist_file)
         self.playlists = self.load()
 
     def load(self):
         """Loads playlists from the JSON file."""
-        if os.path.exists(self.playlist_file):
+        if self.playlist_file.exists():
             try:
-                with open(self.playlist_file, 'r', encoding='utf-8') as f:
+                with self.playlist_file.open('r', encoding='utf-8') as f:
                     return json.load(f)
             except (json.JSONDecodeError, IOError):
                 # If file is corrupted or unreadable, start with an empty structure
@@ -20,7 +20,7 @@ class PlaylistManager:
     def save(self):
         """Saves the current playlists to the JSON file."""
         try:
-            with open(self.playlist_file, 'w', encoding='utf-8') as f:
+            with self.playlist_file.open('w', encoding='utf-8') as f:
                 json.dump(self.playlists, f, indent=4, ensure_ascii=False)
             return True
         except IOError:

@@ -24,14 +24,11 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 UninstallDisplayIcon={app}\{#MyAppExeName}
 OutputDir=Output
-; "ArchitecturesAllowed=x64compatible" specifies that Setup cannot run
-; on anything but x64 and Windows 11 on Arm.
-ArchitecturesAllowed=x64compatible
-; "ArchitecturesInstallIn64BitMode=x64compatible" requests that the
-; install be done in "64-bit mode" on x64 or Windows 11 on Arm,
-; meaning it should use the native 64-bit Program Files directory and
-; the 64-bit view of the registry.
-ArchitecturesInstallIn64BitMode=x64compatible
+; 支持 x64 和 ARM64 架构（包括 Windows 11 on ARM）
+; "x64compatible arm64compatible" 允许在 x64 和 ARM64 设备上安装
+ArchitecturesAllowed=x64compatible arm64compatible
+; 在 64 位模式下安装，支持 x64 和 ARM64
+ArchitecturesInstallIn64BitMode=x64compatible arm64compatible
 ChangesAssociations=yes
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only).

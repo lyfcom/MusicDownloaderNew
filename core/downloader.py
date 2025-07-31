@@ -2,6 +2,7 @@ import os
 import re
 import mimetypes
 import requests
+from pathlib import Path
 from urllib.parse import urlparse
 
 from PySide6.QtCore import QThread, Signal
@@ -10,7 +11,7 @@ from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC, TPE1, TIT2, TALB, USLT, SYLT, ID3NoHeaderError
 
 from utils.lrc_parser import parse_lrc_line
-from core.api import get_song_details_robust, search_music
+from core.api import get_song_details_robust, search_music, get_session
 from core.fetch_playlist import fetch_qq_playlist
 
 class BaseDownloader(QThread):
@@ -21,7 +22,8 @@ class BaseDownloader(QThread):
     def download_file(self, url, file_path, progress_callback=None):
         """Downloads a file to a specified path, with progress reporting."""
         try:
-            response = requests.get(url, stream=True)
+            session = get_session()
+            response = session.get(url, stream=True, timeout=(10, 30))  # 下载使用更长超时
             response.raise_for_status()
             
             total_size = int(response.headers.get('content-length', 0))
@@ -36,6 +38,12 @@ class BaseDownloader(QThread):
                             progress = int((downloaded_size / total_size) * 100)
                             progress_callback(progress)
             return True
+        except requests.exceptions.Timeout:
+            self.status_signal.emit("文件下载超时，请检查网络连接")
+            return False
+        except requests.exceptions.ConnectionError:
+            self.status_signal.emit("网络连接错误，请检查网络设置")
+            return False
         except requests.RequestException as e:
             self.status_signal.emit(f"文件下载失败: {e}")
             return False
@@ -82,9 +90,7 @@ class BaseDownloader(QThread):
             audio.save()
         except Exception as e:
             self.status_signal.emit(f"嵌入元数据失败: {e}")
-        finally:
-            if temp_cover_path and os.path.exists(temp_cover_path):
-                os.remove(temp_cover_path)
+        # 注意：临时文件清理现在由调用方（process_song）统一处理
 
     def process_song(self, song_details, download_dir, progress_callback=None):
         """Main logic to download audio, cover, and embed metadata for a single song."""
@@ -93,7 +99,8 @@ class BaseDownloader(QThread):
             self.status_signal.emit(f"歌曲 '{song_details.get('title')}' 无有效链接，跳过。")
             return None
 
-        os.makedirs(download_dir, exist_ok=True)
+        download_path = Path(download_dir)
+        download_path.mkdir(parents=True, exist_ok=True)
         
         # Clean filename
         title = song_details.get('title', '未知歌名')
@@ -104,46 +111,69 @@ class BaseDownloader(QThread):
 
         # Determine file extension
         try:
-            response = requests.head(url, allow_redirects=True, timeout=5)
+            session = get_session()
+            response = session.head(url, allow_redirects=True, timeout=(5, 10))
             content_type = response.headers.get('Content-Type', '').lower()
             ext = mimetypes.guess_extension(content_type) or '.mp3'
         except requests.RequestException:
             ext = '.mp3'
         
-        final_path = os.path.join(download_dir, f"{filename_prefix}{ext}")
-        if os.path.exists(final_path):
-            self.status_signal.emit(f"文件 '{os.path.basename(final_path)}' 已存在。")
-            return final_path # Indicate that it exists, no need to re-download.
+        final_path = download_path / f"{filename_prefix}{ext}"
+        if final_path.exists():
+            self.status_signal.emit(f"文件 '{final_path.name}' 已存在。")
+            return str(final_path)  # Indicate that it exists, no need to re-download.
 
-        temp_audio_path = os.path.join(download_dir, f"temp_{os.urandom(8).hex()}{ext}")
-        
-        # Download audio
-        self.status_signal.emit(f"正在下载: {title}...")
-        if not self.download_file(url, temp_audio_path, progress_callback):
-            if os.path.exists(temp_audio_path): os.remove(temp_audio_path)
-            return None
-
-        # Download cover
+        temp_audio_path = download_path / f"temp_{os.urandom(8).hex()}{ext}"
         temp_cover_path = None
-        cover_url = song_details.get('cover')
-        if cover_url:
-            temp_cover_path = os.path.join(download_dir, f"temp_cover_{os.urandom(8).hex()}.jpg")
-            if not self.download_file(cover_url, temp_cover_path):
-                temp_cover_path = None
-
-        # Embed metadata
-        self.status_signal.emit(f"正在嵌入元数据...")
-        self.embed_metadata(temp_audio_path, song_details, temp_cover_path)
-
-        # Rename to final filename
+        
         try:
-            os.rename(temp_audio_path, final_path)
-            self.status_signal.emit(f"下载完成: {os.path.basename(final_path)}")
-            return final_path
-        except OSError as e:
-            self.status_signal.emit(f"重命名文件失败: {e}")
-            if os.path.exists(temp_audio_path): os.remove(temp_audio_path)
+            # Download audio
+            self.status_signal.emit(f"正在下载: {title}...")
+            if not self.download_file(url, temp_audio_path, progress_callback):
+                return None
+
+            # Download cover
+            cover_url = song_details.get('cover')
+            if cover_url:
+                temp_cover_path = download_path / f"temp_cover_{os.urandom(8).hex()}.jpg"
+                if not self.download_file(cover_url, temp_cover_path, None):
+                    # 封面下载失败不影响主流程，但要清理临时文件
+                    if temp_cover_path and temp_cover_path.exists():
+                        temp_cover_path.unlink()
+                    temp_cover_path = None
+
+            # Embed metadata
+            self.status_signal.emit(f"正在嵌入元数据...")
+            self.embed_metadata(temp_audio_path, song_details, temp_cover_path)
+
+            # Rename to final filename
+            try:
+                temp_audio_path.rename(final_path)
+                temp_audio_path = None  # 重命名成功，不需要清理
+                self.status_signal.emit(f"下载完成: {final_path.name}")
+                return str(final_path)
+            except OSError as e:
+                self.status_signal.emit(f"重命名文件失败: {e}")
+                return None
+                
+        except Exception as e:
+            self.status_signal.emit(f"处理歌曲时发生错误: {e}")
             return None
+        finally:
+            # 确保清理所有临时文件（重命名成功的文件不会被清理）
+            self._cleanup_temp_files(temp_audio_path, temp_cover_path)
+
+    def _cleanup_temp_files(self, *temp_paths):
+        """清理临时文件的统一方法"""
+        for temp_path in temp_paths:
+            if temp_path:
+                try:
+                    # 支持Path对象和字符串路径
+                    path_obj = Path(temp_path) if not isinstance(temp_path, Path) else temp_path
+                    if path_obj.exists():
+                        path_obj.unlink()
+                except OSError as e:
+                    print(f"清理临时文件失败 {temp_path}: {e}")
 
 
 class SearchThread(QThread):

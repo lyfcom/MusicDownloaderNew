@@ -1,6 +1,7 @@
 import os
 import random
 import qtawesome
+from pathlib import Path
 from utils.lrc_parser import parse_lrc_line
 
 from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
@@ -8,7 +9,7 @@ from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, Q
                              QInputDialog, QFrame, QLineEdit, QPushButton)
 from PySide6.QtCore import Qt, QTimer, QPropertyAnimation, QEasingCurve, Property, QUrl
 from PySide6.QtGui import QColor
-from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
+from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput, QMediaDevices
 
 from core.downloader import (SingleDownloadThread, BatchDownloadThread, PlaylistImportThread,
                              SearchThread, SongDetailsThread)
@@ -43,8 +44,18 @@ class MusicDownloader(QMainWindow):
 
     def init_components(self):
         self.playlist_manager = PlaylistManager()
-        self.download_dir = os.path.join(os.path.expanduser("~"), "Music", "Downloads")
+        self.download_dir = Path.home() / "Music" / "Downloads"
         self.active_threads = set()
+
+    def _register_thread(self, thread):
+        """统一的线程注册和清理管理"""
+        def cleanup_thread():
+            self.active_threads.discard(thread)  # 使用discard避免KeyError
+            thread.deleteLater()  # 确保线程对象被正确释放
+        
+        thread.finished.connect(cleanup_thread)
+        self.active_threads.add(thread)
+        return thread
 
     def init_player(self):
         self.player = QMediaPlayer()
@@ -56,6 +67,48 @@ class MusicDownloader(QMainWindow):
         self.volume_animation.setEasingCurve(QEasingCurve.Linear)
         
         self.audio_output.setVolume(0.7)
+        
+        # 监听默认音频输出设备变化，解决声卡切换问题
+        QMediaDevices.defaultAudioOutputChanged.connect(self._on_audio_device_changed)
+
+    def _on_audio_device_changed(self, device_info):
+        """处理音频输出设备变化，确保音频输出到正确的设备"""
+        try:
+            # 保存当前状态
+            current_volume = self.audio_output.volume()
+            was_playing = self.player.playbackState() == QMediaPlayer.PlayingState
+            current_position = self.player.position()
+            current_media = self.player.source()
+            
+            # 停止动画以避免干扰
+            self.volume_animation.stop()
+            
+            # 创建新的音频输出实例
+            old_audio_output = self.audio_output
+            self.audio_output = QAudioOutput()
+            self.audio_output.setVolume(current_volume)
+            
+            # 重新绑定到播放器
+            self.player.setAudioOutput(self.audio_output)
+            
+            # 重新创建音量动画对象
+            self.volume_animation = QPropertyAnimation(self.audio_output, b"volume")
+            self.volume_animation.setDuration(400)
+            self.volume_animation.setEasingCurve(QEasingCurve.Linear)
+            
+            # 如果之前在播放，恢复播放状态
+            if was_playing and current_media.isValid():
+                self.player.setPosition(current_position)
+                self.player.play()
+            
+            # 清理旧的音频输出对象
+            old_audio_output.deleteLater()
+            
+            self.status_bar.showMessage("音频输出设备已切换", 2000)
+            
+        except Exception as e:
+            print(f"音频设备切换失败: {e}")
+            self.status_bar.showMessage("音频设备切换失败", 3000)
 
     def init_state(self):
         playlist_names = self.playlist_manager.get_playlist_names()
@@ -72,8 +125,9 @@ class MusicDownloader(QMainWindow):
         # Lyrics state
         self.current_lyrics = []
         self.current_lyric_line = -1
+        self.lyrics_html_cache = ""  # 缓存完整的歌词HTML
         self.lyric_timer = QTimer(self)
-        self.lyric_timer.setInterval(100)
+        self.lyric_timer.setInterval(250)  # 降低刷新频率从100ms到250ms
         self.lyric_timer.timeout.connect(self.update_lyrics_display)
 
     def setup_ui(self):
@@ -167,6 +221,7 @@ class MusicDownloader(QMainWindow):
         self.player.positionChanged.connect(self.player_controls.update_position)
         self.player.durationChanged.connect(self.player_controls.update_duration)
         self.player.mediaStatusChanged.connect(self.handle_media_status_changed)
+        self.player.errorOccurred.connect(self.handle_player_error)
 
         # Player controls connections
         self.player_controls.play_pause_clicked.connect(self.toggle_play_pause)
@@ -244,14 +299,9 @@ class MusicDownloader(QMainWindow):
         search_thread = SearchThread(query)
         search_thread.finished_signal.connect(self.handle_search_finished)
         search_thread.status_signal.connect(self.status_bar.showMessage)
+        search_thread.finished.connect(lambda: self.set_search_controls_enabled(True))
         
-        def on_search_finish():
-            if search_thread in self.active_threads:
-                self.active_threads.remove(search_thread)
-            self.set_search_controls_enabled(True)
-
-        search_thread.finished.connect(on_search_finish)
-        self.active_threads.add(search_thread)
+        self._register_thread(search_thread)
         search_thread.start()
 
     def handle_search_finished(self, songs):
@@ -315,8 +365,8 @@ class MusicDownloader(QMainWindow):
         details_thread = SongDetailsThread(song_info, table, row)
         details_thread.finished_signal.connect(self.handle_song_details_finished)
         details_thread.status_signal.connect(self.status_bar.showMessage)
-        details_thread.finished.connect(lambda: self.active_threads.remove(details_thread))
-        self.active_threads.add(details_thread)
+        
+        self._register_thread(details_thread)
         details_thread.start()
 
     def handle_song_details_finished(self, details, song_info, table, row):
@@ -345,6 +395,7 @@ class MusicDownloader(QMainWindow):
         self.lyric_timer.stop()
         self.current_lyrics.clear()
         self.current_lyric_line = -1
+        self.lyrics_html_cache = ""  # 清空歌词HTML缓存
 
         if details.get('lyric'):
             lyric_text = details['lyric']
@@ -354,8 +405,9 @@ class MusicDownloader(QMainWindow):
                     self.current_lyrics.append({'time': parsed[0], 'text': parsed[1]})
             
             if self.current_lyrics:
-                full_lyrics_html = "<br>".join([line['text'] for line in self.current_lyrics])
-                self.playlist_widget.update_lyrics(f"<center>{full_lyrics_html}</center>")
+                # 使用新的缓存构建方法
+                self._build_lyrics_html()
+                self.playlist_widget.update_lyrics(self.lyrics_html_cache)
                 self.lyric_timer.start()
                 self.player_controls.set_lyrics_button_enabled(True)
             else:
@@ -432,8 +484,7 @@ class MusicDownloader(QMainWindow):
             else QMessageBox.warning(self, "下载失败", msg)
         )
         
-        download_thread.finished.connect(lambda: self.active_threads.remove(download_thread))
-        self.active_threads.add(download_thread)
+        self._register_thread(download_thread)
         download_thread.start()
 
     def download_playlist(self, playlist_name):
@@ -454,8 +505,7 @@ class MusicDownloader(QMainWindow):
         batch_download_thread.status_signal.connect(self.status_bar.showMessage)
         batch_download_thread.batch_finished_signal.connect(self.handle_batch_finish)
         
-        batch_download_thread.finished.connect(lambda: self.active_threads.remove(batch_download_thread))
-        self.active_threads.add(batch_download_thread)
+        self._register_thread(batch_download_thread)
         batch_download_thread.start()
 
     def handle_batch_finish(self, success, message):
@@ -478,8 +528,40 @@ class MusicDownloader(QMainWindow):
             super().keyPressEvent(event)
 
     def closeEvent(self, event):
+        """优雅关闭程序，确保所有线程安全结束"""
+        # 保存播放列表数据
         self.playlist_manager.save()
+        
+        # 停止播放器和相关定时器
         self.player.stop()
+        if hasattr(self, 'lyric_timer'):
+            self.lyric_timer.stop()
+        if hasattr(self, 'volume_animation'):
+            self.volume_animation.stop()
+        
+        # 等待所有活跃线程完成
+        if self.active_threads:
+            self.status_bar.showMessage("正在等待后台任务完成...")
+            
+            # 请求所有线程中断（如果支持的话）
+            for thread in list(self.active_threads):
+                if hasattr(thread, 'requestInterruption'):
+                    thread.requestInterruption()
+            
+            # 等待线程完成，最多等待5秒
+            remaining_threads = list(self.active_threads)
+            for thread in remaining_threads:
+                if thread.isRunning():
+                    thread.wait(5000)  # 等待最多5秒
+                    if thread.isRunning():
+                        print(f"警告: 线程 {thread} 未能在5秒内完成")
+        
+        # 断开音频设备监听
+        try:
+            QMediaDevices.defaultAudioOutputChanged.disconnect(self._on_audio_device_changed)
+        except:
+            pass  # 忽略断开连接时的错误
+        
         super().closeEvent(event)
 
     # Player control methods
@@ -573,6 +655,35 @@ class MusicDownloader(QMainWindow):
                 self.play_next()
             else:
                 self.clear_playing_indicator()
+        elif status == QMediaPlayer.MediaStatus.InvalidMedia:
+            self.handle_player_error(QMediaPlayer.ResourceError, "媒体资源无效")
+        elif status == QMediaPlayer.MediaStatus.NoMedia:
+            self.clear_playing_indicator()
+
+    def handle_player_error(self, error, error_string):
+        """处理播放器错误，提供用户友好的错误信息"""
+        error_messages = {
+            QMediaPlayer.NoError: "无错误",
+            QMediaPlayer.ResourceError: "媒体资源错误：可能是网络问题或文件损坏",
+            QMediaPlayer.FormatError: "媒体格式不支持",
+            QMediaPlayer.NetworkError: "网络连接错误：请检查网络连接",
+            QMediaPlayer.AccessDeniedError: "访问被拒绝：可能是权限问题"
+        }
+        
+        user_message = error_messages.get(error, f"播放错误: {error_string}")
+        self.status_bar.showMessage(user_message, 5000)
+        
+        # 清除播放指示器
+        self.clear_playing_indicator()
+        
+        # 如果是播放列表模式且是网络错误，尝试播放下一首
+        if (error in [QMediaPlayer.NetworkError, QMediaPlayer.ResourceError] and 
+            self.is_playing_from_playlist and 
+            self.playback_mode != PlaybackMode.SINGLE_LOOP):
+            self.status_bar.showMessage("播放失败，正在尝试下一首...", 3000)
+            QTimer.singleShot(1500, self.play_next)  # 延迟1.5秒后播放下一首
+        
+        print(f"播放器错误: {error} - {error_string}")
 
     def seek_playback(self, position):
         self.player.setPosition(position)
@@ -630,15 +741,12 @@ class MusicDownloader(QMainWindow):
         import_thread.status_signal.connect(self.status_bar.showMessage)
         import_thread.progress_signal.connect(self.update_import_progress)
         import_thread.finished_signal.connect(self.handle_import_finished)
-        
-        def on_import_finish():
-            if import_thread in self.active_threads:
-                self.active_threads.remove(import_thread)
-            self.set_search_controls_enabled(True)
+        import_thread.finished.connect(lambda: (
+            self.set_search_controls_enabled(True),
             self.progress_bar.setValue(0)
-
-        import_thread.finished.connect(on_import_finish)
-        self.active_threads.add(import_thread)
+        ))
+        
+        self._register_thread(import_thread)
         import_thread.start()
 
     def update_import_progress(self, current, total):
@@ -690,26 +798,86 @@ class MusicDownloader(QMainWindow):
 
         position = self.player.position()
         
-        new_line_index = -1
-        for i, line in enumerate(self.current_lyrics):
-            if position >= line['time']:
-                new_line_index = i
-            else:
-                break
+        # 优化：使用二分查找快速定位当前歌词行
+        new_line_index = self._find_current_lyric_line(position)
         
+        # 只有当歌词行变化时才更新UI
         if new_line_index != self.current_lyric_line:
             self.current_lyric_line = new_line_index
+            self._update_lyrics_highlight()
+
+    def _find_current_lyric_line(self, position):
+        """使用二分查找快速定位当前歌词行"""
+        if not self.current_lyrics:
+            return -1
             
-            html = []
-            for i, line in enumerate(self.current_lyrics):
-                text = line['text']
-                if i == self.current_lyric_line:
-                    html.append(f'<a name="current"></a><p style="color: {HIGHLIGHT_COLOR.name()}; font-weight: bold; font-size: 16px;">{text}</p>')
-                else:
-                    html.append(f'<p>{text}</p>')
+        left, right = 0, len(self.current_lyrics) - 1
+        result = -1
+        
+        while left <= right:
+            mid = (left + right) // 2
+            if self.current_lyrics[mid]['time'] <= position:
+                result = mid
+                left = mid + 1
+            else:
+                right = mid - 1
+        
+        return result
+
+    def _build_lyrics_html(self):
+        """构建完整的歌词HTML，只在歌曲切换时调用"""
+        if not self.current_lyrics:
+            return ""
             
-            self.playlist_widget.update_lyrics(f"<center>{''.join(html)}</center>")
-            self.playlist_widget.scroll_to_lyric_line("current")
+        html = []
+        for i, line in enumerate(self.current_lyrics):
+            text = line['text']
+            html.append(f'<p id="lyric-{i}">{text}</p>')
+        
+        self.lyrics_html_cache = f"<center>{''.join(html)}</center>"
+        return self.lyrics_html_cache
+
+    def _update_lyrics_highlight(self):
+        """仅更新高亮显示，避免重建整个HTML"""
+        if not self.lyrics_html_cache:
+            # 如果缓存为空，重建HTML
+            self._build_lyrics_html()
+            self.playlist_widget.update_lyrics(self.lyrics_html_cache)
+        
+        # 使用CSS样式更新而不是重建HTML
+        highlight_style = f"color: {HIGHLIGHT_COLOR.name()}; font-weight: bold; font-size: 16px;"
+        
+        # 构建样式更新的JavaScript
+        script = f"""
+        <style>
+        .current-lyric {{ {highlight_style} }}
+        .normal-lyric {{ color: #cdd6f4; font-weight: normal; font-size: 14px; }}
+        </style>
+        <script>
+        // 移除之前的高亮
+        var prev = document.querySelector('.current-lyric');
+        if (prev) prev.className = 'normal-lyric';
+        
+        // 添加新的高亮
+        var current = document.getElementById('lyric-{self.current_lyric_line}');
+        if (current) {{
+            current.className = 'current-lyric';
+            current.scrollIntoView({{behavior: 'smooth', block: 'center'}});
+        }}
+        </script>
+        """
+        
+        # 简化版：直接重建HTML但优化性能
+        html = []
+        for i, line in enumerate(self.current_lyrics):
+            text = line['text']
+            if i == self.current_lyric_line:
+                html.append(f'<a name="current"></a><p style="{highlight_style}">{text}</p>')
+            else:
+                html.append(f'<p style="color: #cdd6f4; font-weight: normal; font-size: 14px;">{text}</p>')
+        
+        self.playlist_widget.update_lyrics(f"<center>{''.join(html)}</center>")
+        self.playlist_widget.scroll_to_lyric_line("current")
 
     def toggle_lyrics_view(self):
         if self.playlist_widget.is_lyrics_view_active():
