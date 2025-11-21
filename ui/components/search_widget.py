@@ -67,7 +67,7 @@ class SearchWidget(QWidget):
         self.song_list = songs
         self.result_table.clear()
         for row, song in enumerate(songs):
-            self.result_table.add_song(row, song.get('n'), song.get('title'), song.get('singer'))
+            self.result_table.add_song(row, song.get('id'), song.get('title'), song.get('singer'))
 
     def set_search_controls_enabled(self, enabled):
         self.search_input.setEnabled(enabled)

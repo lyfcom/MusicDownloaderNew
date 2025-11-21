@@ -2,6 +2,7 @@
 .vscode/
 .idea/
 .pytest_cache/
+.claude/
 
 # Environment files
 .env*
@@ -24,3 +25,5 @@ __pycache__/
 
 # Setup files
 playlists.json
+.claude/settings.local.json
+.claude/settings.local.json

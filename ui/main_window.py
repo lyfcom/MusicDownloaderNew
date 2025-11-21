@@ -4,8 +4,8 @@ import qtawesome
 from pathlib import Path
 from utils.lrc_parser import parse_lrc_line
 
-from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
-                             QFileDialog, QProgressBar, QMessageBox, QStatusBar, QSplitter, 
+from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel,
+                             QFileDialog, QProgressBar, QMessageBox, QStatusBar, QSplitter,
                              QInputDialog, QFrame, QLineEdit, QPushButton)
 from PySide6.QtCore import Qt, QTimer, QPropertyAnimation, QEasingCurve, Property, QUrl
 from PySide6.QtGui import QColor
@@ -14,13 +14,14 @@ from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput, QMediaDevices
 from core.downloader import (SingleDownloadThread, BatchDownloadThread, PlaylistImportThread,
                              SearchThread, SongDetailsThread)
 from core.playlist_manager import PlaylistManager
+from core.api import get_lyric
 from core.constants import PlaybackMode, HIGHLIGHT_COLOR, BASE_BG_COLOR, ANIMATION_DURATION
 from ui.components.search_widget import SearchWidget
 from ui.components.playlist_widget import PlaylistWidget
 from ui.components.player_controls import PlayerControls
 
 class MusicDownloader(QMainWindow):
-    VERSION = "1.2.1"
+    VERSION = "2.0.0"
 
     def __init__(self):
         super().__init__()
@@ -414,13 +415,24 @@ class MusicDownloader(QMainWindow):
         self.current_lyric_line = -1
         self.lyrics_html_cache = ""  # 清空歌词HTML缓存
 
-        if details.get('lyric'):
-            lyric_text = details['lyric']
+        # 新API需要单独请求歌词
+        song_id = details.get('songID') or details.get('id')
+        lyric_text = None
+
+        if song_id:
+            try:
+                lyric_data = get_lyric(song_id)
+                if lyric_data and lyric_data.get('lrc'):
+                    lyric_text = lyric_data['lrc']
+            except Exception as e:
+                print(f"获取歌词失败: {e}")
+
+        if lyric_text:
             for line in lyric_text.strip().split('\n'):
                 parsed = parse_lrc_line(line)
                 if parsed and parsed[1]:
                     self.current_lyrics.append({'time': parsed[0], 'text': parsed[1]})
-            
+
             if self.current_lyrics:
                 # 使用新的缓存构建方法
                 self._build_lyrics_html()

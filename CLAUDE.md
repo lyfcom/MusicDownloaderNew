@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 这是一个基于 **PySide6** 构建的现代化桌面音乐下载工具，具有完整的搜索、预览、下载、播放列表管理和音频播放功能。项目采用模块化架构，遵循现代Qt应用程序的最佳实践。
 
+**当前版本**: v2.0.0 (重大API升级)
+
 ## 开发环境配置
 
 ### 快速启动
@@ -41,8 +43,8 @@ python -m nuitka \
     --windows-icon-from-ico=icon.ico \
     --windows-company-name=XHZX \
     --windows-product-name="音乐下载器" \
-    --windows-file-version=1.2.0 \
-    --windows-product-version=1.2.0 \
+    --windows-file-version=2.0.0 \
+    --windows-product-version=2.0.0 \
     --output-filename=MusicDownloader.exe \
     main.py
 ```
@@ -102,17 +104,25 @@ MusicDownloaderNew/
 
 #### `core/api.py` - API抽象层
 ```python
-API_URL = "https://www.hhlqilongzhu.cn/api/joox/juhe_music.php"
+# 新API端点（v2.0.0+）
+BASE_URL = "https://api.vkeys.cn/v2/music/tencent"
+LYRIC_URL = "https://api.vkeys.cn/v2/music/tencent/lyric"
 
 # 核心函数：
 - search_music(query) -> List[Dict]
-  # 返回包含 raw_title（原始标题）和 title（清理标题）的歌曲列表
-  
+  # 返回歌曲列表，每首歌包含: id, title, singer, album
+
+- get_song_details(song_id) -> Dict
+  # 根据歌曲ID获取详细信息（包括播放URL、封面等）
+
 - get_song_details_robust(song_info) -> Dict
-  # ⭐ 关键实现：双重匹配策略
-  # 1. 主策略：使用 "title singer" 搜索并精确匹配 raw_title + singer
-  # 2. 备用策略：使用原始 query + n 索引获取详情
-  # 确保API索引变化时播放列表仍然有效
+  # ⭐ 健壮的歌曲详情获取
+  # 主策略：使用 "title singer" 重新搜索并精确匹配
+  # 备用策略：直接使用 song_info['id'] 获取详情
+
+- get_lyric(song_id) -> Dict
+  # 获取歌曲歌词（lrc, yrc, trans, roma）
+  # 新API中歌词需要单独请求
 ```
 
 #### `core/downloader.py` - 后台线程架构
@@ -135,8 +145,24 @@ BaseDownloader(QThread)
 PlaylistManager:
   ├── load()/save()          # JSON文件读写
   ├── create()/delete()      # 播放列表CRUD
-  ├── add_song()            # 基于 raw_title + singer 去重
-  └── playlists.json        # 数据存储格式
+  ├── add_song()            # 基于 title + singer 去重
+  └── playlists.json        # 数据存储格式（位于AppData/Roaming/MusicDownloader/）
+
+# 数据存储格式 (v2.0.0+):
+{
+  "playlist_name": [
+    {
+      "id": "歌曲ID",
+      "title": "歌曲名",
+      "singer": "歌手名",
+      "album": "专辑名"
+    }
+  ]
+}
+
+# 旧版本数据自动迁移:
+- 检测到旧格式数据（含 'n' 或 'raw_title' 字段）时自动备份到 playlists_backup_v1.json
+- 清空所有播放列表（因为旧数据与新API不兼容）
 ```
 
 #### `ui/main_window.py` - 主界面控制器（900+行）
@@ -192,17 +218,17 @@ parse_lrc_line(line) -> Tuple[int, str]
 
 ### 2. 健壮的歌曲匹配策略
 ```python
-# core/api.py:64-89 的核心实现
+# core/api.py 的核心实现
 def get_song_details_robust(song_info):
-    # 主策略：内容匹配（推荐）
+    # 主策略：使用 "title singer" 重新搜索并精确匹配
     new_query = f"{song_info['title']} {song_info['singer']}"
     search_results = search_music(new_query)
     for result in search_results:
         if exact_match(result, song_info):
-            return get_song_details(new_query, result['n'])
-    
-    # 备用策略：索引匹配
-    return get_song_details(song_info['query'], song_info['n'])
+            return get_song_details(result['id'])
+
+    # 备用策略：直接使用ID
+    return get_song_details(song_info['id'])
 ```
 
 ### 3. 音频和元数据处理
@@ -210,11 +236,13 @@ def get_song_details_robust(song_info):
 - **元数据**: `Mutagen` 库处理 MP3 ID3 标签、封面图片、歌词嵌入
 - **动画**: `QPropertyAnimation` 实现音量淡入淡出效果
 - **歌词同步**: `QTimer` 驱动的实时歌词高亮显示
+- **歌词获取**: 单独调用 `get_lyric()` API（v2.0.0+）
 
 ### 4. 播放列表管理
 - **存储格式**: JSON文件 (`playlists.json`)
-- **去重策略**: 基于 `raw_title` + `singer` 的内容匹配
+- **去重策略**: 基于 `title` + `singer` 的内容匹配
 - **增量导入**: 歌单导入时只处理新歌曲，减少API调用
+- **数据迁移**: 自动检测并备份旧版本数据
 
 ### 5. 外部歌单支持
 ```python
@@ -225,7 +253,77 @@ fetch_qq_playlist(playlist_id) -> List[Dict]:
   # 自动处理多歌手分隔和名称清理
 ```
 
-## 最新稳定性改进 (v1.2.0)
+## 重大更新 - v2.0.0 (API迁移)
+
+### 破坏性变更
+
+**⚠️ 警告**: v2.0.0 是一个重大版本更新，与 v1.x 版本不兼容
+
+#### 1. API端点完全更换
+- **旧API**: `https://www.hhlqilongzhu.cn/api/joox/juhe_music.php`
+- **新API**: `https://api.vkeys.cn/v2/music/tencent`
+
+#### 2. 数据结构变更
+
+**歌曲标识方式**:
+- 旧版: 使用动态索引 `n`
+- 新版: 使用固定唯一 `id`
+
+**播放列表数据格式**:
+```python
+# v1.x 格式
+{
+  "playlist_name": [
+    {
+      "n": 0,
+      "raw_title": "歌名[酷我]",
+      "title": "歌名",
+      "singer": "歌手",
+      "query": "搜索词"
+    }
+  ]
+}
+
+# v2.0.0+ 格式
+{
+  "playlist_name": [
+    {
+      "id": "001AbRES1Sx24C",
+      "title": "歌名",
+      "singer": "歌手",
+      "album": "专辑"
+    }
+  ]
+}
+```
+
+#### 3. 歌词获取方式变更
+- **旧版**: 歌词包含在歌曲详情API中 (`details['lyric']`)
+- **新版**: 需要单独调用 `get_lyric(song_id)` API获取
+
+### 新增功能
+
+#### 1. 增强的歌词支持
+```python
+# 新API返回多种歌词格式
+{
+  'lrc': '普通LRC歌词',
+  'yrc': '逐字歌词（可用于逐字高亮）',
+  'trans': '翻译歌词',
+  'roma': '罗马音/音译'
+}
+```
+
+#### 2. 专辑信息
+- 搜索结果现在包含专辑信息
+- 可选择在UI中显示专辑列
+
+#### 3. 自动数据迁移
+- 检测旧版本数据格式
+- 自动备份到 `playlists_backup_v1.json`
+- 清空播放列表并提示用户重新添加
+
+### 稳定性改进 (继承自 v1.2.0)
 
 ### 音频设备热切换解决方案
 ```python
