@@ -143,12 +143,23 @@ class PlaylistWidget(QWidget):
 
     def _create_playlist(self):
         name, ok = QInputDialog.getText(self, "新建播放列表", "请输入列表名称:")
-        if ok and name:
+        if not ok:
+            return
+        name = name.strip()
+        if name:
             self.playlist_created.emit(name)
+        else:
+            QMessageBox.warning(self, "无效名称", "播放列表名称不能为空。")
 
     def _rename_playlist(self, old_name):
         new_name, ok = QInputDialog.getText(self, "重命名播放列表", "请输入新名称:", text=old_name)
-        if ok and new_name and new_name != old_name:
+        if not ok:
+            return
+        new_name = new_name.strip()
+        if not new_name:
+            QMessageBox.warning(self, "无效名称", "播放列表名称不能为空。")
+            return
+        if new_name != old_name:
             self.playlist_renamed.emit(old_name, new_name)
 
     def _delete_playlist(self, name):

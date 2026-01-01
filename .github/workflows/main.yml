@@ -10,7 +10,10 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
 
     steps:
     - name: Checkout repository
@@ -30,16 +33,29 @@ jobs:
         # 安装项目依赖
         pip install -r requirements.txt
 
-    - name: Run Nuitka
+    - name: Run Nuitka (Linux)
+      if: runner.os == 'Linux'
       run: |
         # 使用Nuitka打包应用程序
         # --standalone: 创建包含所有依赖的独立应用（类似PyInstaller的--onedir）
-        # --windows-console-mode=disable: 禁用控制台
         # --output-dir=dist: 指定输出目录为dist
         # --include-data-dir=ui/resources=ui/resources: 包含资源文件
         # --enable-plugin=pyside6: 启用pyside6插件以支持Qt
         # --assume-yes-for-downloads: 自动同意所有依赖下载
         # --include-qt-plugins=multimedia: 强制包含Qt多媒体插件
+        python -m nuitka \
+          --standalone \
+          --assume-yes-for-downloads \
+          --enable-plugin=pyside6 \
+          --include-qt-plugins=multimedia \
+          --output-dir=dist \
+          --include-data-dir=ui/resources=ui/resources \
+          --output-filename=MusicDownloader \
+          main.py
+
+    - name: Run Nuitka (Windows settings)
+      if: runner.os == 'Windows'
+      run: |
         python -m nuitka `
           --standalone `
           --assume-yes-for-downloads `
@@ -55,10 +71,12 @@ jobs:
           --windows-product-version=1.1.0 `
           --output-filename=MusicDownloader.exe `
           main.py
+      shell: pwsh
 
     # 由于Nuitka会自动处理包含的数据文件，我们可能不需要额外的复制步骤
     # 但为了确保资源文件被正确包含，保留此步骤并调整路径
     - name: Copy UI Resources (Post-processing)
+      if: runner.os == 'Windows'
       run: |
         # 确保目标目录存在
         New-Item -ItemType Directory -Force -Path "dist/main.dist/ui/resources"
@@ -68,20 +86,29 @@ jobs:
       shell: pwsh
 
     - name: Install Inno Setup
+      if: runner.os == 'Windows'
       run: choco install innosetup --no-progress --yes
 
     - name: Compile Installer with Inno Setup
+      if: runner.os == 'Windows'
       run: iscc inno_setup.iss
       shell: cmd
 
     - name: Upload Installer Artifact
+      if: runner.os == 'Windows'
       uses: actions/upload-artifact@v4
       with:
         name: MusicDownloader-Installer
         path: Output/MusicDownloader-Setup.exe
 
+    - name: Copy UI Resources (Post-processing)
+      if: runner.os == 'Linux'
+      run: |
+        mkdir -p dist/main.dist/ui/resources
+        cp -R ui/resources/* dist/main.dist/ui/resources/
+
     - name: Upload Application Files
       uses: actions/upload-artifact@v4
       with:
-        name: MusicDownloader-Application
+        name: MusicDownloader-Application-${{ runner.os }}
         path: dist/main.dist
