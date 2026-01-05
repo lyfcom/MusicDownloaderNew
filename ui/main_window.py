@@ -462,9 +462,10 @@ class MusicDownloader(QMainWindow):
     def is_song_playing(self, song_info):
         if not self.currently_playing_song_info:
             return False
-        
-        return (self.currently_playing_song_info.get('raw_title') == song_info.get('raw_title') and 
-                self.currently_playing_song_info.get('singer') == song_info.get('singer'))
+
+        # 使用 id 唯一标识歌曲（v2.0.0+ API）
+        # API保证每首歌的id是唯一的
+        return self.currently_playing_song_info.get('id') == song_info.get('id')
             
     def set_playing_indicator(self, table, row, animated=False):
         self.clear_playing_indicator()
