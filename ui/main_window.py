@@ -750,7 +750,11 @@ class MusicDownloader(QMainWindow):
 
         if target_playlist_name == new_playlist_option:
             new_name, ok = QInputDialog.getText(self, "新建播放列表", "请输入新列表名称:")
-            if ok and new_name:
+            if ok:
+                new_name = new_name.strip()
+                if not new_name:
+                    QMessageBox.warning(self, "无效名称", "播放列表名称不能为空。")
+                    return
                 if not self.playlist_manager.create(new_name):
                     QMessageBox.warning(self, "错误", "该名称的播放列表已存在。")
                     return

@@ -1,5 +1,5 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton, QLabel
-from PySide6.QtCore import Signal, Qt
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton, QLabel, QToolTip
+from PySide6.QtCore import Signal, Qt, QPoint
 import qtawesome
 
 from ui.components.music_table import SearchResultTable
@@ -55,8 +55,14 @@ class SearchWidget(QWidget):
 
     def _on_search(self):
         query = self.search_input.text().strip()
-        if query:
-            self.search_requested.emit(query)
+        if not query:
+            QToolTip.showText(
+                self.search_input.mapToGlobal(QPoint(0, self.search_input.height())),
+                "请输入搜索内容"
+            )
+            self.search_input.setFocus()
+            return
+        self.search_requested.emit(query)
 
     def _on_song_preview(self, row):
         if 0 <= row < len(self.song_list):
@@ -67,7 +73,7 @@ class SearchWidget(QWidget):
         self.song_list = songs
         self.result_table.clear()
         for row, song in enumerate(songs):
-            self.result_table.add_song(row, song.get('id'), song.get('title'), song.get('singer'))
+            self.result_table.add_song(row, row + 1, song.get('title'), song.get('singer'))
 
     def set_search_controls_enabled(self, enabled):
         self.search_input.setEnabled(enabled)
