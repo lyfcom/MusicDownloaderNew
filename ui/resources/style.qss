@@ -362,7 +362,7 @@ QSplitter::handle:hover {
     min-width: 50px;
 }
 
-/* 进度滑块专用样式 */
+/* Progress slider dedicated style */
 #progress_slider {
     height: 20px;
 }
@@ -406,4 +406,78 @@ QComboBox:focus {
 /* Ensure no focus rectangle appears anywhere */
 *:focus {
     outline: none;
+}
+
+/* ===================================
+   Quality Selector Styles
+   =================================== */
+
+/* Quality selector base style */
+QComboBox#quality_selector {
+    background-color: #313244;
+    color: #cdd6f4;
+    border: 1px solid #45475a;
+    border-radius: 8px;
+    padding: 6px 10px;
+    min-height: 28px;
+}
+
+/* Quality selector hover effect */
+QComboBox#quality_selector:hover {
+    border: 1px solid #89b4fa;
+    background-color: #383850;
+}
+
+/* Quality selector focus state */
+QComboBox#quality_selector:focus {
+    border: 1px solid #74c7ec;
+}
+
+/* Dropdown arrow area */
+QComboBox#quality_selector::drop-down {
+    border: none;
+    width: 20px;
+}
+
+/* Dropdown arrow icon */
+QComboBox#quality_selector::down-arrow {
+    image: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #cdd6f4;
+    width: 0;
+    height: 0;
+}
+
+/* Dropdown list view */
+QComboBox#quality_selector QAbstractItemView {
+    background-color: #313244;
+    color: #cdd6f4;
+    border: 1px solid #45475a;
+    border-radius: 8px;
+    selection-background-color: #89b4fa;
+    selection-color: #1e1e2e;
+    padding: 4px;
+}
+
+/* Dropdown list items */
+QComboBox#quality_selector QAbstractItemView::item {
+    min-height: 28px;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+/* Selected list item */
+QComboBox#quality_selector QAbstractItemView::item:selected {
+    background-color: #89b4fa;
+    color: #1e1e2e;
+}
+
+/* Disabled list item (separator) */
+QComboBox#quality_selector QAbstractItemView::item:disabled {
+    color: #89b4fa;
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 9pt;
+    padding-left: 5px;
 } 

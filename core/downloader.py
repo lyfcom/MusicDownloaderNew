@@ -329,15 +329,16 @@ class SongDetailsThread(QThread):
     finished_signal = Signal(dict, dict, QTableWidget, int) # details, song_info, table, row
     status_signal = Signal(str)
 
-    def __init__(self, song_info, table, row, parent=None):
+    def __init__(self, song_info, table, row, quality=9, parent=None):
         super().__init__(parent)
         self.song_info = song_info
         self.table = table
         self.row = row
+        self.quality = quality
 
     def run(self):
         try:
-            details = get_song_details_robust(self.song_info)
+            details = get_song_details_robust(self.song_info, quality=self.quality)
             self.finished_signal.emit(details, self.song_info, self.table, self.row)
         except Exception as e:
             self.status_signal.emit(f"获取歌曲详情失败: {e}")
@@ -349,13 +350,14 @@ class SingleDownloadThread(BaseDownloader):
     finished_signal = Signal(bool, str) # success, message/filepath
     progress_signal = Signal(int)
 
-    def __init__(self, song_info, download_dir, parent=None):
+    def __init__(self, song_info, download_dir, quality=9, parent=None):
         super().__init__(parent)
         self.song_info = song_info
         self.download_dir = download_dir
+        self.quality = quality
 
     def run(self):
-        details = get_song_details_robust(self.song_info)
+        details = get_song_details_robust(self.song_info, quality=self.quality)
         if not details:
             msg = f"无法获取 '{self.song_info['title']}' 的详细信息。"
             self.status_signal.emit(msg)
@@ -375,24 +377,25 @@ class BatchDownloadThread(BaseDownloader):
     single_finished_signal = Signal(str) # song title
     batch_progress_signal = Signal(int, int) # current, total
 
-    def __init__(self, playlist, download_dir):
+    def __init__(self, playlist, download_dir, quality=9):
         super().__init__()
         self.playlist = playlist
         self.download_dir = download_dir
+        self.quality = quality
 
     def run(self):
         total = len(self.playlist)
         for i, song_info in enumerate(self.playlist):
             self.batch_progress_signal.emit(i + 1, total)
-            
-            details = get_song_details_robust(song_info)
+
+            details = get_song_details_robust(song_info, quality=self.quality)
             if not details:
                 self.status_signal.emit(f"无法获取 '{song_info.get('title')}' 详情，跳过。")
                 continue
 
             self.process_song(details, self.download_dir)
             self.single_finished_signal.emit(song_info['title'])
-        
+
         self.batch_finished_signal.emit(True, "批量下载完成！")
 
 

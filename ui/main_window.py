@@ -21,7 +21,7 @@ from ui.components.playlist_widget import PlaylistWidget
 from ui.components.player_controls import PlayerControls
 
 class MusicDownloader(QMainWindow):
-    VERSION = "2.0.0"
+    VERSION = "2.1.0"
 
     def __init__(self):
         super().__init__()
@@ -44,8 +44,15 @@ class MusicDownloader(QMainWindow):
         self.initialize_data()
 
     def init_components(self):
+        from core.config_manager import ConfigManager
+
+        self.config_manager = ConfigManager()
         self.playlist_manager = PlaylistManager()
-        self.download_dir = Path.home() / "Music" / "Downloads"
+
+        # 从配置读取下载目录
+        saved_dir = self.config_manager.get_last_download_dir()
+        self.download_dir = Path(saved_dir)
+
         self.active_threads = set()
 
     def _register_thread(self, thread):
@@ -134,12 +141,15 @@ class MusicDownloader(QMainWindow):
         self.currently_playing_song_info = None
         self.currently_playing_item_ref = None
         self.animations = QPropertyAnimation(self, b'highlight_color')
-        
+
         # Player state
         self.playback_mode = PlaybackMode.LIST_LOOP
         self.is_playing_from_playlist = False
         self.current_playing_row = -1
-        
+
+        # 音质状态
+        self.current_quality = self.config_manager.get_quality()
+
         # Lyrics state
         self.current_lyrics = []
         self.current_lyric_line = -1
@@ -250,6 +260,7 @@ class MusicDownloader(QMainWindow):
         self.player_controls.volume_slider_released.connect(self.restore_volume_animation_duration)
         self.player_controls.seek_requested.connect(self.seek_playback)
         self.player_controls.lyrics_view_toggled.connect(self.toggle_lyrics_view)
+        self.player_controls.quality_changed.connect(self._on_quality_changed)
 
         # Search widget connections
         self.search_widget.search_requested.connect(self.run_search)
@@ -276,9 +287,22 @@ class MusicDownloader(QMainWindow):
         self.update_playlist_songs_table()
         self.player_controls.update_playback_mode_button()
 
+        # 设置初始音质
+        self.player_controls.set_quality(self.current_quality)
+
     def _on_playback_mode_changed(self):
         self.playback_mode = self.player_controls.playback_mode
         self.status_bar.showMessage(f"播放模式: {PlaybackMode.ICONS[self.playback_mode][1]}", 2000)
+
+    def _on_quality_changed(self, quality_value):
+        """音质选择变化处理"""
+        from core.constants import QualityLevel
+
+        self.current_quality = quality_value
+        self.config_manager.set_quality(quality_value)
+
+        quality_name = QualityLevel.get_quality_name(quality_value)
+        self.status_bar.showMessage(f"音质已切换: {quality_name}", 3000)
 
     def _on_playlist_created(self, name):
         if not self.playlist_manager.create(name):
@@ -380,10 +404,11 @@ class MusicDownloader(QMainWindow):
     def play_song(self, song_info, table, row):
         self.status_bar.showMessage(f"正在获取 {song_info['title']} 的播放地址...", 2000)
 
-        details_thread = SongDetailsThread(song_info, table, row)
+        # 传递当前音质设置
+        details_thread = SongDetailsThread(song_info, table, row, quality=self.current_quality)
         details_thread.finished_signal.connect(self.handle_song_details_finished)
         details_thread.status_signal.connect(self.status_bar.showMessage)
-        
+
         self._register_thread(details_thread)
         details_thread.start()
 
@@ -506,14 +531,15 @@ class MusicDownloader(QMainWindow):
 
     def download_song(self, song_info):
         self.progress_bar.setValue(0)
-        download_thread = SingleDownloadThread(song_info, self.download_dir)
+        # 传递当前音质设置
+        download_thread = SingleDownloadThread(song_info, self.download_dir, quality=self.current_quality)
         download_thread.progress_signal.connect(self.progress_bar.setValue)
         download_thread.status_signal.connect(self.status_bar.showMessage)
         download_thread.finished_signal.connect(
-            lambda s, msg: QMessageBox.information(self, "下载完成", msg) if s 
+            lambda s, msg: QMessageBox.information(self, "下载完成", msg) if s
             else QMessageBox.warning(self, "下载失败", msg)
         )
-        
+
         self._register_thread(download_thread)
         download_thread.start()
 
@@ -522,19 +548,20 @@ class MusicDownloader(QMainWindow):
         if not songs:
             QMessageBox.information(self, "提示", "此播放列表为空。")
             return
-        
+
         reply = QMessageBox.question(
             self, "确认下载", f"准备下载 '{playlist_name}' 中的 {len(songs)} 首歌曲。",
             QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes
         )
         if reply == QMessageBox.No:
             return
-        
-        batch_download_thread = BatchDownloadThread(songs, self.download_dir)
+
+        # 传递当前音质设置
+        batch_download_thread = BatchDownloadThread(songs, self.download_dir, quality=self.current_quality)
         batch_download_thread.batch_progress_signal.connect(self.update_batch_progress)
         batch_download_thread.status_signal.connect(self.status_bar.showMessage)
         batch_download_thread.batch_finished_signal.connect(self.handle_batch_finish)
-        
+
         self._register_thread(batch_download_thread)
         batch_download_thread.start()
 

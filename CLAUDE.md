@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 这是一个基于 **PySide6** 构建的现代化桌面音乐下载工具，具有完整的搜索、预览、下载、播放列表管理和音频播放功能。项目采用模块化架构，遵循现代Qt应用程序的最佳实践。
 
-**当前版本**: v2.0.0 (重大API升级)
+**当前版本**: v2.1.0 (音质选择功能)
 
 ## 开发环境配置
 
@@ -77,7 +77,8 @@ MusicDownloaderNew/
 ├── core/                     # 核心业务逻辑层
 │   ├── __init__.py
 │   ├── api.py                # 音乐API封装和健壮匹配策略
-│   ├── constants.py          # 应用常量和播放模式定义
+│   ├── constants.py          # 应用常量、播放模式和音质等级定义
+│   ├── config_manager.py     # 应用配置管理（音质、下载目录等）
 │   ├── downloader.py         # 后台线程工作器（搜索、下载、导入）
 │   ├── fetch_playlist.py     # QQ音乐歌单获取
 │   └── playlist_manager.py   # 播放列表CRUD和JSON持久化
@@ -89,11 +90,11 @@ MusicDownloaderNew/
 │   ├── components/           # 模块化UI组件
 │   │   ├── __init__.py
 │   │   ├── music_table.py    # 音乐列表表格组件
-│   │   ├── player_controls.py # 播放控制面板
+│   │   ├── player_controls.py # 播放控制面板（含音质选择器）
 │   │   ├── playlist_widget.py # 播放列表管理组件
 │   │   └── search_widget.py  # 搜索界面组件
 │   └── resources/
-│       └── style.qss         # 自定义QSS主题样式（400行）
+│       └── style.qss         # 自定义QSS主题样式（480+行）
 │
 └── utils/                    # 通用工具库
     ├── __init__.py
@@ -112,13 +113,15 @@ LYRIC_URL = "https://api.vkeys.cn/v2/music/tencent/lyric"
 - search_music(query) -> List[Dict]
   # 返回歌曲列表，每首歌包含: id, title, singer, album
 
-- get_song_details(song_id) -> Dict
+- get_song_details(song_id, quality=9) -> Dict
   # 根据歌曲ID获取详细信息（包括播放URL、封面等）
+  # quality参数: 0-14，默认9（HQ高音质增强）
 
-- get_song_details_robust(song_info) -> Dict
-  # ⭐ 健壮的歌曲详情获取
+- get_song_details_robust(song_info, quality=9) -> Dict
+  # ⭐ 健壮的歌曲详情获取（支持音质选择）
   # 主策略：使用 "title singer" 重新搜索并精确匹配
   # 备用策略：直接使用 song_info['id'] 获取详情
+  # quality参数: 用户选择的音质等级
 
 - get_lyric(song_id) -> Dict
   # 获取歌曲歌词（lrc, yrc, trans, roma）
@@ -134,10 +137,44 @@ BaseDownloader(QThread)
 
 # 具体实现类
 ├── SearchThread            # 非阻塞搜索
-├── SongDetailsThread       # 歌曲详情获取
-├── SingleDownloadThread    # 单曲下载
-├── BatchDownloadThread     # 批量下载
+├── SongDetailsThread       # 歌曲详情获取（支持音质参数）
+├── SingleDownloadThread    # 单曲下载（支持音质参数）
+├── BatchDownloadThread     # 批量下载（支持音质参数）
 └── PlaylistImportThread    # 歌单导入（支持去重和增量匹配）
+```
+
+#### `core/constants.py` - 常量和配置定义
+```python
+# 播放模式定义
+PlaybackMode:
+  ├── LIST_LOOP = 0          # 列表循环
+  ├── RANDOM = 1             # 随机播放
+  └── SINGLE_LOOP = 2        # 单曲循环
+
+# 音质等级定义（v2.1.0+）
+QualityLevel:
+  ├── DEFAULT_QUALITY = 9    # 默认音质（HQ高音质增强）
+  ├── BASIC = [(0,4,8)]      # 基础音质组
+  ├── LOSSLESS = [(9,10,11)] # 无损音质组
+  ├── SPATIAL = [(12,13,14)] # 空间音频组
+  └── 工具方法:
+      ├── get_combobox_items()  # 返回UI下拉框选项
+      ├── get_tooltip()         # 返回音质详细说明
+      └── get_quality_name()    # 返回音质名称
+```
+
+#### `core/config_manager.py` - 配置管理器（v2.1.0+）
+```python
+ConfigManager:
+  ├── 存储位置: AppData/Roaming/MusicDownloader/config.json
+  ├── get_quality()/set_quality()      # 音质配置管理
+  ├── get_last_download_dir()          # 下载目录管理
+  └── 配置格式:
+      {
+        "quality": 9,
+        "last_download_dir": "...",
+        "version": "2.1.0"
+      }
 ```
 
 #### `core/playlist_manager.py` - 数据持久化
@@ -168,23 +205,46 @@ PlaylistManager:
 #### `ui/main_window.py` - 主界面控制器（900+行）
 ```python
 MusicDownloader(QMainWindow):
-  ├── init_components()      # 组件初始化
+  ├── init_components()      # 组件初始化（含ConfigManager）
   ├── init_player()         # QMediaPlayer + QAudioOutput
   ├── setup_ui()           # UI布局构建
-  ├── connect_signals()     # 信号槽连接
+  ├── connect_signals()     # 信号槽连接（含音质变化信号）
   │
   ├── 播放器功能：
   │   ├── QStackedWidget    # 播放列表/歌词视图切换
   │   ├── QPropertyAnimation # 音量淡入淡出动画
   │   ├── QTimer           # 歌词同步定时器
-  │   └── 播放模式支持      # 列表循环/随机/单曲循环
+  │   ├── 播放模式支持      # 列表循环/随机/单曲循环
+  │   └── 音质管理         # 动态音质选择和配置持久化
   │
   └── 线程管理：
       ├── active_threads    # 活跃线程集合管理
-      └── 信号槽处理        # 线程完成信号的UI更新
+      ├── 信号槽处理        # 线程完成信号的UI更新
+      └── 音质参数传递      # 播放/下载时传递用户选择的音质
 ```
 
-#### `ui/resources/style.qss` - 主题系统（400行）
+#### `ui/components/player_controls.py` - 播放控制面板（含音质选择器）
+```python
+PlayerControls(QWidget):
+  ├── 播放控制:
+  │   ├── 播放/暂停按钮
+  │   ├── 上一首/下一首按钮
+  │   ├── 播放模式切换按钮
+  │   └── 歌词显示切换按钮
+  │
+  ├── 音质选择器（v2.1.0+）:
+  │   ├── QComboBox下拉选择器
+  │   ├── 三级分组显示（基础/无损/空间音频）
+  │   ├── 工具提示详细说明
+  │   ├── quality_changed信号
+  │   └── 配置持久化支持
+  │
+  └── 音量控制:
+      ├── 音量滑块
+      └── 音量图标
+```
+
+#### `ui/resources/style.qss` - 主题系统（480+行）
 ```css
 /* 基于 Catppuccin Mocha 主题的现代化UI */
 基础配色:
@@ -198,6 +258,7 @@ MusicDownloader(QMainWindow):
   ├── 现代化按钮 (圆角、渐变动画)
   ├── 美化表格 (交替行颜色、选中高亮)
   ├── 优雅滑块 (进度条、音量控制)
+  ├── 音质选择器样式 (v2.1.0+)
   └── 统一的焦点状态处理
 ```
 
@@ -216,19 +277,20 @@ parse_lrc_line(line) -> Tuple[int, str]
 - **通信**: 使用Qt信号槽机制确保线程间安全通信
 - **资源管理**: `active_threads` 集合跟踪所有活跃线程，防止内存泄漏
 
-### 2. 健壮的歌曲匹配策略
+### 2. 健壮的歌曲匹配策略（支持音质选择）
 ```python
 # core/api.py 的核心实现
-def get_song_details_robust(song_info):
+def get_song_details_robust(song_info, quality=9):
     # 主策略：使用 "title singer" 重新搜索并精确匹配
     new_query = f"{song_info['title']} {song_info['singer']}"
     search_results = search_music(new_query)
     for result in search_results:
         if exact_match(result, song_info):
-            return get_song_details(result['id'])
+            # 使用用户选择的音质获取详情
+            return get_song_details(result['id'], quality=quality)
 
-    # 备用策略：直接使用ID
-    return get_song_details(song_info['id'])
+    # 备用策略：直接使用ID，同时应用音质参数
+    return get_song_details(song_info['id'], quality=quality)
 ```
 
 ### 3. 音频和元数据处理
@@ -252,6 +314,67 @@ fetch_qq_playlist(playlist_id) -> List[Dict]:
   # 返回标准化的 {title, singer} 格式
   # 自动处理多歌手分隔和名称清理
 ```
+
+### 6. 音质选择系统（v2.1.0+）
+```python
+# 音质等级定义 (core/constants.py)
+QualityLevel:
+  - 9个推荐音质值：0, 4, 8, 9, 10, 11, 12, 13, 14
+  - 三级分组：基础音质、无损音质、空间音频
+  - 默认值：quality=9（HQ高音质增强）
+
+# 配置管理 (core/config_manager.py)
+ConfigManager:
+  - 用户音质偏好持久化
+  - 存储位置：AppData/Roaming/MusicDownloader/config.json
+  - 自动加载/保存用户设置
+
+# UI集成 (ui/components/player_controls.py)
+PlayerControls:
+  - QComboBox音质选择器
+  - 位置：播放控制栏，音量控制左侧
+  - quality_changed信号
+
+# 参数传递链
+用户选择音质 → quality_changed信号 → _on_quality_changed()
+  → 保存到self.current_quality
+  → 创建线程时传递给 SongDetailsThread/SingleDownloadThread/BatchDownloadThread
+  → API调用时使用该音质值
+```
+
+## 重大更新 - v2.1.0 (音质选择功能)
+
+### 新增功能
+
+#### 1. 用户音质选择
+- 支持9种推荐音质等级（0, 4, 8, 9, 10, 11, 12, 13, 14）
+- 三级分组UI设计：基础音质、无损音质、空间音频
+- 每个音质选项都有详细的tooltip说明
+- 默认音质：quality=9（HQ高音质增强）
+
+#### 2. 配置管理系统
+- 新增 `core/config_manager.py` 配置管理器
+- 用户音质偏好自动保存和恢复
+- 支持下载目录等其他配置项
+- 存储路径：`AppData/Roaming/MusicDownloader/config.json`
+
+#### 3. UI改进
+- 播放控制栏新增音质选择器（QComboBox）
+- 位置：音量控制左侧，始终可见
+- 分组显示使用禁用的分隔项实现
+- 工具提示显示详细的音质说明
+
+#### 4. 参数传递链完整化
+- `get_song_details()` 和 `get_song_details_robust()` 添加quality参数
+- 三个下载线程类（SongDetailsThread/SingleDownloadThread/BatchDownloadThread）支持quality参数
+- 主窗口在创建线程时自动传递当前音质设置
+
+### 向后兼容性
+- 所有新增的quality参数都设置了默认值（质量=9）
+- 现有代码不传递quality参数时自动使用默认值
+- **零破坏性更改**
+
+---
 
 ## 重大更新 - v2.0.0 (API迁移)
 
@@ -580,15 +703,24 @@ class PlaylistManager:
 2. 实现统一的搜索和详情获取接口
 3. 更新 `get_song_details_robust` 支持新源
 
+### 音质功能扩展（v2.1.0+）
+1. **智能音质降级**：当选择的音质不可用时，自动降级到可用的最高音质
+2. **音质统计**：记录用户最常使用的音质，优化默认推荐
+3. **预设方案**：提供"省流量模式"、"高音质模式"等一键切换
+4. **下载估算**：根据选择的音质，预估下载时间和文件大小
+5. **音质标签**：在歌曲列表中显示可用的最高音质
+
 ### UI主题自定义
 1. 修改 `ui/resources/style.qss` 中的颜色变量
 2. 调整 `core/constants.py` 中的UI常量
-3. 测试所有组件的视觉一致性
+3. 修改 `QualityLevel` 的分组和音质选项
+4. 测试所有组件的视觉一致性
 
 ### 新功能集成
 1. 在 `core/` 中实现业务逻辑
 2. 在 `ui/components/` 中创建对应UI组件
 3. 在 `main_window.py` 中集成并连接信号槽
+4. 记得使用配置管理器持久化用户设置
 
 ## 故障排除
 

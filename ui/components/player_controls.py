@@ -1,8 +1,9 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSlider, QPushButton
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSlider, QPushButton, QComboBox
 from PySide6.QtCore import Qt, QSize, Signal
+from PySide6.QtGui import QColor
 import qtawesome
 
-from core.constants import PlaybackMode
+from core.constants import PlaybackMode, QualityLevel
 
 class PlayerControls(QWidget):
     play_pause_clicked = Signal()
@@ -13,6 +14,7 @@ class PlayerControls(QWidget):
     volume_slider_released = Signal()
     seek_requested = Signal(int)
     lyrics_view_toggled = Signal()
+    quality_changed = Signal(int)  # 新增：音质变化信号
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -113,11 +115,27 @@ class PlayerControls(QWidget):
         self.lyrics_button.setIconSize(QSize(16, 16))
         self.lyrics_button.setFixedSize(button_size)
         self.lyrics_button.setEnabled(False)
-        
+
+        # 音质选择器
+        quality_label = QLabel()
+        quality_label.setPixmap(qtawesome.icon('fa5s.sliders-h', color='#cdd6f4').pixmap(16, 16))
+        quality_label.setToolTip("音质设置")
+
+        self.quality_selector = QComboBox()
+        self.quality_selector.setObjectName("quality_selector")
+        self.quality_selector.setMinimumWidth(150)
+        self.quality_selector.setMaximumWidth(200)
+
+        # 填充音质选项
+        self._populate_quality_options()
+
+        # 连接信号
+        self.quality_selector.currentIndexChanged.connect(self._on_quality_changed)
+
         # 音量控制
         volume_label = QLabel()
         volume_label.setPixmap(qtawesome.icon('fa5s.volume-up', color='#cdd6f4').pixmap(16, 16))
-        
+
         self.volume_slider = QSlider(Qt.Horizontal)
         self.volume_slider.setObjectName("volume_slider")
         self.volume_slider.setRange(0, 100)
@@ -125,7 +143,7 @@ class PlayerControls(QWidget):
         self.volume_slider.setMaximumWidth(100)
         self.volume_slider.valueChanged.connect(self.volume_changed.emit)
         self.volume_slider.sliderReleased.connect(self.volume_slider_released.emit)
-        
+
         controls_layout.addStretch()
         controls_layout.addWidget(self.playback_mode_button)
         controls_layout.addWidget(self.prev_button)
@@ -133,6 +151,9 @@ class PlayerControls(QWidget):
         controls_layout.addWidget(self.next_button)
         controls_layout.addWidget(self.lyrics_button)
         controls_layout.addStretch()
+        controls_layout.addWidget(quality_label)
+        controls_layout.addWidget(self.quality_selector)
+        controls_layout.addSpacing(20)  # 与音量控制留出间距
         controls_layout.addWidget(volume_label)
         controls_layout.addWidget(self.volume_slider)
         
@@ -189,3 +210,53 @@ class PlayerControls(QWidget):
         minutes = seconds // 60
         seconds %= 60
         return f"{minutes:02}:{seconds:02}"
+
+    def _populate_quality_options(self):
+        """填充音质选择下拉框"""
+        for value, text, is_separator in QualityLevel.get_combobox_items():
+            if is_separator:
+                # 添加分隔项（禁用状态）
+                self.quality_selector.addItem(text)
+                index = self.quality_selector.count() - 1
+                # 使用模型设置项为禁用状态
+                item = self.quality_selector.model().item(index)
+                if item:
+                    item.setEnabled(False)
+                    # 设置分隔符样式（蓝色加粗）
+                    item.setForeground(QColor("#89b4fa"))
+            else:
+                # 添加正常选项，userData存储quality值
+                self.quality_selector.addItem(text, value)
+                # 设置工具提示
+                index = self.quality_selector.count() - 1
+                tooltip = QualityLevel.get_tooltip(value)
+                self.quality_selector.setItemData(index, tooltip, Qt.ToolTipRole)
+
+        # 设置默认选项
+        self.set_quality(QualityLevel.DEFAULT_QUALITY)
+
+    def _on_quality_changed(self, index):
+        """音质选择变化事件"""
+        quality_value = self.quality_selector.itemData(index)
+        if quality_value is not None:  # 跳过分隔符
+            self.quality_changed.emit(quality_value)
+
+    def set_quality(self, quality_value):
+        """设置当前音质
+
+        Args:
+            quality_value: 音质值（0-14）
+        """
+        for i in range(self.quality_selector.count()):
+            if self.quality_selector.itemData(i) == quality_value:
+                self.quality_selector.setCurrentIndex(i)
+                break
+
+    def get_quality(self):
+        """获取当前选择的音质值
+
+        Returns:
+            int: 音质值，如果是分隔符则返回None
+        """
+        current_index = self.quality_selector.currentIndex()
+        return self.quality_selector.itemData(current_index)

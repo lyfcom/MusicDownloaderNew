@@ -100,18 +100,19 @@ def search_music(query):
 
     return []
 
-def get_song_details(song_id):
+def get_song_details(song_id, quality=9):
     """
     根据歌曲ID获取详细信息（包括播放地址、封面等）
 
     Args:
         song_id: 歌曲ID
+        quality: 音质等级 (0-14)，默认9（HQ高音质增强）
 
     Returns:
         歌曲详细信息字典，包含url、cover等
         返回None如果获取失败
     """
-    params = {'id': song_id}
+    params = {'id': song_id, 'quality': quality}
     data = request_api(BASE_URL, params)
 
     if data and isinstance(data, dict) and data.get('code') == 200:
@@ -121,7 +122,7 @@ def get_song_details(song_id):
 
     return None
 
-def get_song_details_robust(song_info):
+def get_song_details_robust(song_info, quality=9):
     """
     健壮地获取歌曲详情
 
@@ -130,6 +131,7 @@ def get_song_details_robust(song_info):
 
     Args:
         song_info: 包含 id, title, singer 的歌曲信息字典
+        quality: 音质等级 (0-14)，默认9
 
     Returns:
         歌曲详细信息字典或None
@@ -151,7 +153,7 @@ def get_song_details_robust(song_info):
                 # 精确匹配 title 和 singer
                 if result_title == target_title and result_singer == target_singer:
                     # 找到可靠的匹配！
-                    details = get_song_details(result_song['id'])
+                    details = get_song_details(result_song['id'], quality=quality)
                     if details:
                         return details
     except Exception as e:
@@ -161,7 +163,7 @@ def get_song_details_robust(song_info):
 
     # --- 备用策略：直接使用ID ---
     if 'id' in song_info and song_info['id']:
-        return get_song_details(song_info['id'])
+        return get_song_details(song_info['id'], quality=quality)
 
     return None
 
